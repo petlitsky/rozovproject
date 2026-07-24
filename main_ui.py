@@ -1211,24 +1211,24 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addWidget(self.label_32, 0, 0, 1, 1)
 
-        self.horizontalSlider = QSlider(self.groupBox_3)
-        self.horizontalSlider.setObjectName(u"horizontalSlider")
-        self.horizontalSlider.setMaximum(100)
-        self.horizontalSlider.setValue(50)
-        self.horizontalSlider.setOrientation(Qt.Orientation.Horizontal)
+        self.setFanSpeed = QSlider(self.groupBox_3)
+        self.setFanSpeed.setObjectName(u"setFanSpeed")
+        self.setFanSpeed.setMaximum(100)
+        self.setFanSpeed.setValue(50)
+        self.setFanSpeed.setOrientation(Qt.Orientation.Horizontal)
 
-        self.gridLayout_3.addWidget(self.horizontalSlider, 1, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.setFanSpeed, 1, 0, 1, 1)
 
-        self.label_33 = QLabel(self.groupBox_3)
-        self.label_33.setObjectName(u"label_33")
-        self.label_33.setMinimumSize(QSize(40, 0))
-        self.label_33.setMaximumSize(QSize(30, 16777215))
+        self.lblFanSpeed = QLabel(self.groupBox_3)
+        self.lblFanSpeed.setObjectName(u"lblFanSpeed")
+        self.lblFanSpeed.setMinimumSize(QSize(40, 0))
+        self.lblFanSpeed.setMaximumSize(QSize(30, 16777215))
         font12 = QFont()
         font12.setPointSize(9)
         font12.setBold(False)
-        self.label_33.setFont(font12)
+        self.lblFanSpeed.setFont(font12)
 
-        self.gridLayout_3.addWidget(self.label_33, 1, 1, 1, 1)
+        self.gridLayout_3.addWidget(self.lblFanSpeed, 1, 1, 1, 1)
 
 
         self.verticalLayout_63.addWidget(self.groupBox_3)
@@ -3587,7 +3587,7 @@ class Ui_MainWindow(object):
         self.radioButton_3.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u043a\u043b\u044e\u0447\u0438\u0442\u044c", None))
         self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u0440\u0443\u0447\u043d\u043e\u0433\u043e \u0440\u0435\u0436\u0438\u043c\u0430", None))
         self.label_32.setText(QCoreApplication.translate("MainWindow", u"\u0424\u0438\u043a\u0441\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u0430\u044f \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c (0-100%):", None))
-        self.label_33.setText(QCoreApplication.translate("MainWindow", u"50%", None))
+        self.lblFanSpeed.setText(QCoreApplication.translate("MainWindow", u"50%", None))
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u043e\u0433\u043e \u0440\u0435\u0436\u0438\u043c\u0430", None))
         self.label_34.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u041f\u043e\u0440\u043e\u0433 \u0432\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f (<span style=\" font-style:italic;\">T</span><span style=\" vertical-align:sub;\">\u043c\u0438\u043d</span>):</p></body></html>", None))
         self.label_51.setText(QCoreApplication.translate("MainWindow", u"\u00b0C", None))
