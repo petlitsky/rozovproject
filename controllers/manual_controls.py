@@ -154,5 +154,5 @@ class ManualControls(QObject):
     
     def _on_fan_speed_changed(self, value: int) -> None:
         if hasattr(self.ui, 'lblFanSpeed'):
-            self.ui.lblFanSpeed.setText(f"Скорость куллера: {value}%")
+            self.ui.lblFanSpeed.setText(f"{value}%")
         self.main.set_fan_speed(value)

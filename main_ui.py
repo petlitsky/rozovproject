@@ -16,11 +16,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QDoubleSpinBox, QFrame,
-    QGridLayout, QGroupBox, QHBoxLayout, QLabel,
-    QMainWindow, QPlainTextEdit, QPushButton, QRadioButton,
-    QSizePolicy, QSlider, QSpacerItem, QSpinBox,
-    QStackedWidget, QToolButton, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QFrame, QGridLayout,
+    QGroupBox, QHBoxLayout, QLabel, QMainWindow,
+    QPlainTextEdit, QPushButton, QRadioButton, QSizePolicy,
+    QSlider, QSpacerItem, QSpinBox, QStackedWidget,
+    QToolButton, QVBoxLayout, QWidget)
 import resources_rc
 
 class Ui_MainWindow(object):
@@ -1213,9 +1213,46 @@ class Ui_MainWindow(object):
 
         self.fanSpeed = QSlider(self.groupBox_3)
         self.fanSpeed.setObjectName(u"fanSpeed")
+        self.fanSpeed.setMinimumSize(QSize(0, 40))
+        self.fanSpeed.setFont(font)
+        self.fanSpeed.setStyleSheet(u"/* \u0414\u043e\u0440\u043e\u0436\u043a\u0430 */\n"
+"QSlider::groove:horizontal {\n"
+"    height: 8px;\n"
+"    background: #d5d8df;\n"
+"    border-radius: 4px;\n"
+"}\n"
+"\n"
+"/* \u041f\u043e\u043b\u0437\u0443\u043d\u043e\u043a (\u043a\u0440\u0443\u0436\u043e\u043a) */\n"
+"QSlider::handle:horizontal {\n"
+"    background: #bdcfdd;\n"
+"    border: 2px solid #a6b8c6;\n"
+"    border-radius: 20px;      /* \u0421\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 = \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0448\u0438\u0440\u0438\u043d\u044b \u0434\u043b\u044f \u043a\u0440\u0443\u0433\u0430 */\n"
+"    width: 40px;\n"
+"    height: 40px;\n"
+"    margin: -16px 0;          /* (40-8)/2 = 16 */\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:hover {\n"
+"    background: #cfddeb;\n"
+"    border-color: #4A8AB5;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:pressed {\n"
+"    background: #4A8AB5;\n"
+"    border-color: #2c6a8f;\n"
+"}\n"
+"\n"
+"/* \u0417\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u043d\u0430\u044f \u0447\u0430\u0441"
+                        "\u0442\u044c */\n"
+"QSlider::sub-page:horizontal {\n"
+"    background: #4A8AB5;\n"
+"    border-radius: 4px;\n"
+"}")
         self.fanSpeed.setMaximum(100)
         self.fanSpeed.setValue(50)
         self.fanSpeed.setOrientation(Qt.Orientation.Horizontal)
+        self.fanSpeed.setInvertedAppearance(False)
+        self.fanSpeed.setInvertedControls(False)
 
         self.gridLayout_3.addWidget(self.fanSpeed, 1, 0, 1, 1)
 
@@ -1244,15 +1281,15 @@ class Ui_MainWindow(object):
 
         self.gridLayout_4.addWidget(self.label_34, 0, 0, 1, 1)
 
-        self.spinBox = QSpinBox(self.groupBox_4)
-        self.spinBox.setObjectName(u"spinBox")
-        self.spinBox.setMinimumSize(QSize(0, 40))
-        self.spinBox.setMaximumSize(QSize(110, 16777215))
-        self.spinBox.setFont(font12)
-        self.spinBox.setMinimum(20)
-        self.spinBox.setMaximum(100)
+        self.tempMin = QSpinBox(self.groupBox_4)
+        self.tempMin.setObjectName(u"tempMin")
+        self.tempMin.setMinimumSize(QSize(0, 40))
+        self.tempMin.setMaximumSize(QSize(110, 16777215))
+        self.tempMin.setFont(font12)
+        self.tempMin.setMinimum(20)
+        self.tempMin.setMaximum(100)
 
-        self.gridLayout_4.addWidget(self.spinBox, 0, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.tempMin, 0, 1, 1, 1)
 
         self.label_51 = QLabel(self.groupBox_4)
         self.label_51.setObjectName(u"label_51")
@@ -1267,14 +1304,14 @@ class Ui_MainWindow(object):
 
         self.gridLayout_4.addWidget(self.label_35, 1, 0, 1, 1)
 
-        self.spinBox_2 = QSpinBox(self.groupBox_4)
-        self.spinBox_2.setObjectName(u"spinBox_2")
-        self.spinBox_2.setMinimumSize(QSize(0, 40))
-        self.spinBox_2.setMaximumSize(QSize(90, 16777215))
-        self.spinBox_2.setFont(font12)
-        self.spinBox_2.setMinimum(40)
+        self.tempMax = QSpinBox(self.groupBox_4)
+        self.tempMax.setObjectName(u"tempMax")
+        self.tempMax.setMinimumSize(QSize(101, 40))
+        self.tempMax.setMaximumSize(QSize(90, 16777215))
+        self.tempMax.setFont(font12)
+        self.tempMax.setMinimum(40)
 
-        self.gridLayout_4.addWidget(self.spinBox_2, 1, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.tempMax, 1, 1, 1, 1)
 
         self.label_52 = QLabel(self.groupBox_4)
         self.label_52.setObjectName(u"label_52")
@@ -1288,15 +1325,15 @@ class Ui_MainWindow(object):
 
         self.gridLayout_4.addWidget(self.label_50, 2, 0, 1, 1)
 
-        self.spinBox_3 = QSpinBox(self.groupBox_4)
-        self.spinBox_3.setObjectName(u"spinBox_3")
-        self.spinBox_3.setMinimumSize(QSize(0, 40))
-        self.spinBox_3.setMaximumSize(QSize(110, 16777215))
-        self.spinBox_3.setFont(font12)
-        self.spinBox_3.setMinimum(5)
-        self.spinBox_3.setMaximum(40)
+        self.startSpeed = QSpinBox(self.groupBox_4)
+        self.startSpeed.setObjectName(u"startSpeed")
+        self.startSpeed.setMinimumSize(QSize(0, 40))
+        self.startSpeed.setMaximumSize(QSize(110, 16777215))
+        self.startSpeed.setFont(font12)
+        self.startSpeed.setMinimum(5)
+        self.startSpeed.setMaximum(40)
 
-        self.gridLayout_4.addWidget(self.spinBox_3, 2, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.startSpeed, 2, 1, 1, 1)
 
         self.label_53 = QLabel(self.groupBox_4)
         self.label_53.setObjectName(u"label_53")
@@ -1416,6 +1453,40 @@ class Ui_MainWindow(object):
 
         self.linSpeed = QSlider(self.frameLin)
         self.linSpeed.setObjectName(u"linSpeed")
+        self.linSpeed.setMinimumSize(QSize(0, 30))
+        self.linSpeed.setStyleSheet(u"/* \u0414\u043e\u0440\u043e\u0436\u043a\u0430 */\n"
+"QSlider::groove:horizontal {\n"
+"    height: 8px;\n"
+"    background: #d5d8df;\n"
+"    border-radius: 4px;\n"
+"}\n"
+"\n"
+"/* \u041f\u043e\u043b\u0437\u0443\u043d\u043e\u043a (\u043a\u0440\u0443\u0436\u043e\u043a) */\n"
+"QSlider::handle:horizontal {\n"
+"    background: #bdcfdd;\n"
+"    border: 2px solid #a6b8c6;\n"
+"    border-radius: 10px;      /* \u0421\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 = \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0448\u0438\u0440\u0438\u043d\u044b \u0434\u043b\u044f \u043a\u0440\u0443\u0433\u0430 */\n"
+"    width: 20px;\n"
+"    height: 20px;\n"
+"    margin: -8px 0;          /* (40-8)/2 = 16 */\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:hover {\n"
+"    background: #cfddeb;\n"
+"    border-color: #4A8AB5;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:pressed {\n"
+"    background: #4A8AB5;\n"
+"    border-color: #2c6a8f;\n"
+"}\n"
+"\n"
+"/* \u0417\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u043d\u0430\u044f \u0447\u0430\u0441"
+                        "\u0442\u044c */\n"
+"QSlider::sub-page:horizontal {\n"
+"    background: #4A8AB5;\n"
+"    border-radius: 4px;\n"
+"}")
         self.linSpeed.setMinimum(1)
         self.linSpeed.setMaximum(100)
         self.linSpeed.setValue(30)
@@ -1954,6 +2025,40 @@ class Ui_MainWindow(object):
 
         self.fixSpeed = QSlider(self.frameLin_3)
         self.fixSpeed.setObjectName(u"fixSpeed")
+        self.fixSpeed.setMinimumSize(QSize(0, 30))
+        self.fixSpeed.setStyleSheet(u"/* \u0414\u043e\u0440\u043e\u0436\u043a\u0430 */\n"
+"QSlider::groove:horizontal {\n"
+"    height: 8px;\n"
+"    background: #d5d8df;\n"
+"    border-radius: 4px;\n"
+"}\n"
+"\n"
+"/* \u041f\u043e\u043b\u0437\u0443\u043d\u043e\u043a (\u043a\u0440\u0443\u0436\u043e\u043a) */\n"
+"QSlider::handle:horizontal {\n"
+"    background: #bdcfdd;\n"
+"    border: 2px solid #a6b8c6;\n"
+"    border-radius: 10px;      /* \u0421\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 = \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0448\u0438\u0440\u0438\u043d\u044b \u0434\u043b\u044f \u043a\u0440\u0443\u0433\u0430 */\n"
+"    width: 20px;\n"
+"    height: 20px;\n"
+"    margin: -8px 0;          /* (40-8)/2 = 16 */\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:hover {\n"
+"    background: #cfddeb;\n"
+"    border-color: #4A8AB5;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:pressed {\n"
+"    background: #4A8AB5;\n"
+"    border-color: #2c6a8f;\n"
+"}\n"
+"\n"
+"/* \u0417\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u043d\u0430\u044f \u0447\u0430\u0441"
+                        "\u0442\u044c */\n"
+"QSlider::sub-page:horizontal {\n"
+"    background: #4A8AB5;\n"
+"    border-radius: 4px;\n"
+"}")
         self.fixSpeed.setMinimum(1)
         self.fixSpeed.setMaximum(100)
         self.fixSpeed.setValue(30)
@@ -2495,6 +2600,40 @@ class Ui_MainWindow(object):
 
         self.preSpeed = QSlider(self.frameLin_2)
         self.preSpeed.setObjectName(u"preSpeed")
+        self.preSpeed.setMinimumSize(QSize(0, 30))
+        self.preSpeed.setStyleSheet(u"/* \u0414\u043e\u0440\u043e\u0436\u043a\u0430 */\n"
+"QSlider::groove:horizontal {\n"
+"    height: 8px;\n"
+"    background: #d5d8df;\n"
+"    border-radius: 4px;\n"
+"}\n"
+"\n"
+"/* \u041f\u043e\u043b\u0437\u0443\u043d\u043e\u043a (\u043a\u0440\u0443\u0436\u043e\u043a) */\n"
+"QSlider::handle:horizontal {\n"
+"    background: #bdcfdd;\n"
+"    border: 2px solid #a6b8c6;\n"
+"    border-radius: 10px;      /* \u0421\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 = \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0448\u0438\u0440\u0438\u043d\u044b \u0434\u043b\u044f \u043a\u0440\u0443\u0433\u0430 */\n"
+"    width: 20px;\n"
+"    height: 20px;\n"
+"    margin: -8px 0;          /* (40-8)/2 = 16 */\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:hover {\n"
+"    background: #cfddeb;\n"
+"    border-color: #4A8AB5;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:pressed {\n"
+"    background: #4A8AB5;\n"
+"    border-color: #2c6a8f;\n"
+"}\n"
+"\n"
+"/* \u0417\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u043d\u0430\u044f \u0447\u0430\u0441"
+                        "\u0442\u044c */\n"
+"QSlider::sub-page:horizontal {\n"
+"    background: #4A8AB5;\n"
+"    border-radius: 4px;\n"
+"}")
         self.preSpeed.setMinimum(1)
         self.preSpeed.setMaximum(100)
         self.preSpeed.setValue(30)
@@ -3068,6 +3207,41 @@ class Ui_MainWindow(object):
 
         self.postSpeed = QSlider(self.frameLin_5)
         self.postSpeed.setObjectName(u"postSpeed")
+        self.postSpeed.setMinimumSize(QSize(0, 30))
+        self.postSpeed.setStyleSheet(u"/* \u0414\u043e\u0440\u043e\u0436\u043a\u0430 */\n"
+"QSlider::groove:horizontal {\n"
+"    height: 8px;\n"
+"    background: #d5d8df;\n"
+"    border-radius: 4px;\n"
+"}\n"
+"\n"
+"/* \u041f\u043e\u043b\u0437\u0443\u043d\u043e\u043a (\u043a\u0440\u0443\u0436\u043e\u043a) */\n"
+"QSlider::handle:horizontal {\n"
+"    background: #bdcfdd;\n"
+"    border: 2px solid #a6b8c6;\n"
+"    border-radius: 10px;      /* \u0421\u043a\u0440\u0443\u0433\u043b\u0435\u043d\u0438\u0435 = \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430 \u0448\u0438\u0440\u0438\u043d\u044b \u0434\u043b\u044f \u043a\u0440\u0443\u0433\u0430 */\n"
+"    width: 20px;\n"
+"    height: 20px;\n"
+"    margin: -8px 0;          /* (40-8)/2 = 16 */\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:hover {\n"
+"    background: #cfddeb;\n"
+"    border-color: #4A8AB5;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:pressed {\n"
+"    background: #4A8AB5;\n"
+"    border-color: #2c6a8f;\n"
+"}\n"
+"\n"
+"/* \u0417\u0430\u043f\u043e\u043b\u043d\u0435\u043d\u043d\u0430\u044f \u0447\u0430\u0441"
+                        "\u0442\u044c */\n"
+"QSlider::sub-page:horizontal {\n"
+"    background: #4A8AB5;\n"
+"    border-radius: 4px;\n"
+"}\n"
+"")
         self.postSpeed.setMinimum(1)
         self.postSpeed.setMaximum(100)
         self.postSpeed.setValue(30)
@@ -3232,12 +3406,11 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_40.addWidget(self.widget_29)
 
-        self.doubleSpinBox_4 = QDoubleSpinBox(self.frameXPos_4)
-        self.doubleSpinBox_4.setObjectName(u"doubleSpinBox_4")
-        self.doubleSpinBox_4.setMinimumSize(QSize(0, 30))
-        self.doubleSpinBox_4.setMaximum(300.000000000000000)
+        self.exPostPos = QSpinBox(self.frameXPos_4)
+        self.exPostPos.setObjectName(u"exPostPos")
+        self.exPostPos.setMinimumSize(QSize(0, 30))
 
-        self.verticalLayout_40.addWidget(self.doubleSpinBox_4)
+        self.verticalLayout_40.addWidget(self.exPostPos)
 
         self.widget_30 = QWidget(self.frameXPos_4)
         self.widget_30.setObjectName(u"widget_30")
@@ -3520,7 +3693,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(4)
+        self.stackedWidget.setCurrentIndex(8)
 
 
         QMetaObject.connectSlotsByName(MainWindow)

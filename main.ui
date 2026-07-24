@@ -316,7 +316,7 @@ QPushButton:checked {
           <string notr="true">background: #dde0e7;</string>
          </property>
          <property name="currentIndex">
-          <number>4</number>
+          <number>8</number>
          </property>
          <widget class="QWidget" name="pageAutoMode">
           <layout class="QVBoxLayout" name="verticalLayout_30">
@@ -2456,6 +2456,51 @@ QRadioButton::indicator:checked {
                     </item>
                     <item row="1" column="0">
                      <widget class="QSlider" name="fanSpeed">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">/* Дорожка */
+QSlider::groove:horizontal {
+    height: 8px;
+    background: #d5d8df;
+    border-radius: 4px;
+}
+
+/* Ползунок (кружок) */
+QSlider::handle:horizontal {
+    background: #bdcfdd;
+    border: 2px solid #a6b8c6;
+    border-radius: 20px;      /* Скругление = половина ширины для круга */
+    width: 40px;
+    height: 40px;
+    margin: -16px 0;          /* (40-8)/2 = 16 */
+}
+
+QSlider::handle:horizontal:hover {
+    background: #cfddeb;
+    border-color: #4A8AB5;
+}
+
+QSlider::handle:horizontal:pressed {
+    background: #4A8AB5;
+    border-color: #2c6a8f;
+}
+
+/* Заполненная часть */
+QSlider::sub-page:horizontal {
+    background: #4A8AB5;
+    border-radius: 4px;
+}</string>
+                      </property>
                       <property name="maximum">
                        <number>100</number>
                       </property>
@@ -2464,6 +2509,12 @@ QRadioButton::indicator:checked {
                       </property>
                       <property name="orientation">
                        <enum>Qt::Orientation::Horizontal</enum>
+                      </property>
+                      <property name="invertedAppearance">
+                       <bool>false</bool>
+                      </property>
+                      <property name="invertedControls">
+                       <bool>false</bool>
                       </property>
                      </widget>
                     </item>
@@ -2521,7 +2572,7 @@ QRadioButton::indicator:checked {
                      </widget>
                     </item>
                     <item row="0" column="1">
-                     <widget class="QSpinBox" name="spinBox">
+                     <widget class="QSpinBox" name="tempMin">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -2581,10 +2632,10 @@ QRadioButton::indicator:checked {
                      </widget>
                     </item>
                     <item row="1" column="1">
-                     <widget class="QSpinBox" name="spinBox_2">
+                     <widget class="QSpinBox" name="tempMax">
                       <property name="minimumSize">
                        <size>
-                        <width>0</width>
+                        <width>101</width>
                         <height>40</height>
                        </size>
                       </property>
@@ -2632,7 +2683,7 @@ QRadioButton::indicator:checked {
                      </widget>
                     </item>
                     <item row="2" column="1">
-                     <widget class="QSpinBox" name="spinBox_3">
+                     <widget class="QSpinBox" name="startSpeed">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -2917,6 +2968,46 @@ QToolButton:pressed {
                     </item>
                     <item>
                      <widget class="QSlider" name="linSpeed">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">/* Дорожка */
+QSlider::groove:horizontal {
+    height: 8px;
+    background: #d5d8df;
+    border-radius: 4px;
+}
+
+/* Ползунок (кружок) */
+QSlider::handle:horizontal {
+    background: #bdcfdd;
+    border: 2px solid #a6b8c6;
+    border-radius: 10px;      /* Скругление = половина ширины для круга */
+    width: 20px;
+    height: 20px;
+    margin: -8px 0;          /* (40-8)/2 = 16 */
+}
+
+QSlider::handle:horizontal:hover {
+    background: #cfddeb;
+    border-color: #4A8AB5;
+}
+
+QSlider::handle:horizontal:pressed {
+    background: #4A8AB5;
+    border-color: #2c6a8f;
+}
+
+/* Заполненная часть */
+QSlider::sub-page:horizontal {
+    background: #4A8AB5;
+    border-radius: 4px;
+}</string>
+                      </property>
                       <property name="minimum">
                        <number>1</number>
                       </property>
@@ -3943,6 +4034,46 @@ QToolButton:pressed {
                     </item>
                     <item>
                      <widget class="QSlider" name="fixSpeed">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">/* Дорожка */
+QSlider::groove:horizontal {
+    height: 8px;
+    background: #d5d8df;
+    border-radius: 4px;
+}
+
+/* Ползунок (кружок) */
+QSlider::handle:horizontal {
+    background: #bdcfdd;
+    border: 2px solid #a6b8c6;
+    border-radius: 10px;      /* Скругление = половина ширины для круга */
+    width: 20px;
+    height: 20px;
+    margin: -8px 0;          /* (40-8)/2 = 16 */
+}
+
+QSlider::handle:horizontal:hover {
+    background: #cfddeb;
+    border-color: #4A8AB5;
+}
+
+QSlider::handle:horizontal:pressed {
+    background: #4A8AB5;
+    border-color: #2c6a8f;
+}
+
+/* Заполненная часть */
+QSlider::sub-page:horizontal {
+    background: #4A8AB5;
+    border-radius: 4px;
+}</string>
+                      </property>
                       <property name="minimum">
                        <number>1</number>
                       </property>
@@ -4987,6 +5118,46 @@ QToolButton:pressed {
                     </item>
                     <item>
                      <widget class="QSlider" name="preSpeed">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">/* Дорожка */
+QSlider::groove:horizontal {
+    height: 8px;
+    background: #d5d8df;
+    border-radius: 4px;
+}
+
+/* Ползунок (кружок) */
+QSlider::handle:horizontal {
+    background: #bdcfdd;
+    border: 2px solid #a6b8c6;
+    border-radius: 10px;      /* Скругление = половина ширины для круга */
+    width: 20px;
+    height: 20px;
+    margin: -8px 0;          /* (40-8)/2 = 16 */
+}
+
+QSlider::handle:horizontal:hover {
+    background: #cfddeb;
+    border-color: #4A8AB5;
+}
+
+QSlider::handle:horizontal:pressed {
+    background: #4A8AB5;
+    border-color: #2c6a8f;
+}
+
+/* Заполненная часть */
+QSlider::sub-page:horizontal {
+    background: #4A8AB5;
+    border-radius: 4px;
+}</string>
+                      </property>
                       <property name="minimum">
                        <number>1</number>
                       </property>
@@ -6086,6 +6257,47 @@ QToolButton:pressed {
                     </item>
                     <item>
                      <widget class="QSlider" name="postSpeed">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">/* Дорожка */
+QSlider::groove:horizontal {
+    height: 8px;
+    background: #d5d8df;
+    border-radius: 4px;
+}
+
+/* Ползунок (кружок) */
+QSlider::handle:horizontal {
+    background: #bdcfdd;
+    border: 2px solid #a6b8c6;
+    border-radius: 10px;      /* Скругление = половина ширины для круга */
+    width: 20px;
+    height: 20px;
+    margin: -8px 0;          /* (40-8)/2 = 16 */
+}
+
+QSlider::handle:horizontal:hover {
+    background: #cfddeb;
+    border-color: #4A8AB5;
+}
+
+QSlider::handle:horizontal:pressed {
+    background: #4A8AB5;
+    border-color: #2c6a8f;
+}
+
+/* Заполненная часть */
+QSlider::sub-page:horizontal {
+    background: #4A8AB5;
+    border-radius: 4px;
+}
+</string>
+                      </property>
                       <property name="minimum">
                        <number>1</number>
                       </property>
@@ -6390,15 +6602,12 @@ QPushButton:pressed {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+                     <widget class="QSpinBox" name="exPostPos">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
                         <height>30</height>
                        </size>
-                      </property>
-                      <property name="maximum">
-                       <double>300.000000000000000</double>
                       </property>
                      </widget>
                     </item>

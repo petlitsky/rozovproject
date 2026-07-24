@@ -2,6 +2,7 @@
 import sys
 from datetime import datetime
 from typing import Optional
+import subprocess
 
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtCore import Qt, QTimer, QPropertyAnimation, QEasingCurve, QSize
@@ -41,10 +42,15 @@ class MainWindow(QMainWindow):
         self.disconnect_shown = False
         self._is_closing = False
         
+        # Переменные для клавиатуры
+        self.keyboard_process = None
+        self.keyboard_visible = False
+        
         # Настройка UI
         self._setup_ui()
         self._setup_connections()
         self._setup_timer()
+        self._setup_keyboard_triggers()
         
         # Подключение к Arduino
         QTimer.singleShot(500, self._connect_arduino)
@@ -127,6 +133,57 @@ class MainWindow(QMainWindow):
         # Сигналы Fan
         self.fan.fan_speed_updated.connect(self._update_fan_speed)
     
+    def _setup_keyboard_triggers(self):
+        """Настройка полей для вызова клавиатуры"""
+        keyboard_fields = [
+            self.ui.tempMin,
+            self.ui.tempMax,
+            self.ui.startSpeed,
+            self.ui.exLinPos,
+            self.ui.exFixPos,
+            self.ui.exPrePos,
+            self.ui.exPostPos,
+        ]
+        
+        for field in keyboard_fields:
+            if field and hasattr(field, 'mousePressEvent'):
+                field.original_mouse_press = field.mousePressEvent
+                field.mousePressEvent = self._create_keyboard_handler(field)
+    
+    def _create_keyboard_handler(self, widget):
+        def handler(event):
+            self.toggle_keyboard()
+            if hasattr(widget, 'original_mouse_press'):
+                widget.original_mouse_press(event)
+        return handler
+    
+    def show_keyboard(self):
+        """Показать цифровую клавиатуру"""
+        if self.keyboard_process is None or self.keyboard_process.poll() is not None:
+            try:
+                self.keyboard_process = subprocess.Popen(["matchbox-keyboard", "-i", "-v"])
+                self.keyboard_visible = True
+            except FileNotFoundError:
+                try:
+                    self.keyboard_process = subprocess.Popen(["onboard", "--xid"])
+                    self.keyboard_visible = True
+                except:
+                    pass
+    
+    def hide_keyboard(self):
+        """Скрыть клавиатуру"""
+        if self.keyboard_process and self.keyboard_process.poll() is None:
+            self.keyboard_process.terminate()
+            self.keyboard_process = None
+            self.keyboard_visible = False
+    
+    def toggle_keyboard(self):
+        """Переключить состояние клавиатуры"""
+        if self.keyboard_visible:
+            self.hide_keyboard()
+        else:
+            self.show_keyboard()
+    
     def _setup_timer(self) -> None:
         """Настройка таймера для даты/времени"""
         self.timer = QTimer()
@@ -168,7 +225,7 @@ class MainWindow(QMainWindow):
             self.ui.fanSpeed.setValue(fan_value)
             if hasattr(self.ui, 'lblFanSpeed'):
                 self.ui.lblFanSpeed.setText(f"Скорость куллера: {fan_value}%")
-
+    
     def _connect_arduino(self) -> None:
         """Подключение к Arduino"""
         if not self.arduino.connect():
@@ -680,6 +737,7 @@ class MainWindow(QMainWindow):
     
     def closeEvent(self, event) -> None:
         """Обработка закрытия окна"""
+        self.hide_keyboard()
         self._is_closing = True
         
         dialog = PasswordDialog(self)
