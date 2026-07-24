@@ -2455,7 +2455,7 @@ QRadioButton::indicator:checked {
                      </widget>
                     </item>
                     <item row="1" column="0">
-                     <widget class="QSlider" name="setFanSpeed">
+                     <widget class="QSlider" name="fanSpeed">
                       <property name="maximum">
                        <number>100</number>
                       </property>
@@ -2468,7 +2468,7 @@ QRadioButton::indicator:checked {
                      </widget>
                     </item>
                     <item row="1" column="1">
-                     <widget class="QLabel" name="fanSpeed">
+                     <widget class="QLabel" name="lblFanSpeed">
                       <property name="minimumSize">
                        <size>
                         <width>40</width>
