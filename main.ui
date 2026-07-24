@@ -614,7 +614,7 @@ QToolButton:pressed {
                              <string>Вперед</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/left.png</normaloff>:/icons/left.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -664,7 +664,7 @@ QToolButton:pressed {
                              <string>Назад</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/right.png</normaloff>:/icons/right.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -797,7 +797,7 @@ QToolButton:pressed {
                              <string>Домой</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/home.png</normaloff>:/icons/home.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -1118,7 +1118,7 @@ QToolButton:pressed {
                              <string>Вверх</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -1168,7 +1168,7 @@ QToolButton:pressed {
                              <string>Вниз</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/down.png</normaloff>:/icons/down.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -1218,7 +1218,7 @@ QToolButton:pressed {
                              <string>До усилия</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/press.png</normaloff>:/icons/press.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -1268,7 +1268,7 @@ QToolButton:pressed {
                              <string>Домой</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/home.png</normaloff>:/icons/home.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -1528,7 +1528,7 @@ QToolButton:pressed {
                              <string>Разводить</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/unfix.png</normaloff>:/icons/unfix.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -1578,7 +1578,7 @@ QToolButton:pressed {
                              <string>Сводить</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/fix.png</normaloff>:/icons/fix.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -1649,7 +1649,7 @@ QToolButton:pressed {
                              <string>Разжать</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/unfix.png</normaloff>:/icons/unfix.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -1699,7 +1699,7 @@ QToolButton:pressed {
                              <string>Зажать</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/fix.png</normaloff>:/icons/fix.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -1926,7 +1926,7 @@ QToolButton:pressed {
                              <string>Разводить</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/unfix.png</normaloff>:/icons/unfix.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -1976,7 +1976,7 @@ QToolButton:pressed {
                              <string>Сводить</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/fix.png</normaloff>:/icons/fix.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -2047,7 +2047,7 @@ QToolButton:pressed {
                              <string>Разжать</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/unfix.png</normaloff>:/icons/unfix.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -2097,7 +2097,7 @@ QToolButton:pressed {
                              <string>Зажать</string>
                             </property>
                             <property name="icon">
-                             <iconset resource="resources.qrc">
+                             <iconset>
                               <normaloff>:/icons/fix.png</normaloff>:/icons/fix.png</iconset>
                             </property>
                             <property name="iconSize">
@@ -2208,7 +2208,7 @@ QToolButton:pressed {
                  <string/>
                 </property>
                 <property name="pixmap">
-                 <pixmap resource="resources.qrc">:/icons/fan.jpg</pixmap>
+                 <pixmap>:/icons/fan.jpg</pixmap>
                 </property>
                </widget>
               </item>
@@ -2246,7 +2246,7 @@ QToolButton:pressed {
                  <string/>
                 </property>
                 <property name="pixmap">
-                 <pixmap resource="resources.qrc">:/icons/fan.jpg</pixmap>
+                 <pixmap>:/icons/fan.jpg</pixmap>
                 </property>
                </widget>
               </item>
@@ -2829,7 +2829,7 @@ QToolButton:pressed {
                        <string>Вперед</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="resources.qrc">
+                       <iconset>
                         <normaloff>:/icons/left.png</normaloff>:/icons/left.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -2879,7 +2879,7 @@ QToolButton:pressed {
                        <string>Назад</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="resources.qrc">
+                       <iconset>
                         <normaloff>:/icons/right.png</normaloff>:/icons/right.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -3306,7 +3306,7 @@ QToolButton:pressed {
                           <string>Назад</string>
                          </property>
                          <property name="icon">
-                          <iconset resource="resources.qrc">
+                          <iconset>
                            <normaloff>:/icons/right.png</normaloff>:/icons/right.png</iconset>
                          </property>
                          <property name="iconSize">
@@ -3356,7 +3356,7 @@ QToolButton:pressed {
                           <string>Вперед</string>
                          </property>
                          <property name="icon">
-                          <iconset resource="resources.qrc">
+                          <iconset>
                            <normaloff>:/icons/left.png</normaloff>:/icons/left.png</iconset>
                          </property>
                          <property name="iconSize">
@@ -3441,7 +3441,7 @@ QToolButton:pressed {
                     <string>Домой</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="resources.qrc">
+                    <iconset>
                      <normaloff>:/icons/home.png</normaloff>:/icons/home.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -3855,7 +3855,7 @@ QToolButton:pressed {
                        <string>Зажать</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="resources.qrc">
+                       <iconset>
                         <normaloff>:/icons/fix.png</normaloff>:/icons/fix.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -3905,7 +3905,7 @@ QToolButton:pressed {
                        <string>Разжать</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="resources.qrc">
+                       <iconset>
                         <normaloff>:/icons/unfix.png</normaloff>:/icons/unfix.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -4298,7 +4298,7 @@ QToolButton:pressed {
                           <string>Разжать</string>
                          </property>
                          <property name="icon">
-                          <iconset resource="resources.qrc">
+                          <iconset>
                            <normaloff>:/icons/unfix.png</normaloff>:/icons/unfix.png</iconset>
                          </property>
                          <property name="iconSize">
@@ -4348,7 +4348,7 @@ QToolButton:pressed {
                           <string>Зажать</string>
                          </property>
                          <property name="icon">
-                          <iconset resource="resources.qrc">
+                          <iconset>
                            <normaloff>:/icons/fix.png</normaloff>:/icons/fix.png</iconset>
                          </property>
                          <property name="iconSize">
@@ -4433,7 +4433,7 @@ QToolButton:pressed {
                     <string>Домашняя позиция</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="resources.qrc">
+                    <iconset>
                      <normaloff>:/icons/home.png</normaloff>:/icons/home.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -4896,7 +4896,7 @@ QToolButton:pressed {
                        <string>Вверх</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="resources.qrc">
+                       <iconset>
                         <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -4946,7 +4946,7 @@ QToolButton:pressed {
                        <string>Вниз</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="resources.qrc">
+                       <iconset>
                         <normaloff>:/icons/down.png</normaloff>:/icons/down.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -5373,7 +5373,7 @@ QToolButton:pressed {
                           <string>Вверх</string>
                          </property>
                          <property name="icon">
-                          <iconset resource="resources.qrc">
+                          <iconset>
                            <normaloff>:/icons/up.png</normaloff>:/icons/up.png</iconset>
                          </property>
                          <property name="iconSize">
@@ -5423,7 +5423,7 @@ QToolButton:pressed {
                           <string>Вниз</string>
                          </property>
                          <property name="icon">
-                          <iconset resource="resources.qrc">
+                          <iconset>
                            <normaloff>:/icons/down.png</normaloff>:/icons/down.png</iconset>
                          </property>
                          <property name="iconSize">
@@ -5508,7 +5508,7 @@ QToolButton:pressed {
                     <string>Домой</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="resources.qrc">
+                    <iconset>
                      <normaloff>:/icons/home.png</normaloff>:/icons/home.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -5995,7 +5995,7 @@ QToolButton:pressed {
                        <string>Зажать</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="resources.qrc">
+                       <iconset>
                         <normaloff>:/icons/fix.png</normaloff>:/icons/fix.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -6045,7 +6045,7 @@ QToolButton:pressed {
                        <string>Разжать</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="resources.qrc">
+                       <iconset>
                         <normaloff>:/icons/unfix.png</normaloff>:/icons/unfix.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -6438,7 +6438,7 @@ QToolButton:pressed {
                           <string>Разжать</string>
                          </property>
                          <property name="icon">
-                          <iconset resource="resources.qrc">
+                          <iconset>
                            <normaloff>:/icons/unfix.png</normaloff>:/icons/unfix.png</iconset>
                          </property>
                          <property name="iconSize">
@@ -6488,7 +6488,7 @@ QToolButton:pressed {
                           <string>Зажать</string>
                          </property>
                          <property name="icon">
-                          <iconset resource="resources.qrc">
+                          <iconset>
                            <normaloff>:/icons/fix.png</normaloff>:/icons/fix.png</iconset>
                          </property>
                          <property name="iconSize">
@@ -6573,7 +6573,7 @@ QToolButton:pressed {
                     <string>Домашняя позиция</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="resources.qrc">
+                    <iconset>
                      <normaloff>:/icons/home.png</normaloff>:/icons/home.png</iconset>
                    </property>
                    <property name="iconSize">

@@ -1,3 +1,4 @@
+# controllers/arduino_controller.py
 import serial
 import serial.tools.list_ports
 from typing import Optional, Callable
@@ -38,6 +39,9 @@ class ArduinoController(QObject):
             "STOP_LIMIT_PRE_UP": lambda: self.limit_reached.emit("PRE", "UP"),
             "STOP_LIMIT_PRE_DOWN": lambda: self.limit_reached.emit("PRE", "DOWN"),
             "MOVE_DONE": lambda: self.move_done.emit(),
+            "PRE_MOVE_DONE": lambda: self.move_done.emit(),
+            "LIN_POS_SET": lambda: None,
+            "PRE_POS_SET": lambda: None,
         }
     
     def connect(self) -> bool:
@@ -117,7 +121,7 @@ class ArduinoController(QObject):
         for key, handler in self._handlers.items():
             if data.startswith(key + ":"):
                 value = data.split(":")[1]
-                if "POS" in key:
+                if "POS" in key and key not in ["LIN_POS_SET", "PRE_POS_SET"]:
                     axis = key.split("_")[0]
                     try:
                         self.position_updated.emit(axis, int(value))

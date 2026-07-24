@@ -103,6 +103,7 @@ class ManualControls(QObject):
         self.ui.btnDownPre1mm.clicked.connect(lambda: self.main.pre_move_steps(-1))
         self.ui.btnDownPre5mm.clicked.connect(lambda: self.main.pre_move_steps(-5))
         self.ui.btnPreDownEx.clicked.connect(self.main.pre_down_exact)
+        self.ui.btnPreUpEx.clicked.connect(self.main.pre_up_exact)
         
         # Домой и сброс
         self.ui.btnPreHome.clicked.connect(self.main.pre_home)

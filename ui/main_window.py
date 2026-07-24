@@ -34,6 +34,7 @@ class MainWindow(QMainWindow):
         self.homing_dialog: Optional[HomingDialog] = None
         self.animation: Optional[QPropertyAnimation] = None
         self.disconnect_shown = False
+        self._is_closing = False  # Флаг закрытия приложения
         
         # Настройка UI
         self._setup_ui()
@@ -143,15 +144,47 @@ class MainWindow(QMainWindow):
             slider.setValue(value)
             label.setText(template.format(value))
         
-        # Позиция предобжима
+        # Позиции
+        lin_pos = self.config.get('lin_position', 0)
+        self.ui.lblLinPos.setText(f"{lin_pos} мм")
+        self.ui.lblLinPosMan.setText(f"{lin_pos} мм")
+        
         pre_pos = self.config.get('pre_position', 0)
         self.ui.lblPrePos.setText(f"{pre_pos} мм")
         self.ui.lblPrePosMan.setText(f"{pre_pos} мм")
     
     def _connect_arduino(self) -> None:
-        """Подключение к Arduino"""
+        """Подключение к Arduino и отправка сохраненных значений"""
         if not self.arduino.connect():
             show_error(self, "Ошибка подключения", "Arduino не найдена!\nПроверьте подключение и порт.")
+            return
+        
+        # Отправляем сохраненные значения на Arduino
+        self._send_saved_values()
+    
+    def _send_saved_values(self) -> None:
+        """Отправка сохраненных значений на Arduino"""
+        # Скорости
+        lin_speed = self.config.get('lin_speed', 30)
+        fix_speed = self.config.get('fix_speed', 30)
+        pre_speed = self.config.get('pre_speed', 30)
+        post_speed = self.config.get('post_speed', 30)
+        
+        self.arduino.send_command(f"LIN_SPEED:{lin_speed}")
+        self.arduino.send_command(f"FIX_SPEED:{fix_speed}")
+        self.arduino.send_command(f"PRE_SPEED:{pre_speed}")
+        self.arduino.send_command(f"POST_SPEED:{post_speed}")
+        
+        # Позиции (устанавливаем как текущие)
+        lin_pos = self.config.get('lin_position', 0)
+        pre_pos = self.config.get('pre_position', 0)
+        
+        # Отправляем команду установки позиции на Arduino
+        self.arduino.send_command(f"LIN_SET_POS:{lin_pos}")
+        self.arduino.send_command(f"PRE_SET_POS:{pre_pos}")
+        
+        self.loggers['lin'].info(f"Загружены настройки: скорость {lin_speed}%, позиция {lin_pos} мм")
+        self.loggers['pre'].info(f"Загружены настройки: скорость {pre_speed}%, позиция {pre_pos} мм")
     
     # ===== Обработчики кнопок главного меню =====
     
@@ -328,6 +361,10 @@ class MainWindow(QMainWindow):
     
     def _handle_disconnect(self) -> None:
         """Обработка отключения Arduino"""
+        # Если приложение закрывается - не показываем ошибку
+        if self._is_closing:
+            return
+        
         if self.disconnect_shown:
             return
         
@@ -528,7 +565,7 @@ class MainWindow(QMainWindow):
         """Перемещение предобжима на заданное расстояние"""
         steps = int(mm * 200)
         direction = "вверх" if steps > 0 else "вниз"
-        self.arduino.send_command(f"PRE_MOVE:{steps}")
+        self.arduino.send_command(f"PRE_MOVE:{-steps}")
         self.loggers['pre'].info(f"Перемещение {direction} на {abs(mm)} мм ({abs(steps)} шагов)")
     
     def pre_down_exact(self) -> None:
@@ -537,11 +574,23 @@ class MainWindow(QMainWindow):
             mm = self.ui.exPrePos.value()
             if mm > 0:
                 steps = int(mm * 200)
-                self.arduino.send_command(f"PRE_MOVE:{-steps}")
+                self.arduino.send_command(f"PRE_MOVE:{steps}")
                 self.loggers['pre'].info(f"Точное перемещение вниз: {mm} мм ({steps} шагов)")
                 self.ui.exPrePos.setValue(0)
         except ValueError:
             self.loggers['pre'].error("Ошибка точного перемещения вниз")
+
+    def pre_up_exact(self) -> None:
+        """Точное перемещение вверх"""
+        try:
+            mm = self.ui.exPrePos.value()
+            if mm > 0:
+                steps = int(mm * 200)
+                self.arduino.send_command(f"PRE_MOVE:{-steps}")
+                self.loggers['pre'].info(f"Точное перемещение вверх: {mm} мм ({steps} шагов)")
+                self.ui.exPrePos.setValue(0)
+        except ValueError:
+            self.loggers['pre'].error("Ошибка точного перемещения вверх")
     
     # ===== Управление постобжимом =====
     
@@ -567,6 +616,8 @@ class MainWindow(QMainWindow):
     
     def closeEvent(self, event) -> None:
         """Обработка закрытия окна"""
+        self._is_closing = True  # Устанавливаем флаг закрытия
+        
         dialog = PasswordDialog(self)
         if dialog.exec() == PasswordDialog.Accepted:
             self._close_homing_dialog()
@@ -574,6 +625,7 @@ class MainWindow(QMainWindow):
             self.arduino.disconnect()
             event.accept()
         else:
+            self._is_closing = False
             event.ignore()
 
 
