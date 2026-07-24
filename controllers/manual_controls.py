@@ -17,19 +17,10 @@ class ManualControls(QObject):
     
     def _setup_connections(self) -> None:
         """Подключение всех кнопок"""
-        # Линейное перемещение
         self._connect_linear_buttons()
-        
-        # Фиксация
         self._connect_fixation_buttons()
-        
-        # Предобжим
         self._connect_pre_crimp_buttons()
-        
-        # Постобжим
         self._connect_post_crimp_buttons()
-        
-        # Ползунки скорости
         self._connect_speed_sliders()
     
     def _connect_linear_buttons(self) -> None:
@@ -45,21 +36,17 @@ class ManualControls(QObject):
             btn.pressed.connect(press)
             btn.released.connect(release)
         
-        # Кнопки "Домой"
         self.ui.btnLinHome.clicked.connect(self.main.lin_home)
         self.ui.btnLinHomeMan.clicked.connect(self.main.lin_home)
         
-        # Точное перемещение
         self.ui.btnLinBackEx.clicked.connect(self.main.lin_back_exact)
         self.ui.btnLinForwardEx.clicked.connect(self.main.lin_forward_exact)
         
-        # Перемещение на фиксированное расстояние
         self.ui.btnBackLin1mm.clicked.connect(lambda: self.main.lin_move_steps(-1))
         self.ui.btnBackLin5mm.clicked.connect(lambda: self.main.lin_move_steps(-5))
         self.ui.btnForwardLin1mm.clicked.connect(lambda: self.main.lin_move_steps(1))
         self.ui.btnForwardLin5mm.clicked.connect(lambda: self.main.lin_move_steps(5))
         
-        # Сохранение и переход к позициям
         self.ui.btnSaveLinPos1.clicked.connect(self.main.save_lin_position_1)
         self.ui.btnSaveLinPos2.clicked.connect(self.main.save_lin_position_2)
         self.ui.btnGoLinPos1.clicked.connect(lambda: self.main.go_to_lin_position(1))
@@ -67,7 +54,6 @@ class ManualControls(QObject):
         self.ui.btnGoLinPos1Man.clicked.connect(lambda: self.main.go_to_lin_position(1))
         self.ui.btnGoLinPos2Man.clicked.connect(lambda: self.main.go_to_lin_position(2))
         
-        # Сброс позиции
         self.ui.btnResLinPos.clicked.connect(self.main.lin_reset_position)
     
     def _connect_fixation_buttons(self) -> None:
@@ -83,13 +69,11 @@ class ManualControls(QObject):
             btn.pressed.connect(press)
             btn.released.connect(release)
         
-        # Кнопки поворота на 1 и 5 градусов
         self.ui.btnBackFix1grad.clicked.connect(lambda: self.main.fix_move_degrees(-1))
         self.ui.btnForwardFix1grad.clicked.connect(lambda: self.main.fix_move_degrees(1))
         self.ui.btnBackFix5grad.clicked.connect(lambda: self.main.fix_move_degrees(-5))
         self.ui.btnForwardFix5grad.clicked.connect(lambda: self.main.fix_move_degrees(5))
         
-        # Точное перемещение
         self.ui.btnFixBackEx.clicked.connect(self.main.fix_back_exact)
         self.ui.btnFixForwardEx.clicked.connect(self.main.fix_forward_exact)
         
@@ -108,7 +92,6 @@ class ManualControls(QObject):
             btn.pressed.connect(press)
             btn.released.connect(release)
         
-        # Точное перемещение
         self.ui.btnUpPre5mm.clicked.connect(lambda: self.main.pre_move_steps(-5))
         self.ui.btnUpPre1mm.clicked.connect(lambda: self.main.pre_move_steps(-1))
         self.ui.btnDownPre1mm.clicked.connect(lambda: self.main.pre_move_steps(1))
@@ -116,14 +99,12 @@ class ManualControls(QObject):
         self.ui.btnPreDownEx.clicked.connect(self.main.pre_down_exact)
         self.ui.btnPreUpEx.clicked.connect(self.main.pre_up_exact)
         
-        # Домой и сброс
         self.ui.btnPreHome.clicked.connect(self.main.pre_home)
         self.ui.btnPreHomeMan.clicked.connect(self.main.pre_home)
         self.ui.btnResPrePos.clicked.connect(self.main.pre_reset_position)
     
     def _connect_post_crimp_buttons(self) -> None:
         """Подключение кнопок постобжима"""
-        # Кнопки на вкладке PostCrimp (без суффикса Man)
         buttons = [
             (self.ui.btnPostBack, self.main.post_back_start, self.main.post_stop),
             (self.ui.btnPostForward, self.main.post_forward_start, self.main.post_stop),
@@ -133,7 +114,6 @@ class ManualControls(QObject):
             btn.pressed.connect(press)
             btn.released.connect(release)
         
-        # Кнопки в ручном режиме (с суффиксом Man)
         buttons_man = [
             (self.ui.btnPostBackMan, self.main.post_back_start, self.main.post_stop),
             (self.ui.btnPostForwardMan, self.main.post_forward_start, self.main.post_stop),
@@ -143,62 +123,36 @@ class ManualControls(QObject):
             btn.pressed.connect(press)
             btn.released.connect(release)
         
-        # Домой для постобжима
         self.ui.btnPostHome.clicked.connect(self.main.post_home)
     
     def _connect_speed_sliders(self) -> None:
-        """Подключение ползунков скорости"""
-        # Линейная скорость
-        self.ui.linSpeed.valueChanged.connect(self._on_lin_speed_preview)
-        self.ui.btnSetLinSpeed.clicked.connect(self._on_lin_speed_apply)
+        """Подключение ползунков скорости (меняется сразу)"""
+        self.ui.linSpeed.valueChanged.connect(self._on_lin_speed_changed)
+        self.ui.fixSpeed.valueChanged.connect(self._on_fix_speed_changed)
+        self.ui.preSpeed.valueChanged.connect(self._on_pre_speed_changed)
+        self.ui.postSpeed.valueChanged.connect(self._on_post_speed_changed)
         
-        # Скорость фиксации
-        self.ui.fixSpeed.valueChanged.connect(self._on_fix_speed_preview)
-        self.ui.btnSetFixSpeed.clicked.connect(self._on_fix_speed_apply)
-        
-        # Скорость предобжима
-        self.ui.preSpeed.valueChanged.connect(self._on_pre_speed_preview)
-        self.ui.btnSetPreSpeed.clicked.connect(self._on_pre_speed_apply)
-        
-        # Скорость постобжима
-        self.ui.postSpeed.valueChanged.connect(self._on_post_speed_preview)
-        self.ui.btnSetPostSpeed.clicked.connect(self._on_post_speed_apply)
-        
-        # Скорость куллера
-        self.ui.fanSpeed.valueChanged.connect(self._on_fan_speed_preview)
-        self.ui.btnSetFanSpeed.clicked.connect(self._on_fan_speed_apply)
+        # Fan speed если есть
+        if hasattr(self.ui, 'fanSpeed'):
+            self.ui.fanSpeed.valueChanged.connect(self._on_fan_speed_changed)
     
-    def _on_lin_speed_preview(self, value: int) -> None:
+    def _on_lin_speed_changed(self, value: int) -> None:
         self.ui.lblLinSpeed.setText(f"Скорость перемещения: {value}%")
-    
-    def _on_lin_speed_apply(self) -> None:
-        value = self.ui.linSpeed.value()
         self.main.set_lin_speed(value)
     
-    def _on_fix_speed_preview(self, value: int) -> None:
+    def _on_fix_speed_changed(self, value: int) -> None:
         self.ui.lblFixSpeed.setText(f"Скорость зажатия: {value}%")
-    
-    def _on_fix_speed_apply(self) -> None:
-        value = self.ui.fixSpeed.value()
         self.main.set_fix_speed(value)
     
-    def _on_pre_speed_preview(self, value: int) -> None:
+    def _on_pre_speed_changed(self, value: int) -> None:
         self.ui.lblPreSpeed.setText(f"Скорость перемещения: {value}%")
-    
-    def _on_pre_speed_apply(self) -> None:
-        value = self.ui.preSpeed.value()
         self.main.set_pre_speed(value)
     
-    def _on_post_speed_preview(self, value: int) -> None:
+    def _on_post_speed_changed(self, value: int) -> None:
         self.ui.lblPostSpeed.setText(f"Скорость зажатия: {value}%")
-    
-    def _on_post_speed_apply(self) -> None:
-        value = self.ui.postSpeed.value()
         self.main.set_post_speed(value)
     
-    def _on_fan_speed_preview(self, value: int) -> None:
-        self.ui.lblFanSpeed.setText(f"Скорость куллера: {value}%")
-    
-    def _on_fan_speed_apply(self) -> None:
-        value = self.ui.fanSpeed.value()
+    def _on_fan_speed_changed(self, value: int) -> None:
+        if hasattr(self.ui, 'lblFanSpeed'):
+            self.ui.lblFanSpeed.setText(f"Скорость куллера: {value}%")
         self.main.set_fan_speed(value)

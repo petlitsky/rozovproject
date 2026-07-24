@@ -155,7 +155,6 @@ class MainWindow(QMainWindow):
             ('fix_speed', self.ui.fixSpeed, self.ui.lblFixSpeed, "Скорость зажатия: {}%"),
             ('pre_speed', self.ui.preSpeed, self.ui.lblPreSpeed, "Скорость перемещения: {}%"),
             ('post_speed', self.ui.postSpeed, self.ui.lblPostSpeed, "Скорость зажатия: {}%"),
-            ('fan_speed', self.ui.fanSpeed, self.ui.lblFanSpeed, "Скорость куллера: {}%"),
         ]
         
         for key, slider, label, template in speeds:
@@ -163,15 +162,13 @@ class MainWindow(QMainWindow):
             slider.setValue(value)
             label.setText(template.format(value))
         
-        # Позиции
-        lin_pos = self.config.get('lin_position', 0)
-        self.ui.lblLinPos.setText(f"{lin_pos} мм")
-        self.ui.lblLinPosMan.setText(f"{lin_pos} мм")
-        
-        pre_pos = self.config.get('pre_position', 0)
-        self.ui.lblPrePos.setText(f"{pre_pos} мм")
-        self.ui.lblPrePosMan.setText(f"{pre_pos} мм")
-    
+        # Fan speed если есть
+        if hasattr(self.ui, 'fanSpeed'):
+            fan_value = self.config.get('fan_speed', 50)
+            self.ui.fanSpeed.setValue(fan_value)
+            if hasattr(self.ui, 'lblFanSpeed'):
+            self.ui.lblFanSpeed.setText(f"Скорость куллера: {fan_value}%")
+            
     def _connect_arduino(self) -> None:
         """Подключение к Arduino"""
         if not self.arduino.connect():
