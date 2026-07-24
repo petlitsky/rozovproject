@@ -173,16 +173,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addItem(self.verticalSpacer)
 
-        self.label_56 = QLabel(self.mainMenu)
-        self.label_56.setObjectName(u"label_56")
-        self.label_56.setMinimumSize(QSize(0, 20))
-        self.label_56.setMaximumSize(QSize(16777215, 36))
+        self.lblTemp = QLabel(self.mainMenu)
+        self.lblTemp.setObjectName(u"lblTemp")
+        self.lblTemp.setMinimumSize(QSize(0, 20))
+        self.lblTemp.setMaximumSize(QSize(16777215, 36))
         font = QFont()
         font.setPointSize(9)
-        self.label_56.setFont(font)
-        self.label_56.setStyleSheet(u"padding-left: 10px;")
+        self.lblTemp.setFont(font)
+        self.lblTemp.setStyleSheet(u"padding-left: 10px;")
 
-        self.verticalLayout_2.addWidget(self.label_56)
+        self.verticalLayout_2.addWidget(self.lblTemp)
 
 
         self.horizontalLayout.addWidget(self.mainMenu)
@@ -2051,10 +2051,10 @@ class Ui_MainWindow(object):
         self.widget_19.setObjectName(u"widget_19")
         self.horizontalLayout_13 = QHBoxLayout(self.widget_19)
         self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
-        self.pushButton_22 = QPushButton(self.widget_19)
-        self.pushButton_22.setObjectName(u"pushButton_22")
-        self.pushButton_22.setMinimumSize(QSize(0, 40))
-        self.pushButton_22.setStyleSheet(u"QPushButton {\n"
+        self.btnBackFix5grad = QPushButton(self.widget_19)
+        self.btnBackFix5grad.setObjectName(u"btnBackFix5grad")
+        self.btnBackFix5grad.setMinimumSize(QSize(0, 40))
+        self.btnBackFix5grad.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -2065,12 +2065,12 @@ class Ui_MainWindow(object):
 "\n"
 "}")
 
-        self.horizontalLayout_13.addWidget(self.pushButton_22)
+        self.horizontalLayout_13.addWidget(self.btnBackFix5grad)
 
-        self.pushButton_23 = QPushButton(self.widget_19)
-        self.pushButton_23.setObjectName(u"pushButton_23")
-        self.pushButton_23.setMinimumSize(QSize(0, 40))
-        self.pushButton_23.setStyleSheet(u"QPushButton {\n"
+        self.btnBackFix1grad = QPushButton(self.widget_19)
+        self.btnBackFix1grad.setObjectName(u"btnBackFix1grad")
+        self.btnBackFix1grad.setMinimumSize(QSize(0, 40))
+        self.btnBackFix1grad.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -2081,12 +2081,12 @@ class Ui_MainWindow(object):
 "\n"
 "}")
 
-        self.horizontalLayout_13.addWidget(self.pushButton_23)
+        self.horizontalLayout_13.addWidget(self.btnBackFix1grad)
 
-        self.pushButton_24 = QPushButton(self.widget_19)
-        self.pushButton_24.setObjectName(u"pushButton_24")
-        self.pushButton_24.setMinimumSize(QSize(0, 40))
-        self.pushButton_24.setStyleSheet(u"QPushButton {\n"
+        self.btnForwardFix1grad = QPushButton(self.widget_19)
+        self.btnForwardFix1grad.setObjectName(u"btnForwardFix1grad")
+        self.btnForwardFix1grad.setMinimumSize(QSize(0, 40))
+        self.btnForwardFix1grad.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -2097,12 +2097,12 @@ class Ui_MainWindow(object):
 "\n"
 "}")
 
-        self.horizontalLayout_13.addWidget(self.pushButton_24)
+        self.horizontalLayout_13.addWidget(self.btnForwardFix1grad)
 
-        self.pushButton_25 = QPushButton(self.widget_19)
-        self.pushButton_25.setObjectName(u"pushButton_25")
-        self.pushButton_25.setMinimumSize(QSize(0, 40))
-        self.pushButton_25.setStyleSheet(u"QPushButton {\n"
+        self.btnForwardFix5grad = QPushButton(self.widget_19)
+        self.btnForwardFix5grad.setObjectName(u"btnForwardFix5grad")
+        self.btnForwardFix5grad.setMinimumSize(QSize(0, 40))
+        self.btnForwardFix5grad.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -2113,29 +2113,30 @@ class Ui_MainWindow(object):
 "\n"
 "}")
 
-        self.horizontalLayout_13.addWidget(self.pushButton_25)
+        self.horizontalLayout_13.addWidget(self.btnForwardFix5grad)
 
 
         self.verticalLayout_25.addWidget(self.widget_19)
 
-        self.doubleSpinBox_3 = QDoubleSpinBox(self.frameXPos_3)
-        self.doubleSpinBox_3.setObjectName(u"doubleSpinBox_3")
-        self.doubleSpinBox_3.setMinimumSize(QSize(0, 30))
-        self.doubleSpinBox_3.setMaximum(300.000000000000000)
+        self.exFixPos = QSpinBox(self.frameXPos_3)
+        self.exFixPos.setObjectName(u"exFixPos")
+        self.exFixPos.setMinimumSize(QSize(0, 30))
+        self.exFixPos.setMinimum(1)
+        self.exFixPos.setMaximum(360)
 
-        self.verticalLayout_25.addWidget(self.doubleSpinBox_3)
+        self.verticalLayout_25.addWidget(self.exFixPos)
 
         self.widget_20 = QWidget(self.frameXPos_3)
         self.widget_20.setObjectName(u"widget_20")
         self.horizontalLayout_14 = QHBoxLayout(self.widget_20)
         self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
-        self.toolButton_13 = QToolButton(self.widget_20)
-        self.toolButton_13.setObjectName(u"toolButton_13")
-        sizePolicy.setHeightForWidth(self.toolButton_13.sizePolicy().hasHeightForWidth())
-        self.toolButton_13.setSizePolicy(sizePolicy)
-        self.toolButton_13.setMinimumSize(QSize(0, 45))
-        self.toolButton_13.setFont(font5)
-        self.toolButton_13.setStyleSheet(u"QToolButton {\n"
+        self.btnFixBackEx = QToolButton(self.widget_20)
+        self.btnFixBackEx.setObjectName(u"btnFixBackEx")
+        sizePolicy.setHeightForWidth(self.btnFixBackEx.sizePolicy().hasHeightForWidth())
+        self.btnFixBackEx.setSizePolicy(sizePolicy)
+        self.btnFixBackEx.setMinimumSize(QSize(0, 45))
+        self.btnFixBackEx.setFont(font5)
+        self.btnFixBackEx.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -2145,19 +2146,19 @@ class Ui_MainWindow(object):
 "	background: #cfddeb;\n"
 "\n"
 "}")
-        self.toolButton_13.setIcon(icon6)
-        self.toolButton_13.setIconSize(QSize(35, 35))
-        self.toolButton_13.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        self.btnFixBackEx.setIcon(icon6)
+        self.btnFixBackEx.setIconSize(QSize(35, 35))
+        self.btnFixBackEx.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
 
-        self.horizontalLayout_14.addWidget(self.toolButton_13)
+        self.horizontalLayout_14.addWidget(self.btnFixBackEx)
 
-        self.toolButton_14 = QToolButton(self.widget_20)
-        self.toolButton_14.setObjectName(u"toolButton_14")
-        sizePolicy.setHeightForWidth(self.toolButton_14.sizePolicy().hasHeightForWidth())
-        self.toolButton_14.setSizePolicy(sizePolicy)
-        self.toolButton_14.setMinimumSize(QSize(0, 45))
-        self.toolButton_14.setFont(font5)
-        self.toolButton_14.setStyleSheet(u"QToolButton {\n"
+        self.btnFixForwardEx = QToolButton(self.widget_20)
+        self.btnFixForwardEx.setObjectName(u"btnFixForwardEx")
+        sizePolicy.setHeightForWidth(self.btnFixForwardEx.sizePolicy().hasHeightForWidth())
+        self.btnFixForwardEx.setSizePolicy(sizePolicy)
+        self.btnFixForwardEx.setMinimumSize(QSize(0, 45))
+        self.btnFixForwardEx.setFont(font5)
+        self.btnFixForwardEx.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -2167,11 +2168,11 @@ class Ui_MainWindow(object):
 "	background: #cfddeb;\n"
 "\n"
 "}")
-        self.toolButton_14.setIcon(icon7)
-        self.toolButton_14.setIconSize(QSize(35, 35))
-        self.toolButton_14.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        self.btnFixForwardEx.setIcon(icon7)
+        self.btnFixForwardEx.setIconSize(QSize(35, 35))
+        self.btnFixForwardEx.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
 
-        self.horizontalLayout_14.addWidget(self.toolButton_14)
+        self.horizontalLayout_14.addWidget(self.btnFixForwardEx)
 
 
         self.verticalLayout_25.addWidget(self.widget_20)
@@ -3164,10 +3165,10 @@ class Ui_MainWindow(object):
         self.widget_29.setObjectName(u"widget_29")
         self.horizontalLayout_22 = QHBoxLayout(self.widget_29)
         self.horizontalLayout_22.setObjectName(u"horizontalLayout_22")
-        self.pushButton_33 = QPushButton(self.widget_29)
-        self.pushButton_33.setObjectName(u"pushButton_33")
-        self.pushButton_33.setMinimumSize(QSize(0, 40))
-        self.pushButton_33.setStyleSheet(u"QPushButton {\n"
+        self.btnPre5mm = QPushButton(self.widget_29)
+        self.btnPre5mm.setObjectName(u"btnPre5mm")
+        self.btnPre5mm.setMinimumSize(QSize(0, 40))
+        self.btnPre5mm.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -3178,7 +3179,7 @@ class Ui_MainWindow(object):
 "\n"
 "}")
 
-        self.horizontalLayout_22.addWidget(self.pushButton_33)
+        self.horizontalLayout_22.addWidget(self.btnPre5mm)
 
         self.pushButton_34 = QPushButton(self.widget_29)
         self.pushButton_34.setObjectName(u"pushButton_34")
@@ -3519,7 +3520,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(7)
+        self.stackedWidget.setCurrentIndex(4)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -3539,7 +3540,7 @@ class Ui_MainWindow(object):
         self.btnCalibration.setText(QCoreApplication.translate("MainWindow", u"\u041a\u0430\u043b\u0438\u0431\u0440\u043e\u0432\u043a\u0430", None))
         self.btnDebug.setText(QCoreApplication.translate("MainWindow", u"\u041e\u0442\u043a\u043b\u0430\u0434\u043a\u0430", None))
         self.btnSettings.setText(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438", None))
-        self.label_56.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043c\u043f\u0435\u0440\u0430\u0442\u0443\u0440\u0430: 20\u00b0C ", None))
+        self.lblTemp.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043c\u043f\u0435\u0440\u0430\u0442\u0443\u0440\u0430: 20\u00b0C ", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u0423\u043f\u0441\u0441... \u041f\u0443\u0441\u0442\u043e(\n"
 "\u0417\u0434\u0435\u0441\u044c \u0441\u043a\u043e\u0440\u043e \u0447\u0442\u043e-\u0442\u043e \u0431\u0443\u0434\u0435\u0442!", None))
         self.label_42.setText(QCoreApplication.translate("MainWindow", u"\u041c\u043e\u0434\u0443\u043b\u044c \u043b\u0438\u043d\u0435\u0439\u043d\u043e\u0433\u043e \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u044f", None))
@@ -3624,12 +3625,12 @@ class Ui_MainWindow(object):
         self.label_21.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0410\u042f \u0421\u0418\u041b\u0410 \u0422\u041e\u041a\u0410", None))
         self.label_22.setText(QCoreApplication.translate("MainWindow", u"0.07 \u0410", None))
         self.label_23.setText(QCoreApplication.translate("MainWindow", u"\u0422\u043e\u0447\u043d\u043e\u0435 \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u0435", None))
-        self.pushButton_22.setText(QCoreApplication.translate("MainWindow", u"-5\u00b0", None))
-        self.pushButton_23.setText(QCoreApplication.translate("MainWindow", u"-1\u00b0", None))
-        self.pushButton_24.setText(QCoreApplication.translate("MainWindow", u"+1\u00b0", None))
-        self.pushButton_25.setText(QCoreApplication.translate("MainWindow", u"+5\u00b0", None))
-        self.toolButton_13.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0430\u0442\u044c", None))
-        self.toolButton_14.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0430\u0442\u044c", None))
+        self.btnBackFix5grad.setText(QCoreApplication.translate("MainWindow", u"-5\u00b0", None))
+        self.btnBackFix1grad.setText(QCoreApplication.translate("MainWindow", u"-1\u00b0", None))
+        self.btnForwardFix1grad.setText(QCoreApplication.translate("MainWindow", u"+1\u00b0", None))
+        self.btnForwardFix5grad.setText(QCoreApplication.translate("MainWindow", u"+5\u00b0", None))
+        self.btnFixBackEx.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0430\u0442\u044c", None))
+        self.btnFixForwardEx.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0430\u0442\u044c", None))
         self.btnFixHome.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u043c\u0430\u0448\u043d\u044f\u044f \u043f\u043e\u0437\u0438\u0446\u0438\u044f", None))
         self.pushButton_26.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0441\u0438\u043b\u0443 \u0442\u043e\u043a\u0430", None))
         self.pushButton_27.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0434\u043e\u043c. \u043f\u043e\u0437\u0438\u0446\u0438\u044e", None))
@@ -3668,7 +3669,7 @@ class Ui_MainWindow(object):
         self.label_29.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0418\u0419 \u041c\u041e\u041c\u0415\u041d\u0422", None))
         self.label_30.setText(QCoreApplication.translate("MainWindow", u"3 \u041d\u00b7\u043c", None))
         self.label_31.setText(QCoreApplication.translate("MainWindow", u"\u0422\u043e\u0447\u043d\u043e\u0435 \u0437\u0430\u0436\u0430\u0442\u0438\u0435", None))
-        self.pushButton_33.setText(QCoreApplication.translate("MainWindow", u"-5\u00b0", None))
+        self.btnPre5mm.setText(QCoreApplication.translate("MainWindow", u"-5\u00b0", None))
         self.pushButton_34.setText(QCoreApplication.translate("MainWindow", u"-1\u00b0", None))
         self.pushButton_35.setText(QCoreApplication.translate("MainWindow", u"+1\u00b0", None))
         self.pushButton_36.setText(QCoreApplication.translate("MainWindow", u"+5\u00b0", None))

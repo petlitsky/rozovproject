@@ -1,3 +1,4 @@
+# models/config.py
 import json
 import os
 from typing import Any, Optional
@@ -61,7 +62,7 @@ class Config:
         return self._config.copy()
 
 
-# Для обратной совместимости с вашим кодом
+# Для обратной совместимости
 def get_config_value(key: str, default: Any = None) -> Any:
     return Config().get(key, default)
 

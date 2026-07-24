@@ -1,7 +1,7 @@
 # controllers/arduino_controller.py
 import serial
 import serial.tools.list_ports
-from typing import Optional, Callable
+from typing import Optional
 from PySide6.QtCore import QObject, QTimer, Signal
 
 
@@ -15,6 +15,7 @@ class ArduinoController(QObject):
     limit_reached = Signal(str, str)     # (axis, direction)
     move_done = Signal()
     disconnected = Signal()
+    speed_updated = Signal(str, int)     # (axis, speed)
     
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -134,6 +135,42 @@ class ArduinoController(QObject):
             if data == key:
                 handler()
                 return
+        
+        # Проверяем на скорость от Arduino при старте
+        if data.startswith("LIN_SPEED_CURRENT:"):
+            speed = int(data.split(":")[1])
+            self.speed_updated.emit("LIN", speed)
+            return
+        elif data.startswith("FIX_SPEED_CURRENT:"):
+            speed = int(data.split(":")[1])
+            self.speed_updated.emit("FIX", speed)
+            return
+        elif data.startswith("PRE_SPEED_CURRENT:"):
+            speed = int(data.split(":")[1])
+            self.speed_updated.emit("PRE", speed)
+            return
+        elif data.startswith("POST_SPEED_CURRENT:"):
+            speed = int(data.split(":")[1])
+            self.speed_updated.emit("POST", speed)
+            return
+        
+        # Проверяем на подтверждение установки скорости
+        if data.startswith("LIN_SPEED_SET:"):
+            speed = int(data.split(":")[1])
+            self.speed_updated.emit("LIN", speed)
+            return
+        elif data.startswith("FIX_SPEED_SET:"):
+            speed = int(data.split(":")[1])
+            self.speed_updated.emit("FIX", speed)
+            return
+        elif data.startswith("PRE_SPEED_SET:"):
+            speed = int(data.split(":")[1])
+            self.speed_updated.emit("PRE", speed)
+            return
+        elif data.startswith("POST_SPEED_SET:"):
+            speed = int(data.split(":")[1])
+            self.speed_updated.emit("POST", speed)
+            return
         
         # Неизвестная команда (для отладки)
         print(data)

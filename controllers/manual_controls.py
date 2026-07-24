@@ -1,3 +1,4 @@
+# controllers/manual_controls.py
 from PySide6.QtCore import QObject
 from typing import TYPE_CHECKING
 
@@ -82,6 +83,16 @@ class ManualControls(QObject):
             btn.pressed.connect(press)
             btn.released.connect(release)
         
+        # Кнопки поворота на 1 и 5 градусов
+        self.ui.btnBackFix1grad.clicked.connect(lambda: self.main.fix_move_degrees(-1))
+        self.ui.btnForwardFix1grad.clicked.connect(lambda: self.main.fix_move_degrees(1))
+        self.ui.btnBackFix5grad.clicked.connect(lambda: self.main.fix_move_degrees(-5))
+        self.ui.btnForwardFix5grad.clicked.connect(lambda: self.main.fix_move_degrees(5))
+        
+        # Точное перемещение
+        self.ui.btnFixBackEx.clicked.connect(self.main.fix_back_exact)
+        self.ui.btnFixForwardEx.clicked.connect(self.main.fix_forward_exact)
+        
         self.ui.btnFixHome.clicked.connect(self.main.fix_home)
     
     def _connect_pre_crimp_buttons(self) -> None:
@@ -98,10 +109,10 @@ class ManualControls(QObject):
             btn.released.connect(release)
         
         # Точное перемещение
-        self.ui.btnUpPre5mm.clicked.connect(lambda: self.main.pre_move_steps(5))
-        self.ui.btnUpPre1mm.clicked.connect(lambda: self.main.pre_move_steps(1))
-        self.ui.btnDownPre1mm.clicked.connect(lambda: self.main.pre_move_steps(-1))
-        self.ui.btnDownPre5mm.clicked.connect(lambda: self.main.pre_move_steps(-5))
+        self.ui.btnUpPre5mm.clicked.connect(lambda: self.main.pre_move_steps(-5))
+        self.ui.btnUpPre1mm.clicked.connect(lambda: self.main.pre_move_steps(-1))
+        self.ui.btnDownPre1mm.clicked.connect(lambda: self.main.pre_move_steps(1))
+        self.ui.btnDownPre5mm.clicked.connect(lambda: self.main.pre_move_steps(5))
         self.ui.btnPreDownEx.clicked.connect(self.main.pre_down_exact)
         self.ui.btnPreUpEx.clicked.connect(self.main.pre_up_exact)
         
@@ -112,14 +123,28 @@ class ManualControls(QObject):
     
     def _connect_post_crimp_buttons(self) -> None:
         """Подключение кнопок постобжима"""
+        # Кнопки на вкладке PostCrimp (без суффикса Man)
         buttons = [
-            (self.ui.btnPostBackMan, self.main.post_back_start, self.main.post_stop),
-            (self.ui.btnPostForwardMan, self.main.post_forward_start, self.main.post_stop),
+            (self.ui.btnPostBack, self.main.post_back_start, self.main.post_stop),
+            (self.ui.btnPostForward, self.main.post_forward_start, self.main.post_stop),
         ]
         
         for btn, press, release in buttons:
             btn.pressed.connect(press)
             btn.released.connect(release)
+        
+        # Кнопки в ручном режиме (с суффиксом Man)
+        buttons_man = [
+            (self.ui.btnPostBackMan, self.main.post_back_start, self.main.post_stop),
+            (self.ui.btnPostForwardMan, self.main.post_forward_start, self.main.post_stop),
+        ]
+        
+        for btn, press, release in buttons_man:
+            btn.pressed.connect(press)
+            btn.released.connect(release)
+        
+        # Домой для постобжима
+        self.ui.btnPostHome.clicked.connect(self.main.post_home)
     
     def _connect_speed_sliders(self) -> None:
         """Подключение ползунков скорости"""

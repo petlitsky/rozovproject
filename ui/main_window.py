@@ -1,3 +1,4 @@
+# ui/main_window.py
 import sys
 from datetime import datetime
 from typing import Optional
@@ -11,6 +12,7 @@ from controllers.arduino_controller import ArduinoController
 from controllers.manual_controls import ManualControls
 from models.config import Config
 from utils.logger import Logger
+from sensors.bme280_sensor import BME280Sensor
 
 
 class MainWindow(QMainWindow):
@@ -27,6 +29,7 @@ class MainWindow(QMainWindow):
         # Инициализация компонентов
         self.config = Config()
         self.arduino = ArduinoController(self)
+        self.bme280 = BME280Sensor(self)
         self.loggers = self._create_loggers()
         self.manual = ManualControls(self)
         
@@ -34,7 +37,7 @@ class MainWindow(QMainWindow):
         self.homing_dialog: Optional[HomingDialog] = None
         self.animation: Optional[QPropertyAnimation] = None
         self.disconnect_shown = False
-        self._is_closing = False  # Флаг закрытия приложения
+        self._is_closing = False
         
         # Настройка UI
         self._setup_ui()
@@ -115,6 +118,9 @@ class MainWindow(QMainWindow):
         self.arduino.limit_reached.connect(self._on_limit_reached)
         self.arduino.move_done.connect(self._on_move_done)
         self.arduino.disconnected.connect(self._handle_disconnect)
+        
+        # Сигналы BME280
+        self.bme280.temperature_updated.connect(self._update_temperature)
     
     def _setup_timer(self) -> None:
         """Настройка таймера для даты/времени"""
@@ -129,9 +135,12 @@ class MainWindow(QMainWindow):
         if hasattr(self.ui, 'lblDate'):
             self.ui.lblDate.setText(now)
     
+    def _update_temperature(self, temp: float) -> None:
+        """Обновление температуры в lblTemp"""
+        self.ui.lblTemp.setText(f"Температура: {temp:.1f}°C")
+    
     def _load_saved_values(self) -> None:
         """Загрузка сохраненных значений из конфига"""
-        # Скорости
         speeds = [
             ('lin_speed', self.ui.linSpeed, self.ui.lblLinSpeed, "Скорость перемещения: {}%"),
             ('fix_speed', self.ui.fixSpeed, self.ui.lblFixSpeed, "Скорость зажатия: {}%"),
@@ -154,13 +163,13 @@ class MainWindow(QMainWindow):
         self.ui.lblPrePosMan.setText(f"{pre_pos} мм")
     
     def _connect_arduino(self) -> None:
-        """Подключение к Arduino и отправка сохраненных значений"""
+        """Подключение к Arduino"""
         if not self.arduino.connect():
             show_error(self, "Ошибка подключения", "Arduino не найдена!\nПроверьте подключение и порт.")
             return
         
-        # Отправляем сохраненные значения на Arduino
-        self._send_saved_values()
+        # Отправляем сохраненные значения
+        QTimer.singleShot(300, self._send_saved_values)
     
     def _send_saved_values(self) -> None:
         """Отправка сохраненных значений на Arduino"""
@@ -175,11 +184,10 @@ class MainWindow(QMainWindow):
         self.arduino.send_command(f"PRE_SPEED:{pre_speed}")
         self.arduino.send_command(f"POST_SPEED:{post_speed}")
         
-        # Позиции (устанавливаем как текущие)
+        # Позиции
         lin_pos = self.config.get('lin_position', 0)
         pre_pos = self.config.get('pre_position', 0)
         
-        # Отправляем команду установки позиции на Arduino
         self.arduino.send_command(f"LIN_SET_POS:{lin_pos}")
         self.arduino.send_command(f"PRE_SET_POS:{pre_pos}")
         
@@ -335,7 +343,12 @@ class MainWindow(QMainWindow):
             print(msg)
             
             if axis in ("LIN", "PRE"):
-                self.ui.lblLinPos.setText("0 мм") if axis == "LIN" else self.ui.lblPrePos.setText("0 мм")
+                if axis == "LIN":
+                    self.ui.lblLinPos.setText("0 мм")
+                    self.ui.lblLinPosMan.setText("0 мм")
+                else:
+                    self.ui.lblPrePos.setText("0 мм")
+                    self.ui.lblPrePosMan.setText("0 мм")
                 self.config.set("lin_position" if axis == "LIN" else "pre_position", 0)
             
             self._close_homing_dialog()
@@ -361,7 +374,6 @@ class MainWindow(QMainWindow):
     
     def _handle_disconnect(self) -> None:
         """Обработка отключения Arduino"""
-        # Если приложение закрывается - не показываем ошибку
         if self._is_closing:
             return
         
@@ -528,6 +540,45 @@ class MainWindow(QMainWindow):
         self.loggers['fix'].info("Остановка фиксации")
         self.arduino.send_command("FIX_STOP")
     
+    def fix_move_degrees(self, degrees: float) -> None:
+        """Поворот фиксации на заданное количество градусов (отрицательное = назад)"""
+        # Для твоего драйвера (микрошаги 1/8)
+        # 200 шагов/оборот * 8 = 1600 шагов/оборот двигателя
+        # Передаточное число: 48/20 = 2.4
+        # 1600 * 2.4 = 3840 шагов на 1 оборот патрона
+        # 3840 / 360 = 10.666 шага на 1 градус
+        STEPS_PER_DEGREE = 10.666
+        steps = int(degrees * STEPS_PER_DEGREE)
+        
+        if steps > 0:
+            self.arduino.send_command(f"FIX_MOVE:{steps}")
+            self.loggers['fix'].info(f"Поворот на {degrees}° вперед ({steps} шагов)")
+        elif steps < 0:
+            self.arduino.send_command(f"FIX_MOVE:{steps}")
+            self.loggers['fix'].info(f"Поворот на {abs(degrees)}° назад ({abs(steps)} шагов)")
+        else:
+            return
+    
+    def fix_back_exact(self) -> None:
+        """Точный поворот назад на заданное количество градусов"""
+        try:
+            deg = self.ui.exFixPos.value()
+            if deg > 0:
+                self.fix_move_degrees(-deg)
+                self.ui.exFixPos.setValue(0)
+        except ValueError:
+            self.loggers['fix'].error("Ошибка точного поворота назад")
+    
+    def fix_forward_exact(self) -> None:
+        """Точный поворот вперед на заданное количество градусов"""
+        try:
+            deg = self.ui.exFixPos.value()
+            if deg > 0:
+                self.fix_move_degrees(deg)
+                self.ui.exFixPos.setValue(0)
+        except ValueError:
+            self.loggers['fix'].error("Ошибка точного поворота вперед")
+    
     def fix_home(self) -> None:
         self.loggers['fix'].info("Запуск поиска дома (фиксация)")
         self.show_homing_dialog("Поиск дома фиксации...")
@@ -616,7 +667,7 @@ class MainWindow(QMainWindow):
     
     def closeEvent(self, event) -> None:
         """Обработка закрытия окна"""
-        self._is_closing = True  # Устанавливаем флаг закрытия
+        self._is_closing = True
         
         dialog = PasswordDialog(self)
         if dialog.exec() == PasswordDialog.Accepted:

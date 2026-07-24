@@ -281,7 +281,7 @@ QPushButton:checked {
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="label_56">
+           <widget class="QLabel" name="lblTemp">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -316,7 +316,7 @@ QPushButton:checked {
           <string notr="true">background: #dde0e7;</string>
          </property>
          <property name="currentIndex">
-          <number>7</number>
+          <number>4</number>
          </property>
          <widget class="QWidget" name="pageAutoMode">
           <layout class="QVBoxLayout" name="verticalLayout_30">
@@ -4144,7 +4144,7 @@ QFrame#frameXPos {
                      <widget class="QWidget" name="widget_19" native="true">
                       <layout class="QHBoxLayout" name="horizontalLayout_13">
                        <item>
-                        <widget class="QPushButton" name="pushButton_22">
+                        <widget class="QPushButton" name="btnBackFix5grad">
                          <property name="minimumSize">
                           <size>
                            <width>0</width>
@@ -4169,7 +4169,7 @@ QPushButton:pressed {
                         </widget>
                        </item>
                        <item>
-                        <widget class="QPushButton" name="pushButton_23">
+                        <widget class="QPushButton" name="btnBackFix1grad">
                          <property name="minimumSize">
                           <size>
                            <width>0</width>
@@ -4194,7 +4194,7 @@ QPushButton:pressed {
                         </widget>
                        </item>
                        <item>
-                        <widget class="QPushButton" name="pushButton_24">
+                        <widget class="QPushButton" name="btnForwardFix1grad">
                          <property name="minimumSize">
                           <size>
                            <width>0</width>
@@ -4219,7 +4219,7 @@ QPushButton:pressed {
                         </widget>
                        </item>
                        <item>
-                        <widget class="QPushButton" name="pushButton_25">
+                        <widget class="QPushButton" name="btnForwardFix5grad">
                          <property name="minimumSize">
                           <size>
                            <width>0</width>
@@ -4247,15 +4247,18 @@ QPushButton:pressed {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+                     <widget class="QSpinBox" name="exFixPos">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
                         <height>30</height>
                        </size>
                       </property>
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
                       <property name="maximum">
-                       <double>300.000000000000000</double>
+                       <number>360</number>
                       </property>
                      </widget>
                     </item>
@@ -4263,7 +4266,7 @@ QPushButton:pressed {
                      <widget class="QWidget" name="widget_20" native="true">
                       <layout class="QHBoxLayout" name="horizontalLayout_14">
                        <item>
-                        <widget class="QToolButton" name="toolButton_13">
+                        <widget class="QToolButton" name="btnFixBackEx">
                          <property name="sizePolicy">
                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                            <horstretch>0</horstretch>
@@ -4313,7 +4316,7 @@ QToolButton:pressed {
                         </widget>
                        </item>
                        <item>
-                        <widget class="QToolButton" name="toolButton_14">
+                        <widget class="QToolButton" name="btnFixForwardEx">
                          <property name="sizePolicy">
                           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                            <horstretch>0</horstretch>
@@ -6284,7 +6287,7 @@ QFrame#frameXPos {
                      <widget class="QWidget" name="widget_29" native="true">
                       <layout class="QHBoxLayout" name="horizontalLayout_22">
                        <item>
-                        <widget class="QPushButton" name="pushButton_33">
+                        <widget class="QPushButton" name="btnPre5mm">
                          <property name="minimumSize">
                           <size>
                            <width>0</width>
