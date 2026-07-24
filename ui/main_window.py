@@ -167,8 +167,8 @@ class MainWindow(QMainWindow):
             fan_value = self.config.get('fan_speed', 50)
             self.ui.fanSpeed.setValue(fan_value)
             if hasattr(self.ui, 'lblFanSpeed'):
-            self.ui.lblFanSpeed.setText(f"Скорость куллера: {fan_value}%")
-            
+                self.ui.lblFanSpeed.setText(f"Скорость куллера: {fan_value}%")
+
     def _connect_arduino(self) -> None:
         """Подключение к Arduino"""
         if not self.arduino.connect():
