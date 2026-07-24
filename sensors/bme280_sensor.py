@@ -1,65 +1,56 @@
 # sensors/bme280_sensor.py
+import board
+import busio
+import adafruit_bme280
 from PySide6.QtCore import QObject, QTimer, Signal
-import random
 
 
 class BME280Sensor(QObject):
-    """Датчик температуры BME280 на RPi5 (заглушка)"""
+    """Датчик температуры BME280 на RPi5"""
     
-    temperature_updated = Signal(float)
+    temperature_updated = Signal(float)  # температура в °C
     
     def __init__(self, parent=None):
         super().__init__(parent)
-        self._temperature = 20.0
-        self._real_sensor = False
+        self._sensor = None
+        self._is_connected = False
         
-        # Пытаемся подключить реальный датчик
-        try:
-            import smbus2
-            self._bus = smbus2.SMBus(1)
-            # Проверяем адрес 0x76
-            try:
-                self._bus.read_byte_data(0x76, 0xD0)
-                self._real_sensor = True
-                self._address = 0x76
-                print("BME280 реальный (адрес 0x76)")
-            except:
-                try:
-                    self._bus.read_byte_data(0x77, 0xD0)
-                    self._real_sensor = True
-                    self._address = 0x77
-                    print("BME280 реальный (адрес 0x77)")
-                except:
-                    self._real_sensor = False
-                    print("BME280 не найден, использую заглушку")
-        except:
-            self._real_sensor = False
-            print("BME280 не найден, использую заглушку")
-        
+        self._init_sensor()
         self._setup_timer()
     
-    def _setup_timer(self):
+    def _init_sensor(self) -> None:
+        """Инициализация BME280"""
+        try:
+            i2c = busio.I2C(board.SCL, board.SDA)
+            self._sensor = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x76)
+            self._is_connected = True
+            print("BME280 подключен")
+        except Exception as e:
+            self._is_connected = False
+            print(f"BME280 не найден: {e}")
+    
+    def _setup_timer(self) -> None:
         """Таймер для чтения температуры каждую секунду"""
         self._timer = QTimer()
         self._timer.timeout.connect(self._read_temperature)
         self._timer.start(1000)
     
-    def _read_temperature(self):
+    def _read_temperature(self) -> None:
         """Чтение температуры"""
-        if self._real_sensor:
-            try:
-                data = self._bus.read_i2c_block_data(self._address, 0xFA, 3)
-                temp_raw = (data[0] << 12) | (data[1] << 4) | (data[2] >> 4)
-                temp = temp_raw / 100.0
-                self._temperature = temp
-                self.temperature_updated.emit(temp)
-                return
-            except:
-                pass
+        if not self._is_connected or self._sensor is None:
+            return
         
-        # Заглушка (20-25°C)
-        self._temperature = 20.0 + (random.random() * 5.0)
-        self.temperature_updated.emit(self._temperature)
+        try:
+            temp = self._sensor.temperature
+            self.temperature_updated.emit(temp)
+        except Exception as e:
+            print(f"Ошибка чтения температуры: {e}")
     
     def get_temperature(self) -> float:
-        return self._temperature
+        """Получение текущей температуры"""
+        if self._is_connected and self._sensor is not None:
+            try:
+                return self._sensor.temperature
+            except:
+                return 0.0
+        return 0.0
