@@ -1,0 +1,14 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>arduino.jpg</file>
+    <file>fan.jpg</file>
+    <file>press.png</file>
+    <file>unfix.png</file>
+    <file>fix.png</file>
+    <file>up.png</file>
+    <file>down.png</file>
+    <file>left.png</file>
+    <file>right.png</file>
+    <file>home.png</file>
+  </qresource>
+</RCC>
