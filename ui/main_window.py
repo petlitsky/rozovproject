@@ -13,6 +13,7 @@ from controllers.manual_controls import ManualControls
 from models.config import Config
 from utils.logger import Logger
 from sensors.bme280_sensor import BME280Sensor
+from sensors.fan_controller import FanController
 
 
 class MainWindow(QMainWindow):
@@ -30,6 +31,7 @@ class MainWindow(QMainWindow):
         self.config = Config()
         self.arduino = ArduinoController(self)
         self.bme280 = BME280Sensor(self)
+        self.fan = FanController(self)
         self.loggers = self._create_loggers()
         self.manual = ManualControls(self)
         
@@ -121,6 +123,9 @@ class MainWindow(QMainWindow):
         
         # Сигналы BME280
         self.bme280.temperature_updated.connect(self._update_temperature)
+        
+        # Сигналы Fan
+        self.fan.fan_speed_updated.connect(self._update_fan_speed)
     
     def _setup_timer(self) -> None:
         """Настройка таймера для даты/времени"""
@@ -139,6 +144,10 @@ class MainWindow(QMainWindow):
         """Обновление температуры в lblTemp"""
         self.ui.lblTemp.setText(f"Температура: {temp:.1f}°C")
     
+    def _update_fan_speed(self, speed: int) -> None:
+        """Обновление скорости куллера в lblFanSpeed"""
+        self.ui.lblFanSpeed.setText(f"Скорость куллера: {speed}%")
+    
     def _load_saved_values(self) -> None:
         """Загрузка сохраненных значений из конфига"""
         speeds = [
@@ -146,6 +155,7 @@ class MainWindow(QMainWindow):
             ('fix_speed', self.ui.fixSpeed, self.ui.lblFixSpeed, "Скорость зажатия: {}%"),
             ('pre_speed', self.ui.preSpeed, self.ui.lblPreSpeed, "Скорость перемещения: {}%"),
             ('post_speed', self.ui.postSpeed, self.ui.lblPostSpeed, "Скорость зажатия: {}%"),
+            ('fan_speed', self.ui.fanSpeed, self.ui.lblFanSpeed, "Скорость куллера: {}%"),
         ]
         
         for key, slider, label, template in speeds:
@@ -431,6 +441,12 @@ class MainWindow(QMainWindow):
         self.arduino.send_command(f"POST_SPEED:{value}")
         self.loggers['post'].info(f"Установлена скорость зажатия: {value}%")
     
+    def set_fan_speed(self, value: int) -> None:
+        """Установка скорости куллера"""
+        self.config.set("fan_speed", value)
+        self.fan.set_speed(value)
+        self.loggers['lin'].info(f"Установлена скорость куллера: {value}%")
+    
     # ===== Управление линейным перемещением =====
     
     def lin_forward_start(self) -> None:
@@ -671,6 +687,7 @@ class MainWindow(QMainWindow):
         
         dialog = PasswordDialog(self)
         if dialog.exec() == PasswordDialog.Accepted:
+            self.fan.cleanup()  # Очищаем GPIO куллера
             self._close_homing_dialog()
             self.arduino.send_command("EMERGENCY_STOP")
             self.arduino.disconnect()

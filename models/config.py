@@ -10,6 +10,7 @@ DEFAULT_CONFIG = {
     "fix_speed": 30,
     "pre_speed": 30,
     "post_speed": 30,
+    "fan_speed": 50,
     "lin_position": 0,
     "pre_position": 0,
     "lin_pos1": 0,

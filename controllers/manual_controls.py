@@ -163,6 +163,10 @@ class ManualControls(QObject):
         # Скорость постобжима
         self.ui.postSpeed.valueChanged.connect(self._on_post_speed_preview)
         self.ui.btnSetPostSpeed.clicked.connect(self._on_post_speed_apply)
+        
+        # Скорость куллера
+        self.ui.fanSpeed.valueChanged.connect(self._on_fan_speed_preview)
+        self.ui.btnSetFanSpeed.clicked.connect(self._on_fan_speed_apply)
     
     def _on_lin_speed_preview(self, value: int) -> None:
         self.ui.lblLinSpeed.setText(f"Скорость перемещения: {value}%")
@@ -191,3 +195,10 @@ class ManualControls(QObject):
     def _on_post_speed_apply(self) -> None:
         value = self.ui.postSpeed.value()
         self.main.set_post_speed(value)
+    
+    def _on_fan_speed_preview(self, value: int) -> None:
+        self.ui.lblFanSpeed.setText(f"Скорость куллера: {value}%")
+    
+    def _on_fan_speed_apply(self) -> None:
+        value = self.ui.fanSpeed.value()
+        self.main.set_fan_speed(value)
