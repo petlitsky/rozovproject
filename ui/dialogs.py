@@ -62,9 +62,6 @@ class PasswordDialog(BaseDialog):
         
         self.setWindowTitle("Введите пароль")
         
-        self.keyboard_process = None
-        self.keyboard_visible = False
-        
         layout = QVBoxLayout(self)
         layout.setSpacing(10)
         layout.setContentsMargins(20, 20, 20, 20)
@@ -77,7 +74,6 @@ class PasswordDialog(BaseDialog):
         self.password_input = QLineEdit()
         self.password_input.setEchoMode(QLineEdit.EchoMode.Password)
         self.password_input.setPlaceholderText("Введите пароль")
-        self.password_input.setFocus()
         self.password_input.original_mouse_press = self.password_input.mousePressEvent
         self.password_input.mousePressEvent = self._on_password_field_click
         layout.addWidget(self.password_input)
@@ -103,40 +99,19 @@ class PasswordDialog(BaseDialog):
         button_layout.addWidget(self.cancel_button)
         layout.addLayout(button_layout)
         
-        self.password_input.setFocus()
+                # Фокусируемся на кнопке «Отмена», чтобы убрать курсор из поля ввода
+        self.cancel_button.setFocus()
+        # И тут же очищаем фокус у всего окна
+        self.clearFocus()
+
+
     
     def _on_password_field_click(self, event):
-        self.toggle_keyboard()
         if self.password_input.original_mouse_press:
             self.password_input.original_mouse_press(event)
     
-    def toggle_keyboard(self):
-        if self.keyboard_visible:
-            self.hide_keyboard()
-        else:
-            self.show_keyboard()
-    
-    def show_keyboard(self):
-        if self.keyboard_process is None or self.keyboard_process.poll() is not None:
-            try:
-                self.keyboard_process = subprocess.Popen(["matchbox-keyboard", "-i", "-v"])
-                self.keyboard_visible = True
-            except:
-                try:
-                    self.keyboard_process = subprocess.Popen(["onboard", "--xid"])
-                    self.keyboard_visible = True
-                except:
-                    pass
-    
-    def hide_keyboard(self):
-        if self.keyboard_process and self.keyboard_process.poll() is None:
-            self.keyboard_process.terminate()
-            self.keyboard_process = None
-            self.keyboard_visible = False
-    
     def _check_password(self):
         if self.password_input.text() == "1111":
-            self.hide_keyboard()
             self.accept()
         else:
             self.error_label.show()
@@ -149,14 +124,19 @@ class PasswordDialog(BaseDialog):
                 }
             """)
             self.password_input.clear()
-            self.password_input.setFocus()
     
+    def mousePressEvent(self, event):
+        clicked_widget = self.childAt(event.position().toPoint())
+        
+        if clicked_widget is not self.password_input:
+            self.password_input.clearFocus() # Убираем фокус с поля ввода
+            
+        super().mousePressEvent(event)
+
     def closeEvent(self, event):
-        self.hide_keyboard()
         event.ignore()
     
     def done(self, result):
-        self.hide_keyboard()
         super().done(result)
 
 

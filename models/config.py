@@ -6,10 +6,7 @@ from typing import Any, Optional
 CONFIG_FILE = "config.json"
 
 DEFAULT_CONFIG = {
-    "lin_speed": 30,
-    "fix_speed": 30,
-    "pre_speed": 30,
-    "post_speed": 30,
+    "mot_speed": 30,
     "fan_speed": 50,
     "lin_position": 0,
     "pre_position": 0,
@@ -18,9 +15,7 @@ DEFAULT_CONFIG = {
 }
 
 
-class Config:
-    """Синглтон для работы с конфигурацией"""
-    
+class Config:    
     _instance = None
     _config = None
     
@@ -32,7 +27,6 @@ class Config:
     
     @staticmethod
     def _load_config() -> dict:
-        """Загрузка конфигурации из файла"""
         if os.path.exists(CONFIG_FILE):
             try:
                 with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
@@ -42,7 +36,6 @@ class Config:
         return DEFAULT_CONFIG.copy()
     
     def _save(self) -> None:
-        """Сохранение конфигурации в файл"""
         try:
             with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
                 json.dump(self._config, f, indent=4, ensure_ascii=False)
@@ -50,11 +43,9 @@ class Config:
             pass
     
     def get(self, key: str, default: Any = None) -> Any:
-        """Получение значения"""
         return self._config.get(key, default)
     
     def set(self, key: str, value: Any) -> None:
-        """Установка значения"""
         self._config[key] = value
         self._save()
     
@@ -62,8 +53,6 @@ class Config:
         """Получение всей конфигурации"""
         return self._config.copy()
 
-
-# Для обратной совместимости
 def get_config_value(key: str, default: Any = None) -> Any:
     return Config().get(key, default)
 

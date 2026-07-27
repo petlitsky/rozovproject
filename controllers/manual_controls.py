@@ -1,4 +1,3 @@
-# controllers/manual_controls.py
 from PySide6.QtCore import QObject
 from typing import TYPE_CHECKING
 
@@ -7,8 +6,6 @@ if TYPE_CHECKING:
 
 
 class ManualControls(QObject):
-    """Управление кнопками ручного режима"""
-    
     def __init__(self, main_window: 'MainWindow'):
         super().__init__()
         self.main = main_window
@@ -16,7 +13,6 @@ class ManualControls(QObject):
         self._setup_connections()
     
     def _setup_connections(self) -> None:
-        """Подключение всех кнопок"""
         self._connect_linear_buttons()
         self._connect_fixation_buttons()
         self._connect_pre_crimp_buttons()
@@ -24,7 +20,6 @@ class ManualControls(QObject):
         self._connect_speed_sliders()
     
     def _connect_linear_buttons(self) -> None:
-        """Подключение кнопок линейного перемещения"""
         buttons = [
             (self.ui.btnLinForward, self.main.lin_forward_start, self.main.lin_stop),
             (self.ui.btnLinBack, self.main.lin_back_start, self.main.lin_stop),
@@ -57,7 +52,6 @@ class ManualControls(QObject):
         self.ui.btnResLinPos.clicked.connect(self.main.lin_reset_position)
     
     def _connect_fixation_buttons(self) -> None:
-        """Подключение кнопок фиксации"""
         buttons = [
             (self.ui.btnFixBack, self.main.fix_back_start, self.main.fix_stop),
             (self.ui.btnFixForward, self.main.fix_forward_start, self.main.fix_stop),
@@ -80,7 +74,6 @@ class ManualControls(QObject):
         self.ui.btnFixHome.clicked.connect(self.main.fix_home)
     
     def _connect_pre_crimp_buttons(self) -> None:
-        """Подключение кнопок предобжима"""
         buttons = [
             (self.ui.btnPreUp, self.main.pre_up_start, self.main.pre_stop),
             (self.ui.btnDownBack, self.main.pre_down_start, self.main.pre_stop),
@@ -104,7 +97,6 @@ class ManualControls(QObject):
         self.ui.btnResPrePos.clicked.connect(self.main.pre_reset_position)
     
     def _connect_post_crimp_buttons(self) -> None:
-        """Подключение кнопок постобжима"""
         buttons = [
             (self.ui.btnPostBack, self.main.post_back_start, self.main.post_stop),
             (self.ui.btnPostForward, self.main.post_forward_start, self.main.post_stop),
@@ -126,33 +118,8 @@ class ManualControls(QObject):
         self.ui.btnPostHome.clicked.connect(self.main.post_home)
     
     def _connect_speed_sliders(self) -> None:
-        """Подключение ползунков скорости (меняется сразу)"""
-        self.ui.linSpeed.valueChanged.connect(self._on_lin_speed_changed)
-        self.ui.fixSpeed.valueChanged.connect(self._on_fix_speed_changed)
-        self.ui.preSpeed.valueChanged.connect(self._on_pre_speed_changed)
-        self.ui.postSpeed.valueChanged.connect(self._on_post_speed_changed)
-        
-        # Fan speed если есть
-        if hasattr(self.ui, 'fanSpeed'):
-            self.ui.fanSpeed.valueChanged.connect(self._on_fan_speed_changed)
-    
-    def _on_lin_speed_changed(self, value: int) -> None:
-        self.ui.lblLinSpeed.setText(f"Скорость перемещения: {value}%")
-        self.main.set_lin_speed(value)
-    
-    def _on_fix_speed_changed(self, value: int) -> None:
-        self.ui.lblFixSpeed.setText(f"Скорость зажатия: {value}%")
-        self.main.set_fix_speed(value)
-    
-    def _on_pre_speed_changed(self, value: int) -> None:
-        self.ui.lblPreSpeed.setText(f"Скорость перемещения: {value}%")
-        self.main.set_pre_speed(value)
-    
-    def _on_post_speed_changed(self, value: int) -> None:
-        self.ui.lblPostSpeed.setText(f"Скорость зажатия: {value}%")
-        self.main.set_post_speed(value)
+        self.ui.fanSpeed.valueChanged.connect(self._on_fan_speed_changed)
     
     def _on_fan_speed_changed(self, value: int) -> None:
-        if hasattr(self.ui, 'lblFanSpeed'):
-            self.ui.lblFanSpeed.setText(f"{value}%")
+        self.ui.lblFanSpeed.setText(f"{value}%")
         self.main.set_fan_speed(value)
