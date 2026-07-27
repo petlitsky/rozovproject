@@ -1,11 +1,11 @@
 {
-    "lin_speed": 61,
+    "lin_speed": 100,
     "fix_speed": 89,
-    "pre_speed": 73,
+    "pre_speed": 74,
     "post_speed": 100,
-    "lin_position": 0,
+    "lin_position": 4,
     "pre_position": 0,
     "lin_pos1": 0,
     "lin_pos2": 0,
-    "fan_speed": 76
+    "fan_speed": 47
 }

@@ -75,6 +75,7 @@ class ArduinoController(QObject):
 
         try:
             self.serial_port.write(f"{command}\n".encode('utf-8'))
+            print(f"[TX -> Arduino]: {command}")
             return True
         except (serial.SerialException, OSError, IOError):
             self.disconnect()
@@ -91,6 +92,7 @@ class ArduinoController(QObject):
                 data = self.serial_port.readline().decode('utf-8').strip()
                 if data:
                     self._process_data(data)
+                    print(f"[RX <- Arduino]: {data}")
 
         except (serial.SerialException, OSError, IOError):
             self.disconnect()

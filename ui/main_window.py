@@ -37,8 +37,12 @@ class MainWindow(QMainWindow):
         self._setup_ui()
         self._setup_connections()
         self._setup_timer()
+
+        self._load_saved_values()
         
         QTimer.singleShot(500, self._connect_arduino)
+        QTimer.singleShot(3000, self._send_saved_values)
+        self._update_page_values()
     
     def _setup_ui(self) -> None:
         main_buttons = [
@@ -114,10 +118,20 @@ class MainWindow(QMainWindow):
             ('pre_speed', self.ui.preSpeed, self.ui.lblPreSpeed, "Скорость перемещения: {}%"),
             ('post_speed', self.ui.postSpeed, self.ui.lblPostSpeed, "Скорость зажатия: {}%"),
         ]
+
+        positions = [
+            ('lin_position', self.ui.lblLinPos, self.ui.lblLinPosMan, "{} мм"),
+            ('pre_position', self.ui.lblPrePos, self.ui.lblPrePosMan, "{} мм"),
+        ]
         
         for key, slider, label, template in speeds:
             value = self.config.get(key, 30)
             slider.setValue(value)
+            label.setText(template.format(value))
+
+        for key, label, labelMan, template in positions:
+            value = self.config.get(key, 30)
+            labelMan.setText(template.format(value))
             label.setText(template.format(value))
         
         fan_value = self.config.get('fan_speed', 50)
@@ -128,8 +142,7 @@ class MainWindow(QMainWindow):
         if not self.arduino.connect():
             show_error(self, "Ошибка подключения", "Arduino не найдена!\nПроверьте подключение и порт.")
             return
-        self._send_saved_values()
-        
+
     def _send_saved_values(self):
         if not self.arduino.is_connected:
             return
@@ -139,17 +152,16 @@ class MainWindow(QMainWindow):
         fix_speed = self.config.get("fix_speed", 30)
         pre_speed = self.config.get("pre_speed", 30)
         post_speed = self.config.get("post_speed", 30)
-
-        lin_pos_1 = self.config.get("lin_pos_1", 0)
-        lin_pos_2 = self.config.get("lin_pos_2", 0)
+        lin_position = self.config.get("lin_position", 0)
+        pre_position = self.config.get("pre_position", 0)
 
         commands = [
-            f"SET_LIN_SPEED:{lin_speed}",
-            f"SET_FIX_SPEED:{fix_speed}",
-            f"SET_PRE_SPEED:{pre_speed}",
-            f"SET_POST_SPEED:{post_speed}",
-            f"SET_LIN_POS1:{lin_pos_1}",
-            f"SET_LIN_POS2:{lin_pos_2}",
+            f"LIN_SPEED:{lin_speed}",
+            f"FIX_SPEED:{fix_speed}",
+            f"PRE_SPEED:{pre_speed}",
+            f"POST_SPEED:{post_speed}",
+            f"LIN_SET_POS:{lin_position}",
+            f"PRE_SET_POS:{pre_position}",
         ]
 
         for cmd in commands:

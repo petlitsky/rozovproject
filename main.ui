@@ -394,7 +394,7 @@ QPushButton:checked {
           <string notr="true">background: #dde0e7;</string>
          </property>
          <property name="currentIndex">
-          <number>8</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="pageAutoMode">
           <layout class="QVBoxLayout" name="verticalLayout_30">
@@ -599,7 +599,7 @@ QFrame#frameXPos {
                           </font>
                          </property>
                          <property name="text">
-                          <string>230 мм</string>
+                          <string>--- мм</string>
                          </property>
                         </widget>
                        </item>
@@ -1403,7 +1403,7 @@ QFrame#frameXPos {
                              </font>
                             </property>
                             <property name="text">
-                             <string>122 мм</string>
+                             <string>--- мм</string>
                             </property>
                            </widget>
                           </item>
@@ -1476,7 +1476,7 @@ QFrame#frameXPos {
                              </font>
                             </property>
                             <property name="text">
-                             <string>65 Н</string>
+                             <string>--- Н</string>
                             </property>
                            </widget>
                           </item>
@@ -1856,7 +1856,7 @@ QFrame#frameXPos {
                           </font>
                          </property>
                          <property name="text">
-                          <string>3 Н·м</string>
+                          <string>--- Н·м</string>
                          </property>
                         </widget>
                        </item>

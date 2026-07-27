@@ -6,7 +6,10 @@ from typing import Any, Optional
 CONFIG_FILE = "config.json"
 
 DEFAULT_CONFIG = {
-    "mot_speed": 30,
+    "lin_speed": 30,
+    "fix_speed": 30,
+    "pre_speed": 30,
+    "post_speed": 30,
     "fan_speed": 50,
     "lin_position": 0,
     "pre_position": 0,
