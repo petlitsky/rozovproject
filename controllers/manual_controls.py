@@ -33,10 +33,7 @@ class ManualControls(QObject):
         
         self.ui.btnLinHome.clicked.connect(self.main.lin_home)
         self.ui.btnLinHomeMan.clicked.connect(self.main.lin_home)
-        
-        self.ui.btnLinBackEx.clicked.connect(self.main.lin_back_exact)
-        self.ui.btnLinForwardEx.clicked.connect(self.main.lin_forward_exact)
-        
+                
         self.ui.btnBackLin1mm.clicked.connect(lambda: self.main.lin_move_steps(-1))
         self.ui.btnBackLin5mm.clicked.connect(lambda: self.main.lin_move_steps(-5))
         self.ui.btnForwardLin1mm.clicked.connect(lambda: self.main.lin_move_steps(1))
@@ -68,9 +65,6 @@ class ManualControls(QObject):
         self.ui.btnBackFix5grad.clicked.connect(lambda: self.main.fix_move_degrees(-5))
         self.ui.btnForwardFix5grad.clicked.connect(lambda: self.main.fix_move_degrees(5))
         
-        self.ui.btnFixBackEx.clicked.connect(self.main.fix_back_exact)
-        self.ui.btnFixForwardEx.clicked.connect(self.main.fix_forward_exact)
-        
         self.ui.btnFixHome.clicked.connect(self.main.fix_home)
     
     def _connect_pre_crimp_buttons(self) -> None:
@@ -89,9 +83,7 @@ class ManualControls(QObject):
         self.ui.btnUpPre1mm.clicked.connect(lambda: self.main.pre_move_steps(-1))
         self.ui.btnDownPre1mm.clicked.connect(lambda: self.main.pre_move_steps(1))
         self.ui.btnDownPre5mm.clicked.connect(lambda: self.main.pre_move_steps(5))
-        self.ui.btnPreDownEx.clicked.connect(self.main.pre_down_exact)
-        self.ui.btnPreUpEx.clicked.connect(self.main.pre_up_exact)
-        
+                
         self.ui.btnPreHome.clicked.connect(self.main.pre_home)
         self.ui.btnPreHomeMan.clicked.connect(self.main.pre_home)
         self.ui.btnResPrePos.clicked.connect(self.main.pre_reset_position)
@@ -118,7 +110,27 @@ class ManualControls(QObject):
         self.ui.btnPostHome.clicked.connect(self.main.post_home)
     
     def _connect_speed_sliders(self) -> None:
+        self.ui.linSpeed.valueChanged.connect(self._on_lin_speed_changed)
+        self.ui.fixSpeed.valueChanged.connect(self._on_fix_speed_changed)
+        self.ui.preSpeed.valueChanged.connect(self._on_pre_speed_changed)
+        self.ui.postSpeed.valueChanged.connect(self._on_post_speed_changed)
         self.ui.fanSpeed.valueChanged.connect(self._on_fan_speed_changed)
+    
+    def _on_lin_speed_changed(self, value: int) -> None:
+        self.ui.lblLinSpeed.setText(f"Скорость перемещения: {value}%")
+        self.main.set_lin_speed(value)
+    
+    def _on_fix_speed_changed(self, value: int) -> None:
+        self.ui.lblFixSpeed.setText(f"Скорость зажатия: {value}%")
+        self.main.set_fix_speed(value)
+    
+    def _on_pre_speed_changed(self, value: int) -> None:
+        self.ui.lblPreSpeed.setText(f"Скорость перемещения: {value}%")
+        self.main.set_pre_speed(value)
+    
+    def _on_post_speed_changed(self, value: int) -> None:
+        self.ui.lblPostSpeed.setText(f"Скорость зажатия: {value}%")
+        self.main.set_post_speed(value)
     
     def _on_fan_speed_changed(self, value: int) -> None:
         self.ui.lblFanSpeed.setText(f"{value}%")

@@ -108,6 +108,18 @@ class MainWindow(QMainWindow):
         self.ui.lblFanSpeed.setText(f"{speed}%")
     
     def _load_saved_values(self) -> None:
+        speeds = [
+            ('lin_speed', self.ui.linSpeed, self.ui.lblLinSpeed, "Скорость перемещения: {}%"),
+            ('fix_speed', self.ui.fixSpeed, self.ui.lblFixSpeed, "Скорость зажатия: {}%"),
+            ('pre_speed', self.ui.preSpeed, self.ui.lblPreSpeed, "Скорость перемещения: {}%"),
+            ('post_speed', self.ui.postSpeed, self.ui.lblPostSpeed, "Скорость зажатия: {}%"),
+        ]
+        
+        for key, slider, label, template in speeds:
+            value = self.config.get(key, 30)
+            slider.setValue(value)
+            label.setText(template.format(value))
+        
         fan_value = self.config.get('fan_speed', 50)
         self.ui.fanSpeed.setValue(fan_value)
         self.ui.lblFanSpeed.setText(f"{fan_value}%")
@@ -122,10 +134,20 @@ class MainWindow(QMainWindow):
         if not self.arduino.is_connected:
             return
 
+        # 1. Читаем настройки из Config
+        lin_speed = self.config.get("lin_speed", 50)
+        fix_speed = self.config.get("fix_speed", 30)
+        pre_speed = self.config.get("pre_speed", 30)
+        post_speed = self.config.get("post_speed", 30)
+
         lin_pos_1 = self.config.get("lin_pos_1", 0)
         lin_pos_2 = self.config.get("lin_pos_2", 0)
 
         commands = [
+            f"SET_LIN_SPEED:{lin_speed}",
+            f"SET_FIX_SPEED:{fix_speed}",
+            f"SET_PRE_SPEED:{pre_speed}",
+            f"SET_POST_SPEED:{post_speed}",
             f"SET_LIN_POS1:{lin_pos_1}",
             f"SET_LIN_POS2:{lin_pos_2}",
         ]
@@ -294,6 +316,22 @@ class MainWindow(QMainWindow):
             self.homing_dialog.accept()
             self.homing_dialog = None
         
+    def set_lin_speed(self, value: int) -> None:
+        self.config.set("lin_speed", value)
+        self.arduino.send_command(f"LIN_SPEED:{value}")
+    
+    def set_fix_speed(self, value: int) -> None:
+        self.config.set("fix_speed", value)
+        self.arduino.send_command(f"FIX_SPEED:{value}")
+    
+    def set_pre_speed(self, value: int) -> None:
+        self.config.set("pre_speed", value)
+        self.arduino.send_command(f"PRE_SPEED:{value}")
+    
+    def set_post_speed(self, value: int) -> None:
+        self.config.set("post_speed", value)
+        self.arduino.send_command(f"POST_SPEED:{value}")
+    
     def set_fan_speed(self, value: int) -> None:
         self.config.set("fan_speed", value)
         self.fan.set_speed(value)

@@ -1583,9 +1583,7 @@ class Ui_MainWindow(object):
         self.frameXPos.setFrameShape(QFrame.Shape.StyledPanel)
         self.frameXPos.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_11 = QVBoxLayout(self.frameXPos)
-        self.verticalLayout_11.setSpacing(5)
         self.verticalLayout_11.setObjectName(u"verticalLayout_11")
-        self.verticalLayout_11.setContentsMargins(10, 10, 10, 10)
         self.label_14 = QLabel(self.frameXPos)
         self.label_14.setObjectName(u"label_14")
         self.label_14.setMinimumSize(QSize(0, 25))
@@ -1605,6 +1603,7 @@ class Ui_MainWindow(object):
 
         self.widget_7 = QWidget(self.frameXPos)
         self.widget_7.setObjectName(u"widget_7")
+        self.widget_7.setMaximumSize(QSize(16777215, 70))
         self.widget_7.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.horizontalLayout_5 = QHBoxLayout(self.widget_7)
         self.horizontalLayout_5.setSpacing(5)
@@ -1677,71 +1676,28 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_11.addWidget(self.widget_7)
 
-        self.exLinPos = QSpinBox(self.frameXPos)
-        self.exLinPos.setObjectName(u"exLinPos")
-        self.exLinPos.setMinimumSize(QSize(0, 50))
-        font14 = QFont()
-        font14.setPointSize(12)
-        self.exLinPos.setFont(font14)
-        self.exLinPos.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-        self.exLinPos.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
-        self.exLinPos.setMaximum(100)
+        self.linSpeed = QSlider(self.frameXPos)
+        self.linSpeed.setObjectName(u"linSpeed")
+        self.linSpeed.setOrientation(Qt.Orientation.Horizontal)
 
-        self.verticalLayout_11.addWidget(self.exLinPos)
+        self.verticalLayout_11.addWidget(self.linSpeed)
 
-        self.widget_8 = QWidget(self.frameXPos)
-        self.widget_8.setObjectName(u"widget_8")
-        self.widget_8.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
-        self.horizontalLayout_6 = QHBoxLayout(self.widget_8)
-        self.horizontalLayout_6.setSpacing(5)
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.btnLinBackEx = QToolButton(self.widget_8)
-        self.btnLinBackEx.setObjectName(u"btnLinBackEx")
-        sizePolicy.setHeightForWidth(self.btnLinBackEx.sizePolicy().hasHeightForWidth())
-        self.btnLinBackEx.setSizePolicy(sizePolicy)
-        self.btnLinBackEx.setMinimumSize(QSize(0, 45))
-        self.btnLinBackEx.setFont(font6)
-        self.btnLinBackEx.setStyleSheet(u"QToolButton {\n"
+        self.pushButton_3 = QPushButton(self.frameXPos)
+        self.pushButton_3.setObjectName(u"pushButton_3")
+        self.pushButton_3.setMinimumSize(QSize(0, 40))
+        self.pushButton_3.setMaximumSize(QSize(16777215, 16777215))
+        self.pushButton_3.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
 "}\n"
 "\n"
-"QToolButton:pressed {\n"
+"QPushButton:pressed {\n"
 "	background: #cfddeb;\n"
 "\n"
 "}")
-        self.btnLinBackEx.setIcon(icon1)
-        self.btnLinBackEx.setIconSize(QSize(35, 35))
-        self.btnLinBackEx.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
 
-        self.horizontalLayout_6.addWidget(self.btnLinBackEx)
-
-        self.btnLinForwardEx = QToolButton(self.widget_8)
-        self.btnLinForwardEx.setObjectName(u"btnLinForwardEx")
-        sizePolicy.setHeightForWidth(self.btnLinForwardEx.sizePolicy().hasHeightForWidth())
-        self.btnLinForwardEx.setSizePolicy(sizePolicy)
-        self.btnLinForwardEx.setMinimumSize(QSize(0, 45))
-        self.btnLinForwardEx.setFont(font6)
-        self.btnLinForwardEx.setStyleSheet(u"QToolButton {\n"
-"	background: #bdcfdd;\n"
-"	border: 2px solid #a6b8c6;\n"
-"	border-radius: 5px;\n"
-"}\n"
-"\n"
-"QToolButton:pressed {\n"
-"	background: #cfddeb;\n"
-"\n"
-"}")
-        self.btnLinForwardEx.setIcon(icon)
-        self.btnLinForwardEx.setIconSize(QSize(35, 35))
-        self.btnLinForwardEx.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-
-        self.horizontalLayout_6.addWidget(self.btnLinForwardEx)
-
-
-        self.verticalLayout_11.addWidget(self.widget_8)
+        self.verticalLayout_11.addWidget(self.pushButton_3)
 
 
         self.verticalLayout_7.addWidget(self.frameXPos)
@@ -2037,9 +1993,7 @@ class Ui_MainWindow(object):
         self.frameXPos_3.setFrameShape(QFrame.Shape.StyledPanel)
         self.frameXPos_3.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_25 = QVBoxLayout(self.frameXPos_3)
-        self.verticalLayout_25.setSpacing(5)
         self.verticalLayout_25.setObjectName(u"verticalLayout_25")
-        self.verticalLayout_25.setContentsMargins(10, 10, 10, 10)
         self.label_23 = QLabel(self.frameXPos_3)
         self.label_23.setObjectName(u"label_23")
         self.label_23.setMinimumSize(QSize(0, 40))
@@ -2059,6 +2013,7 @@ class Ui_MainWindow(object):
 
         self.widget_19 = QWidget(self.frameXPos_3)
         self.widget_19.setObjectName(u"widget_19")
+        self.widget_19.setMaximumSize(QSize(16777215, 70))
         self.widget_19.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.horizontalLayout_13 = QHBoxLayout(self.widget_19)
         self.horizontalLayout_13.setSpacing(5)
@@ -2131,71 +2086,28 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_25.addWidget(self.widget_19)
 
-        self.exFixPos = QSpinBox(self.frameXPos_3)
-        self.exFixPos.setObjectName(u"exFixPos")
-        self.exFixPos.setMinimumSize(QSize(0, 50))
-        self.exFixPos.setFont(font14)
-        self.exFixPos.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-        self.exFixPos.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
-        self.exFixPos.setWrapping(False)
-        self.exFixPos.setMinimum(1)
-        self.exFixPos.setMaximum(360)
+        self.fixSpeed = QSlider(self.frameXPos_3)
+        self.fixSpeed.setObjectName(u"fixSpeed")
+        self.fixSpeed.setOrientation(Qt.Orientation.Horizontal)
 
-        self.verticalLayout_25.addWidget(self.exFixPos)
+        self.verticalLayout_25.addWidget(self.fixSpeed)
 
-        self.widget_20 = QWidget(self.frameXPos_3)
-        self.widget_20.setObjectName(u"widget_20")
-        self.widget_20.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
-        self.horizontalLayout_14 = QHBoxLayout(self.widget_20)
-        self.horizontalLayout_14.setSpacing(5)
-        self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
-        self.horizontalLayout_14.setContentsMargins(0, 0, 0, 0)
-        self.btnFixBackEx = QToolButton(self.widget_20)
-        self.btnFixBackEx.setObjectName(u"btnFixBackEx")
-        sizePolicy.setHeightForWidth(self.btnFixBackEx.sizePolicy().hasHeightForWidth())
-        self.btnFixBackEx.setSizePolicy(sizePolicy)
-        self.btnFixBackEx.setMinimumSize(QSize(0, 45))
-        self.btnFixBackEx.setFont(font6)
-        self.btnFixBackEx.setStyleSheet(u"QToolButton {\n"
+        self.pushButton_2 = QPushButton(self.frameXPos_3)
+        self.pushButton_2.setObjectName(u"pushButton_2")
+        self.pushButton_2.setMinimumSize(QSize(0, 40))
+        self.pushButton_2.setMaximumSize(QSize(16777215, 16777215))
+        self.pushButton_2.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
 "}\n"
 "\n"
-"QToolButton:pressed {\n"
+"QPushButton:pressed {\n"
 "	background: #cfddeb;\n"
 "\n"
 "}")
-        self.btnFixBackEx.setIcon(icon3)
-        self.btnFixBackEx.setIconSize(QSize(35, 35))
-        self.btnFixBackEx.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
 
-        self.horizontalLayout_14.addWidget(self.btnFixBackEx)
-
-        self.btnFixForwardEx = QToolButton(self.widget_20)
-        self.btnFixForwardEx.setObjectName(u"btnFixForwardEx")
-        sizePolicy.setHeightForWidth(self.btnFixForwardEx.sizePolicy().hasHeightForWidth())
-        self.btnFixForwardEx.setSizePolicy(sizePolicy)
-        self.btnFixForwardEx.setMinimumSize(QSize(0, 45))
-        self.btnFixForwardEx.setFont(font6)
-        self.btnFixForwardEx.setStyleSheet(u"QToolButton {\n"
-"	background: #bdcfdd;\n"
-"	border: 2px solid #a6b8c6;\n"
-"	border-radius: 5px;\n"
-"}\n"
-"\n"
-"QToolButton:pressed {\n"
-"	background: #cfddeb;\n"
-"\n"
-"}")
-        self.btnFixForwardEx.setIcon(icon4)
-        self.btnFixForwardEx.setIconSize(QSize(35, 35))
-        self.btnFixForwardEx.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-
-        self.horizontalLayout_14.addWidget(self.btnFixForwardEx)
-
-
-        self.verticalLayout_25.addWidget(self.widget_20)
+        self.verticalLayout_25.addWidget(self.pushButton_2)
 
 
         self.verticalLayout_23.addWidget(self.frameXPos_3)
@@ -2428,9 +2340,9 @@ class Ui_MainWindow(object):
         self.framePos_2.setObjectName(u"framePos_2")
         self.framePos_2.setMinimumSize(QSize(0, 155))
         self.framePos_2.setMaximumSize(QSize(16777215, 155))
-        font15 = QFont()
-        font15.setPointSize(6)
-        self.framePos_2.setFont(font15)
+        font14 = QFont()
+        font14.setPointSize(6)
+        self.framePos_2.setFont(font14)
         self.framePos_2.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.framePos_2.setStyleSheet(u"* {\n"
 "	background: #e9ecf1;\n"
@@ -2529,6 +2441,7 @@ class Ui_MainWindow(object):
 
         self.widget_12 = QWidget(self.frameXPos_2)
         self.widget_12.setObjectName(u"widget_12")
+        self.widget_12.setMaximumSize(QSize(16777215, 70))
         self.widget_12.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.horizontalLayout_8 = QHBoxLayout(self.widget_12)
         self.horizontalLayout_8.setSpacing(5)
@@ -2601,70 +2514,28 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_16.addWidget(self.widget_12)
 
-        self.exPrePos = QSpinBox(self.frameXPos_2)
-        self.exPrePos.setObjectName(u"exPrePos")
-        self.exPrePos.setMinimumSize(QSize(0, 50))
-        self.exPrePos.setFont(font14)
-        self.exPrePos.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-        self.exPrePos.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
-        self.exPrePos.setMinimum(0)
-        self.exPrePos.setMaximum(50)
+        self.preSpeed = QSlider(self.frameXPos_2)
+        self.preSpeed.setObjectName(u"preSpeed")
+        self.preSpeed.setOrientation(Qt.Orientation.Horizontal)
 
-        self.verticalLayout_16.addWidget(self.exPrePos)
+        self.verticalLayout_16.addWidget(self.preSpeed)
 
-        self.widget_13 = QWidget(self.frameXPos_2)
-        self.widget_13.setObjectName(u"widget_13")
-        self.widget_13.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
-        self.horizontalLayout_9 = QHBoxLayout(self.widget_13)
-        self.horizontalLayout_9.setSpacing(5)
-        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
-        self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
-        self.btnPreUpEx = QToolButton(self.widget_13)
-        self.btnPreUpEx.setObjectName(u"btnPreUpEx")
-        sizePolicy.setHeightForWidth(self.btnPreUpEx.sizePolicy().hasHeightForWidth())
-        self.btnPreUpEx.setSizePolicy(sizePolicy)
-        self.btnPreUpEx.setMinimumSize(QSize(0, 45))
-        self.btnPreUpEx.setFont(font6)
-        self.btnPreUpEx.setStyleSheet(u"QToolButton {\n"
+        self.pushButton = QPushButton(self.frameXPos_2)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setMinimumSize(QSize(0, 40))
+        self.pushButton.setMaximumSize(QSize(16777215, 16777215))
+        self.pushButton.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
 "}\n"
 "\n"
-"QToolButton:pressed {\n"
+"QPushButton:pressed {\n"
 "	background: #cfddeb;\n"
 "\n"
 "}")
-        self.btnPreUpEx.setIcon(icon5)
-        self.btnPreUpEx.setIconSize(QSize(35, 35))
-        self.btnPreUpEx.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
 
-        self.horizontalLayout_9.addWidget(self.btnPreUpEx)
-
-        self.btnPreDownEx = QToolButton(self.widget_13)
-        self.btnPreDownEx.setObjectName(u"btnPreDownEx")
-        sizePolicy.setHeightForWidth(self.btnPreDownEx.sizePolicy().hasHeightForWidth())
-        self.btnPreDownEx.setSizePolicy(sizePolicy)
-        self.btnPreDownEx.setMinimumSize(QSize(0, 45))
-        self.btnPreDownEx.setFont(font6)
-        self.btnPreDownEx.setStyleSheet(u"QToolButton {\n"
-"	background: #bdcfdd;\n"
-"	border: 2px solid #a6b8c6;\n"
-"	border-radius: 5px;\n"
-"}\n"
-"\n"
-"QToolButton:pressed {\n"
-"	background: #cfddeb;\n"
-"\n"
-"}")
-        self.btnPreDownEx.setIcon(icon6)
-        self.btnPreDownEx.setIconSize(QSize(35, 35))
-        self.btnPreDownEx.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-
-        self.horizontalLayout_9.addWidget(self.btnPreDownEx)
-
-
-        self.verticalLayout_16.addWidget(self.widget_13)
+        self.verticalLayout_16.addWidget(self.pushButton)
 
 
         self.verticalLayout_14.addWidget(self.frameXPos_2)
@@ -2954,10 +2825,8 @@ class Ui_MainWindow(object):
 "}")
         self.frameXPos_4.setFrameShape(QFrame.Shape.StyledPanel)
         self.frameXPos_4.setFrameShadow(QFrame.Shadow.Raised)
-        self.verticalLayout_40 = QVBoxLayout(self.frameXPos_4)
-        self.verticalLayout_40.setSpacing(5)
-        self.verticalLayout_40.setObjectName(u"verticalLayout_40")
-        self.verticalLayout_40.setContentsMargins(10, 10, 10, 10)
+        self.verticalLayout_27 = QVBoxLayout(self.frameXPos_4)
+        self.verticalLayout_27.setObjectName(u"verticalLayout_27")
         self.label_31 = QLabel(self.frameXPos_4)
         self.label_31.setObjectName(u"label_31")
         self.label_31.setMinimumSize(QSize(0, 40))
@@ -2965,7 +2834,7 @@ class Ui_MainWindow(object):
         self.label_31.setFont(font5)
         self.label_31.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
-        self.verticalLayout_40.addWidget(self.label_31)
+        self.verticalLayout_27.addWidget(self.label_31)
 
         self.line_16 = QFrame(self.frameXPos_4)
         self.line_16.setObjectName(u"line_16")
@@ -2973,10 +2842,11 @@ class Ui_MainWindow(object):
         self.line_16.setFrameShape(QFrame.Shape.HLine)
         self.line_16.setFrameShadow(QFrame.Shadow.Sunken)
 
-        self.verticalLayout_40.addWidget(self.line_16)
+        self.verticalLayout_27.addWidget(self.line_16)
 
         self.widget_29 = QWidget(self.frameXPos_4)
         self.widget_29.setObjectName(u"widget_29")
+        self.widget_29.setMaximumSize(QSize(16777215, 70))
         self.widget_29.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.horizontalLayout_22 = QHBoxLayout(self.widget_29)
         self.horizontalLayout_22.setSpacing(5)
@@ -3047,70 +2917,30 @@ class Ui_MainWindow(object):
         self.horizontalLayout_22.addWidget(self.pushButton_36)
 
 
-        self.verticalLayout_40.addWidget(self.widget_29)
+        self.verticalLayout_27.addWidget(self.widget_29)
 
-        self.exPostPos = QSpinBox(self.frameXPos_4)
-        self.exPostPos.setObjectName(u"exPostPos")
-        self.exPostPos.setMinimumSize(QSize(0, 50))
-        self.exPostPos.setFont(font14)
-        self.exPostPos.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-        self.exPostPos.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
+        self.postSpeed = QSlider(self.frameXPos_4)
+        self.postSpeed.setObjectName(u"postSpeed")
+        self.postSpeed.setOrientation(Qt.Orientation.Horizontal)
 
-        self.verticalLayout_40.addWidget(self.exPostPos)
+        self.verticalLayout_27.addWidget(self.postSpeed)
 
-        self.widget_30 = QWidget(self.frameXPos_4)
-        self.widget_30.setObjectName(u"widget_30")
-        self.widget_30.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
-        self.horizontalLayout_23 = QHBoxLayout(self.widget_30)
-        self.horizontalLayout_23.setSpacing(5)
-        self.horizontalLayout_23.setObjectName(u"horizontalLayout_23")
-        self.horizontalLayout_23.setContentsMargins(0, 0, 0, 0)
-        self.toolButton_20 = QToolButton(self.widget_30)
-        self.toolButton_20.setObjectName(u"toolButton_20")
-        sizePolicy.setHeightForWidth(self.toolButton_20.sizePolicy().hasHeightForWidth())
-        self.toolButton_20.setSizePolicy(sizePolicy)
-        self.toolButton_20.setMinimumSize(QSize(0, 45))
-        self.toolButton_20.setFont(font6)
-        self.toolButton_20.setStyleSheet(u"QToolButton {\n"
+        self.pushButton_4 = QPushButton(self.frameXPos_4)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+        self.pushButton_4.setMinimumSize(QSize(0, 40))
+        self.pushButton_4.setMaximumSize(QSize(16777215, 16777215))
+        self.pushButton_4.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
 "}\n"
 "\n"
-"QToolButton:pressed {\n"
+"QPushButton:pressed {\n"
 "	background: #cfddeb;\n"
 "\n"
 "}")
-        self.toolButton_20.setIcon(icon3)
-        self.toolButton_20.setIconSize(QSize(35, 35))
-        self.toolButton_20.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
 
-        self.horizontalLayout_23.addWidget(self.toolButton_20)
-
-        self.toolButton_21 = QToolButton(self.widget_30)
-        self.toolButton_21.setObjectName(u"toolButton_21")
-        sizePolicy.setHeightForWidth(self.toolButton_21.sizePolicy().hasHeightForWidth())
-        self.toolButton_21.setSizePolicy(sizePolicy)
-        self.toolButton_21.setMinimumSize(QSize(0, 45))
-        self.toolButton_21.setFont(font6)
-        self.toolButton_21.setStyleSheet(u"QToolButton {\n"
-"	background: #bdcfdd;\n"
-"	border: 2px solid #a6b8c6;\n"
-"	border-radius: 5px;\n"
-"}\n"
-"\n"
-"QToolButton:pressed {\n"
-"	background: #cfddeb;\n"
-"\n"
-"}")
-        self.toolButton_21.setIcon(icon4)
-        self.toolButton_21.setIconSize(QSize(35, 35))
-        self.toolButton_21.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-
-        self.horizontalLayout_23.addWidget(self.toolButton_21)
-
-
-        self.verticalLayout_40.addWidget(self.widget_30)
+        self.verticalLayout_27.addWidget(self.pushButton_4)
 
 
         self.verticalLayout_38.addWidget(self.frameXPos_4)
@@ -3210,7 +3040,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.lblDate.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.lblDate.setText(QCoreApplication.translate("MainWindow", u"date", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u044f: 30%", None))
         self.btnExit.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0445\u043e\u0434", None))
         self.btnAutoMode.setText(QCoreApplication.translate("MainWindow", u"\u0410\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0440\u0435\u0436\u0438\u043c", None))
@@ -3281,15 +3111,14 @@ class Ui_MainWindow(object):
         self.btnLinBack.setText(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0437\u0430\u0434", None))
         self.btnLinHome.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u043c\u043e\u0439", None))
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0410\u042f \u041f\u041e\u0417\u0418\u0426\u0418\u042f", None))
-        self.lblLinPos.setText(QCoreApplication.translate("MainWindow", u"230 \u043c\u043c", None))
+        self.lblLinPos.setText(QCoreApplication.translate("MainWindow", u"--- \u043c\u043c", None))
         self.btnResLinPos.setText(QCoreApplication.translate("MainWindow", u"C\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0442\u0435\u043a\u0443\u0449\u0443\u044e \u043f\u043e\u0437\u0438\u0446\u0438\u044e", None))
         self.label_14.setText(QCoreApplication.translate("MainWindow", u"\u0422\u043e\u0447\u043d\u043e\u0435 \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u0435", None))
         self.btnBackLin5mm.setText(QCoreApplication.translate("MainWindow", u"-5 \u043c\u043c", None))
         self.btnBackLin1mm.setText(QCoreApplication.translate("MainWindow", u"-1 \u043c\u043c", None))
         self.btnForwardLin1mm.setText(QCoreApplication.translate("MainWindow", u"+1 \u043c\u043c", None))
         self.btnForwardLin5mm.setText(QCoreApplication.translate("MainWindow", u"+5 \u043c\u043c", None))
-        self.btnLinBackEx.setText(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0437\u0430\u0434", None))
-        self.btnLinForwardEx.setText(QCoreApplication.translate("MainWindow", u"\u0412\u043f\u0435\u0440\u0435\u0434", None))
+        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c", None))
         self.btnSaveLinPos1.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0438\u044e 1", None))
         self.btnSaveLinPos2.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0438\u044e 2", None))
         self.btnGoLinPos1.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0435\u043c\u0435\u0441\u0442\u0438\u0442\u044c\u0441\u044f \u043a \u043f\u043e\u0437\u0438\u0446\u0438\u0438 1", None))
@@ -3299,14 +3128,13 @@ class Ui_MainWindow(object):
         self.btnFixBack.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0430\u0442\u044c", None))
         self.btnFixHome.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043b\u043d\u043e\u0441\u0442\u044c\u044e \u0440\u0430\u0437\u0436\u0430\u0442\u044c", None))
         self.label_21.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0410\u042f \u0421\u0418\u041b\u0410 \u0422\u041e\u041a\u0410", None))
-        self.label_22.setText(QCoreApplication.translate("MainWindow", u"0.07 \u0410", None))
+        self.label_22.setText(QCoreApplication.translate("MainWindow", u"--- \u0410", None))
         self.label_23.setText(QCoreApplication.translate("MainWindow", u"\u0422\u043e\u0447\u043d\u043e\u0435 \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u0435", None))
         self.btnBackFix5grad.setText(QCoreApplication.translate("MainWindow", u"-5\u00b0", None))
         self.btnBackFix1grad.setText(QCoreApplication.translate("MainWindow", u"-1\u00b0", None))
         self.btnForwardFix1grad.setText(QCoreApplication.translate("MainWindow", u"+1\u00b0", None))
         self.btnForwardFix5grad.setText(QCoreApplication.translate("MainWindow", u"+5\u00b0", None))
-        self.btnFixBackEx.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0430\u0442\u044c", None))
-        self.btnFixForwardEx.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0430\u0442\u044c", None))
+        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c", None))
         self.pushButton_26.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0441\u0438\u043b\u0443 \u0442\u043e\u043a\u0430", None))
         self.pushButton_27.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0438\u044e\n"
 "\u0440\u0430\u0437\u0436\u0430\u0442\u0438\u044f", None))
@@ -3316,19 +3144,18 @@ class Ui_MainWindow(object):
         self.btnDownBack.setText(QCoreApplication.translate("MainWindow", u"\u0412\u043d\u0438\u0437", None))
         self.btnPreHome.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u043c\u043e\u0439", None))
         self.label_13.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0410\u042f \u041f\u041e\u0417\u0418\u0426\u0418\u042f", None))
-        self.lblPrePos.setText(QCoreApplication.translate("MainWindow", u"122 \u043c\u043c", None))
+        self.lblPrePos.setText(QCoreApplication.translate("MainWindow", u"--- \u043c\u043c", None))
         self.btnResPrePos.setText(QCoreApplication.translate("MainWindow", u"C\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0442\u0435\u043a\u0443\u0449\u0443\u044e \u043f\u043e\u0437\u0438\u0446\u0438\u044e", None))
         self.label_16.setText(QCoreApplication.translate("MainWindow", u"\u0422\u043e\u0447\u043d\u043e\u0435 \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u0435", None))
         self.btnUpPre5mm.setText(QCoreApplication.translate("MainWindow", u"-5 \u043c\u043c", None))
         self.btnUpPre1mm.setText(QCoreApplication.translate("MainWindow", u"-1 \u043c\u043c", None))
         self.btnDownPre1mm.setText(QCoreApplication.translate("MainWindow", u"+1 \u043c\u043c", None))
         self.btnDownPre5mm.setText(QCoreApplication.translate("MainWindow", u"+5 \u043c\u043c", None))
-        self.btnPreUpEx.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0440\u0445", None))
-        self.btnPreDownEx.setText(QCoreApplication.translate("MainWindow", u"\u0412\u043d\u0438\u0437", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c", None))
         self.pushButton_18.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0443\u0441\u0438\u043b\u0438\u0435", None))
         self.pushButton_20.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0435\u043c\u0435\u0441\u0442\u0438\u0442\u044c\u0441\u044f \u0434\u043e \u0443\u0441\u0438\u043b\u0438\u044f", None))
         self.label_18.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0415\u0415 \u0423\u0421\u0418\u041b\u0418\u0415", None))
-        self.label_19.setText(QCoreApplication.translate("MainWindow", u"65 \u041d", None))
+        self.label_19.setText(QCoreApplication.translate("MainWindow", u"--- \u041d", None))
         self.label_25.setText(QCoreApplication.translate("MainWindow", u"\u041c\u043e\u0434\u0443\u043b\u044c \u043f\u043e\u0441\u0442\u043e\u0431\u0436\u0438\u043c\u0430", None))
         self.btnPostForward.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0430\u0442\u044c", None))
         self.btnPostBack.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0430\u0442\u044c", None))
@@ -3340,8 +3167,7 @@ class Ui_MainWindow(object):
         self.pushButton_34.setText(QCoreApplication.translate("MainWindow", u"-1\u00b0", None))
         self.pushButton_35.setText(QCoreApplication.translate("MainWindow", u"+1\u00b0", None))
         self.pushButton_36.setText(QCoreApplication.translate("MainWindow", u"+5\u00b0", None))
-        self.toolButton_20.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0430\u0442\u044c", None))
-        self.toolButton_21.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0430\u0442\u044c", None))
+        self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c", None))
         self.pushButton_37.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043c\u043e\u043c\u0435\u043d\u0442", None))
         self.pushButton_38.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0438\u044e\n"
 "\u0440\u0430\u0437\u0436\u0430\u0442\u0438\u044f", None))

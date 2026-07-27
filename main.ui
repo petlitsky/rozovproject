@@ -75,7 +75,7 @@
        <item>
         <widget class="QLabel" name="lblDate">
          <property name="text">
-          <string>TextLabel</string>
+          <string>date</string>
          </property>
         </widget>
        </item>
@@ -3242,7 +3242,7 @@ QFrame#framePos {
                        <enum>Qt::FocusPolicy::ClickFocus</enum>
                       </property>
                       <property name="text">
-                       <string>230 мм</string>
+                       <string>--- мм</string>
                       </property>
                      </widget>
                     </item>
@@ -3311,21 +3311,6 @@ QFrame#frameXPos {
                     <enum>QFrame::Shadow::Raised</enum>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_11">
-                    <property name="spacing">
-                     <number>5</number>
-                    </property>
-                    <property name="leftMargin">
-                     <number>10</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>10</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>10</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>10</number>
-                    </property>
                     <item>
                      <widget class="QLabel" name="label_14">
                       <property name="minimumSize">
@@ -3366,6 +3351,12 @@ QFrame#frameXPos {
                     </item>
                     <item>
                      <widget class="QWidget" name="widget_7" native="true">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>70</height>
+                       </size>
+                      </property>
                       <property name="focusPolicy">
                        <enum>Qt::FocusPolicy::ClickFocus</enum>
                       </property>
@@ -3489,151 +3480,41 @@ QPushButton:pressed {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSpinBox" name="exLinPos">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>50</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <pointsize>12</pointsize>
-                       </font>
-                      </property>
-                      <property name="focusPolicy">
-                       <enum>Qt::FocusPolicy::StrongFocus</enum>
-                      </property>
-                      <property name="inputMethodHints">
-                       <set>Qt::InputMethodHint::ImhPreferNumbers</set>
-                      </property>
-                      <property name="maximum">
-                       <number>100</number>
+                     <widget class="QSlider" name="linSpeed">
+                      <property name="orientation">
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QWidget" name="widget_8" native="true">
-                      <property name="focusPolicy">
-                       <enum>Qt::FocusPolicy::ClickFocus</enum>
+                     <widget class="QPushButton" name="pushButton_3">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>40</height>
+                       </size>
                       </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_6">
-                       <property name="spacing">
-                        <number>5</number>
-                       </property>
-                       <property name="leftMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="topMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="rightMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="bottomMargin">
-                        <number>0</number>
-                       </property>
-                       <item>
-                        <widget class="QToolButton" name="btnLinBackEx">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>45</height>
-                          </size>
-                         </property>
-                         <property name="font">
-                          <font>
-                           <pointsize>10</pointsize>
-                           <bold>true</bold>
-                          </font>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QToolButton {
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
 	background: #bdcfdd;
 	border: 2px solid #a6b8c6;
 	border-radius: 5px;
 }
 
-QToolButton:pressed {
+QPushButton:pressed {
 	background: #cfddeb;
 
 }</string>
-                         </property>
-                         <property name="text">
-                          <string>Назад</string>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="resources.qrc">
-                           <normaloff>:/icons/icons/right.png</normaloff>:/icons/icons/right.png</iconset>
-                         </property>
-                         <property name="iconSize">
-                          <size>
-                           <width>35</width>
-                           <height>35</height>
-                          </size>
-                         </property>
-                         <property name="toolButtonStyle">
-                          <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QToolButton" name="btnLinForwardEx">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>45</height>
-                          </size>
-                         </property>
-                         <property name="font">
-                          <font>
-                           <pointsize>10</pointsize>
-                           <bold>true</bold>
-                          </font>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QToolButton {
-	background: #bdcfdd;
-	border: 2px solid #a6b8c6;
-	border-radius: 5px;
-}
-
-QToolButton:pressed {
-	background: #cfddeb;
-
-}</string>
-                         </property>
-                         <property name="text">
-                          <string>Вперед</string>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="resources.qrc">
-                           <normaloff>:/icons/icons/left.png</normaloff>:/icons/icons/left.png</iconset>
-                         </property>
-                         <property name="iconSize">
-                          <size>
-                           <width>35</width>
-                           <height>35</height>
-                          </size>
-                         </property>
-                         <property name="toolButtonStyle">
-                          <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
+                      </property>
+                      <property name="text">
+                       <string>Установить</string>
+                      </property>
                      </widget>
                     </item>
                    </layout>
@@ -4224,7 +4105,7 @@ QFrame#framePos {
                        <enum>Qt::FocusPolicy::ClickFocus</enum>
                       </property>
                       <property name="text">
-                       <string>0.07 А</string>
+                       <string>--- А</string>
                       </property>
                      </widget>
                     </item>
@@ -4253,21 +4134,6 @@ QFrame#frameXPos {
                     <enum>QFrame::Shadow::Raised</enum>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_25">
-                    <property name="spacing">
-                     <number>5</number>
-                    </property>
-                    <property name="leftMargin">
-                     <number>10</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>10</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>10</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>10</number>
-                    </property>
                     <item>
                      <widget class="QLabel" name="label_23">
                       <property name="minimumSize">
@@ -4308,6 +4174,12 @@ QFrame#frameXPos {
                     </item>
                     <item>
                      <widget class="QWidget" name="widget_19" native="true">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>70</height>
+                       </size>
+                      </property>
                       <property name="focusPolicy">
                        <enum>Qt::FocusPolicy::ClickFocus</enum>
                       </property>
@@ -4431,157 +4303,41 @@ QPushButton:pressed {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSpinBox" name="exFixPos">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>50</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <pointsize>12</pointsize>
-                       </font>
-                      </property>
-                      <property name="focusPolicy">
-                       <enum>Qt::FocusPolicy::StrongFocus</enum>
-                      </property>
-                      <property name="inputMethodHints">
-                       <set>Qt::InputMethodHint::ImhPreferNumbers</set>
-                      </property>
-                      <property name="wrapping">
-                       <bool>false</bool>
-                      </property>
-                      <property name="minimum">
-                       <number>1</number>
-                      </property>
-                      <property name="maximum">
-                       <number>360</number>
+                     <widget class="QSlider" name="fixSpeed">
+                      <property name="orientation">
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QWidget" name="widget_20" native="true">
-                      <property name="focusPolicy">
-                       <enum>Qt::FocusPolicy::ClickFocus</enum>
+                     <widget class="QPushButton" name="pushButton_2">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>40</height>
+                       </size>
                       </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_14">
-                       <property name="spacing">
-                        <number>5</number>
-                       </property>
-                       <property name="leftMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="topMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="rightMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="bottomMargin">
-                        <number>0</number>
-                       </property>
-                       <item>
-                        <widget class="QToolButton" name="btnFixBackEx">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>45</height>
-                          </size>
-                         </property>
-                         <property name="font">
-                          <font>
-                           <pointsize>10</pointsize>
-                           <bold>true</bold>
-                          </font>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QToolButton {
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
 	background: #bdcfdd;
 	border: 2px solid #a6b8c6;
 	border-radius: 5px;
 }
 
-QToolButton:pressed {
+QPushButton:pressed {
 	background: #cfddeb;
 
 }</string>
-                         </property>
-                         <property name="text">
-                          <string>Разжать</string>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="resources.qrc">
-                           <normaloff>:/icons/icons/unfix.png</normaloff>:/icons/icons/unfix.png</iconset>
-                         </property>
-                         <property name="iconSize">
-                          <size>
-                           <width>35</width>
-                           <height>35</height>
-                          </size>
-                         </property>
-                         <property name="toolButtonStyle">
-                          <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QToolButton" name="btnFixForwardEx">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>45</height>
-                          </size>
-                         </property>
-                         <property name="font">
-                          <font>
-                           <pointsize>10</pointsize>
-                           <bold>true</bold>
-                          </font>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QToolButton {
-	background: #bdcfdd;
-	border: 2px solid #a6b8c6;
-	border-radius: 5px;
-}
-
-QToolButton:pressed {
-	background: #cfddeb;
-
-}</string>
-                         </property>
-                         <property name="text">
-                          <string>Зажать</string>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="resources.qrc">
-                           <normaloff>:/icons/icons/fix.png</normaloff>:/icons/icons/fix.png</iconset>
-                         </property>
-                         <property name="iconSize">
-                          <size>
-                           <width>35</width>
-                           <height>35</height>
-                          </size>
-                         </property>
-                         <property name="toolButtonStyle">
-                          <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
+                      </property>
+                      <property name="text">
+                       <string>Установить</string>
+                      </property>
                      </widget>
                     </item>
                    </layout>
@@ -5164,7 +4920,7 @@ QFrame#framePos {
                        <enum>Qt::FocusPolicy::ClickFocus</enum>
                       </property>
                       <property name="text">
-                       <string>122 мм</string>
+                       <string>--- мм</string>
                       </property>
                      </widget>
                     </item>
@@ -5288,6 +5044,12 @@ QFrame#frameXPos {
                     </item>
                     <item>
                      <widget class="QWidget" name="widget_12" native="true">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>70</height>
+                       </size>
+                      </property>
                       <property name="focusPolicy">
                        <enum>Qt::FocusPolicy::ClickFocus</enum>
                       </property>
@@ -5411,154 +5173,41 @@ QPushButton:pressed {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSpinBox" name="exPrePos">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>50</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <pointsize>12</pointsize>
-                       </font>
-                      </property>
-                      <property name="focusPolicy">
-                       <enum>Qt::FocusPolicy::StrongFocus</enum>
-                      </property>
-                      <property name="inputMethodHints">
-                       <set>Qt::InputMethodHint::ImhPreferNumbers</set>
-                      </property>
-                      <property name="minimum">
-                       <number>0</number>
-                      </property>
-                      <property name="maximum">
-                       <number>50</number>
+                     <widget class="QSlider" name="preSpeed">
+                      <property name="orientation">
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QWidget" name="widget_13" native="true">
-                      <property name="focusPolicy">
-                       <enum>Qt::FocusPolicy::ClickFocus</enum>
+                     <widget class="QPushButton" name="pushButton">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>40</height>
+                       </size>
                       </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_9">
-                       <property name="spacing">
-                        <number>5</number>
-                       </property>
-                       <property name="leftMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="topMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="rightMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="bottomMargin">
-                        <number>0</number>
-                       </property>
-                       <item>
-                        <widget class="QToolButton" name="btnPreUpEx">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>45</height>
-                          </size>
-                         </property>
-                         <property name="font">
-                          <font>
-                           <pointsize>10</pointsize>
-                           <bold>true</bold>
-                          </font>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QToolButton {
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
 	background: #bdcfdd;
 	border: 2px solid #a6b8c6;
 	border-radius: 5px;
 }
 
-QToolButton:pressed {
+QPushButton:pressed {
 	background: #cfddeb;
 
 }</string>
-                         </property>
-                         <property name="text">
-                          <string>Вверх</string>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="resources.qrc">
-                           <normaloff>:/icons/icons/up.png</normaloff>:/icons/icons/up.png</iconset>
-                         </property>
-                         <property name="iconSize">
-                          <size>
-                           <width>35</width>
-                           <height>35</height>
-                          </size>
-                         </property>
-                         <property name="toolButtonStyle">
-                          <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QToolButton" name="btnPreDownEx">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>45</height>
-                          </size>
-                         </property>
-                         <property name="font">
-                          <font>
-                           <pointsize>10</pointsize>
-                           <bold>true</bold>
-                          </font>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QToolButton {
-	background: #bdcfdd;
-	border: 2px solid #a6b8c6;
-	border-radius: 5px;
-}
-
-QToolButton:pressed {
-	background: #cfddeb;
-
-}</string>
-                         </property>
-                         <property name="text">
-                          <string>Вниз</string>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="resources.qrc">
-                           <normaloff>:/icons/icons/down.png</normaloff>:/icons/icons/down.png</iconset>
-                         </property>
-                         <property name="iconSize">
-                          <size>
-                           <width>35</width>
-                           <height>35</height>
-                          </size>
-                         </property>
-                         <property name="toolButtonStyle">
-                          <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
+                      </property>
+                      <property name="text">
+                       <string>Установить</string>
+                      </property>
                      </widget>
                     </item>
                    </layout>
@@ -5715,7 +5364,7 @@ QPushButton:pressed {
                     <enum>Qt::FocusPolicy::ClickFocus</enum>
                    </property>
                    <property name="text">
-                    <string>65 Н</string>
+                    <string>--- Н</string>
                    </property>
                   </widget>
                  </item>
@@ -6190,22 +5839,7 @@ QFrame#frameXPos {
                    <property name="frameShadow">
                     <enum>QFrame::Shadow::Raised</enum>
                    </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_40">
-                    <property name="spacing">
-                     <number>5</number>
-                    </property>
-                    <property name="leftMargin">
-                     <number>10</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>10</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>10</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>10</number>
-                    </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_27">
                     <item>
                      <widget class="QLabel" name="label_31">
                       <property name="minimumSize">
@@ -6246,6 +5880,12 @@ QFrame#frameXPos {
                     </item>
                     <item>
                      <widget class="QWidget" name="widget_29" native="true">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>70</height>
+                       </size>
+                      </property>
                       <property name="focusPolicy">
                        <enum>Qt::FocusPolicy::ClickFocus</enum>
                       </property>
@@ -6369,148 +6009,41 @@ QPushButton:pressed {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSpinBox" name="exPostPos">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>50</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <pointsize>12</pointsize>
-                       </font>
-                      </property>
-                      <property name="focusPolicy">
-                       <enum>Qt::FocusPolicy::StrongFocus</enum>
-                      </property>
-                      <property name="inputMethodHints">
-                       <set>Qt::InputMethodHint::ImhPreferNumbers</set>
+                     <widget class="QSlider" name="postSpeed">
+                      <property name="orientation">
+                       <enum>Qt::Orientation::Horizontal</enum>
                       </property>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QWidget" name="widget_30" native="true">
-                      <property name="focusPolicy">
-                       <enum>Qt::FocusPolicy::ClickFocus</enum>
+                     <widget class="QPushButton" name="pushButton_4">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>40</height>
+                       </size>
                       </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_23">
-                       <property name="spacing">
-                        <number>5</number>
-                       </property>
-                       <property name="leftMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="topMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="rightMargin">
-                        <number>0</number>
-                       </property>
-                       <property name="bottomMargin">
-                        <number>0</number>
-                       </property>
-                       <item>
-                        <widget class="QToolButton" name="toolButton_20">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>45</height>
-                          </size>
-                         </property>
-                         <property name="font">
-                          <font>
-                           <pointsize>10</pointsize>
-                           <bold>true</bold>
-                          </font>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QToolButton {
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
 	background: #bdcfdd;
 	border: 2px solid #a6b8c6;
 	border-radius: 5px;
 }
 
-QToolButton:pressed {
+QPushButton:pressed {
 	background: #cfddeb;
 
 }</string>
-                         </property>
-                         <property name="text">
-                          <string>Разжать</string>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="resources.qrc">
-                           <normaloff>:/icons/icons/unfix.png</normaloff>:/icons/icons/unfix.png</iconset>
-                         </property>
-                         <property name="iconSize">
-                          <size>
-                           <width>35</width>
-                           <height>35</height>
-                          </size>
-                         </property>
-                         <property name="toolButtonStyle">
-                          <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QToolButton" name="toolButton_21">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="minimumSize">
-                          <size>
-                           <width>0</width>
-                           <height>45</height>
-                          </size>
-                         </property>
-                         <property name="font">
-                          <font>
-                           <pointsize>10</pointsize>
-                           <bold>true</bold>
-                          </font>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QToolButton {
-	background: #bdcfdd;
-	border: 2px solid #a6b8c6;
-	border-radius: 5px;
-}
-
-QToolButton:pressed {
-	background: #cfddeb;
-
-}</string>
-                         </property>
-                         <property name="text">
-                          <string>Зажать</string>
-                         </property>
-                         <property name="icon">
-                          <iconset resource="resources.qrc">
-                           <normaloff>:/icons/icons/fix.png</normaloff>:/icons/icons/fix.png</iconset>
-                         </property>
-                         <property name="iconSize">
-                          <size>
-                           <width>35</width>
-                           <height>35</height>
-                          </size>
-                         </property>
-                         <property name="toolButtonStyle">
-                          <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
+                      </property>
+                      <property name="text">
+                       <string>Установить</string>
+                      </property>
                      </widget>
                     </item>
                    </layout>
