@@ -124,6 +124,6 @@ class ArduinoController(QObject):
                 return
 
     def _get_ports_to_try(self) -> list:
-        #ports = [f"COM{i}" for i in range(1, 16)]
+        ports = [f"COM{i}" for i in range(1, 16)]
         ports.extend(["/dev/ttyACM0", "/dev/ttyACM1", "/dev/ttyUSB0", "/dev/ttyUSB1"])
         return ports
