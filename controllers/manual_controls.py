@@ -119,7 +119,7 @@ class ManualControls(QObject):
     def _on_lin_speed_changed(self, value: int) -> None:
         self.ui.lblLinSpeed.setText(f"Скорость перемещения: {value}%")
         self.main.set_lin_speed(value)
-    
+     
     def _on_fix_speed_changed(self, value: int) -> None:
         self.ui.lblFixSpeed.setText(f"Скорость фиксации: {value}%")
         self.main.set_fix_speed(value)

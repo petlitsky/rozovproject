@@ -103,7 +103,7 @@ class PasswordDialog(BaseDialog):
         self.cancel_button.setFocus()
         # И тут же очищаем фокус у всего окна
         self.clearFocus()
-
+ 
 
     
     def _on_password_field_click(self, event):

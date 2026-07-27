@@ -96,7 +96,7 @@ class ArduinoController(QObject):
 
         except (serial.SerialException, OSError, IOError):
             self.disconnect()
-
+ 
     def _process_data(self, data: str) -> None:
         if data in self._handlers:
             self._handlers[data]()
