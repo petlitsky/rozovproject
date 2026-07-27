@@ -3068,7 +3068,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(8)
+        self.stackedWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -3094,7 +3094,7 @@ class Ui_MainWindow(object):
 "\u0417\u0434\u0435\u0441\u044c \u0441\u043a\u043e\u0440\u043e \u0447\u0442\u043e-\u0442\u043e \u0431\u0443\u0434\u0435\u0442!", None))
         self.label_42.setText(QCoreApplication.translate("MainWindow", u"\u041c\u043e\u0434\u0443\u043b\u044c \u043b\u0438\u043d\u0435\u0439\u043d\u043e\u0433\u043e \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u044f", None))
         self.label_43.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0410\u042f \u041f\u041e\u0417\u0418\u0426\u0418\u042f", None))
-        self.lblLinPosMan.setText(QCoreApplication.translate("MainWindow", u"230 \u043c\u043c", None))
+        self.lblLinPosMan.setText(QCoreApplication.translate("MainWindow", u"--- \u043c\u043c", None))
         self.btnLinForwardMan.setText(QCoreApplication.translate("MainWindow", u"\u0412\u043f\u0435\u0440\u0435\u0434", None))
         self.btnLinBackMan.setText(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0437\u0430\u0434", None))
         self.btnGoLinPos1Man.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u0437\u0438\u0446\u0438\u044f \u043f\u0440\u0435\u0434\u043e\u0431\u0436\u0438\u043c\u0430", None))
@@ -3107,16 +3107,16 @@ class Ui_MainWindow(object):
         self.toolButton_29.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0430\u0442\u044c", None))
         self.label_45.setText(QCoreApplication.translate("MainWindow", u"\u041c\u043e\u0434\u0443\u043b\u044c \u043f\u0440\u0435\u0434\u043e\u0431\u0436\u0438\u043c\u0430", None))
         self.label_46.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0410\u042f \u041f\u041e\u0417\u0418\u0426\u0418\u042f", None))
-        self.lblPrePosMan.setText(QCoreApplication.translate("MainWindow", u"122 \u043c\u043c", None))
+        self.lblPrePosMan.setText(QCoreApplication.translate("MainWindow", u"--- \u043c\u043c", None))
         self.label_48.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0415\u0415 \u0423\u0421\u0418\u041b\u0418\u0415", None))
-        self.label_49.setText(QCoreApplication.translate("MainWindow", u"65 \u041d", None))
+        self.label_49.setText(QCoreApplication.translate("MainWindow", u"--- \u041d", None))
         self.btnPreUpMan.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0440\u0445", None))
         self.btnPreDownMan.setText(QCoreApplication.translate("MainWindow", u"\u0412\u043d\u0438\u0437", None))
         self.btnPreDown11.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e \u0443\u0441\u0438\u043b\u0438\u044f", None))
         self.btnPreHomeMan.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u043c\u043e\u0439", None))
         self.label_36.setText(QCoreApplication.translate("MainWindow", u"\u041c\u043e\u0434\u0443\u043b\u044c \u043f\u043e\u0441\u0442\u043e\u0431\u0436\u0438\u043c\u0430", None))
         self.label_37.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0418\u0419 \u041c\u041e\u041c\u0415\u041d\u0422", None))
-        self.label_38.setText(QCoreApplication.translate("MainWindow", u"3 \u041d\u00b7\u043c", None))
+        self.label_38.setText(QCoreApplication.translate("MainWindow", u"--- \u041d\u00b7\u043c", None))
         self.btnPostBackMan.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0432\u043e\u0434\u0438\u0442\u044c", None))
         self.btnPostForwardMan.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0432\u043e\u0434\u0438\u0442\u044c", None))
         self.toolButton_25.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0430\u0442\u044c", None))
