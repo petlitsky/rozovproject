@@ -19,8 +19,8 @@ class MainWindow(QMainWindow):
         
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.setFixedSize(1024,600)
-        #self.showFullScreen()
+        #self.setFixedSize(1024,600)
+        self.showFullScreen()
         
         self.config = Config()
         self.arduino = ArduinoController(self)
