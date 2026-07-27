@@ -1,10 +1,6 @@
-try:
-    import board
-    import busio
-    import adafruit_bme280
-    HAS_HARDWARE = True
-except (ImportError, NotImplementedError):
-    HAS_HARDWARE = False
+import board
+import busio
+import adafruit_bme280
 from PySide6.QtCore import QObject, QTimer, Signal
 
 

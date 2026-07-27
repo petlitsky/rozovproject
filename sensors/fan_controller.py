@@ -1,9 +1,4 @@
-# sensors/fan_controller.py
-try:
-    import RPi.GPIO as GPIO
-    HAS_HARDWARE = True
-except (ModuleNotFoundError):
-    HAS_HARDWARE = False
+import RPi.GPIO as GPIO
 from PySide6.QtCore import QObject, Signal
 
 
