@@ -394,7 +394,7 @@ QPushButton:checked {
           <string notr="true">background: #dde0e7;</string>
          </property>
          <property name="currentIndex">
-          <number>7</number>
+          <number>8</number>
          </property>
          <widget class="QWidget" name="pageAutoMode">
           <layout class="QVBoxLayout" name="verticalLayout_30">
@@ -3130,7 +3130,7 @@ QToolButton:pressed {
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>16777215</width>
+                  <width>400</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -3480,7 +3480,32 @@ QPushButton:pressed {
                      </widget>
                     </item>
                     <item>
+                     <widget class="QLabel" name="lblLinSpeed">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>11</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Скорость перемещения: --%</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <widget class="QSlider" name="linSpeed">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>100</number>
+                      </property>
                       <property name="orientation">
                        <enum>Qt::Orientation::Horizontal</enum>
                       </property>
@@ -3993,7 +4018,7 @@ QToolButton:pressed {
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>16777215</width>
+                  <width>400</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -4303,7 +4328,32 @@ QPushButton:pressed {
                      </widget>
                     </item>
                     <item>
+                     <widget class="QLabel" name="lblFixSpeed">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>11</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Скорость фиксации: --%</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <widget class="QSlider" name="fixSpeed">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>100</number>
+                      </property>
                       <property name="orientation">
                        <enum>Qt::Orientation::Horizontal</enum>
                       </property>
@@ -4803,7 +4853,7 @@ QToolButton:pressed {
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>16777215</width>
+                  <width>400</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -5173,7 +5223,32 @@ QPushButton:pressed {
                      </widget>
                     </item>
                     <item>
+                     <widget class="QLabel" name="lblPreSpeed">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>11</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Скорость перемещения: --%</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <widget class="QSlider" name="preSpeed">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>100</number>
+                      </property>
                       <property name="orientation">
                        <enum>Qt::Orientation::Horizontal</enum>
                       </property>
@@ -5699,7 +5774,7 @@ QToolButton:pressed {
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>16777215</width>
+                  <width>400</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -6009,7 +6084,32 @@ QPushButton:pressed {
                      </widget>
                     </item>
                     <item>
+                     <widget class="QLabel" name="lblPostSpeed">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>11</pointsize>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Скорость обжима: --%</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
                      <widget class="QSlider" name="postSpeed">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>100</number>
+                      </property>
                       <property name="orientation">
                        <enum>Qt::Orientation::Horizontal</enum>
                       </property>

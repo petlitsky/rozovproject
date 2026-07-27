@@ -121,7 +121,7 @@ class ManualControls(QObject):
         self.main.set_lin_speed(value)
     
     def _on_fix_speed_changed(self, value: int) -> None:
-        self.ui.lblFixSpeed.setText(f"Скорость зажатия: {value}%")
+        self.ui.lblFixSpeed.setText(f"Скорость фиксации: {value}%")
         self.main.set_fix_speed(value)
     
     def _on_pre_speed_changed(self, value: int) -> None:
@@ -129,7 +129,7 @@ class ManualControls(QObject):
         self.main.set_pre_speed(value)
     
     def _on_post_speed_changed(self, value: int) -> None:
-        self.ui.lblPostSpeed.setText(f"Скорость зажатия: {value}%")
+        self.ui.lblPostSpeed.setText(f"Скорость обжима: {value}%")
         self.main.set_post_speed(value)
     
     def _on_fan_speed_changed(self, value: int) -> None:

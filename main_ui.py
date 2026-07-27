@@ -1492,7 +1492,7 @@ class Ui_MainWindow(object):
         self.widget_6 = QWidget(self.widget_3)
         self.widget_6.setObjectName(u"widget_6")
         self.widget_6.setMinimumSize(QSize(0, 0))
-        self.widget_6.setMaximumSize(QSize(16777215, 16777215))
+        self.widget_6.setMaximumSize(QSize(400, 16777215))
         self.widget_6.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.verticalLayout_7 = QVBoxLayout(self.widget_6)
         self.verticalLayout_7.setSpacing(10)
@@ -1676,8 +1676,17 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_11.addWidget(self.widget_7)
 
+        self.lblLinSpeed = QLabel(self.frameXPos)
+        self.lblLinSpeed.setObjectName(u"lblLinSpeed")
+        self.lblLinSpeed.setMaximumSize(QSize(16777215, 40))
+        self.lblLinSpeed.setFont(font3)
+
+        self.verticalLayout_11.addWidget(self.lblLinSpeed)
+
         self.linSpeed = QSlider(self.frameXPos)
         self.linSpeed.setObjectName(u"linSpeed")
+        self.linSpeed.setMinimum(1)
+        self.linSpeed.setMaximum(100)
         self.linSpeed.setOrientation(Qt.Orientation.Horizontal)
 
         self.verticalLayout_11.addWidget(self.linSpeed)
@@ -1934,7 +1943,7 @@ class Ui_MainWindow(object):
         self.widget_18 = QWidget(self.widget_16)
         self.widget_18.setObjectName(u"widget_18")
         self.widget_18.setMinimumSize(QSize(0, 0))
-        self.widget_18.setMaximumSize(QSize(16777215, 16777215))
+        self.widget_18.setMaximumSize(QSize(400, 16777215))
         self.widget_18.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.verticalLayout_23 = QVBoxLayout(self.widget_18)
         self.verticalLayout_23.setSpacing(10)
@@ -2086,8 +2095,17 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_25.addWidget(self.widget_19)
 
+        self.lblFixSpeed = QLabel(self.frameXPos_3)
+        self.lblFixSpeed.setObjectName(u"lblFixSpeed")
+        self.lblFixSpeed.setMaximumSize(QSize(16777215, 40))
+        self.lblFixSpeed.setFont(font3)
+
+        self.verticalLayout_25.addWidget(self.lblFixSpeed)
+
         self.fixSpeed = QSlider(self.frameXPos_3)
         self.fixSpeed.setObjectName(u"fixSpeed")
+        self.fixSpeed.setMinimum(1)
+        self.fixSpeed.setMaximum(100)
         self.fixSpeed.setOrientation(Qt.Orientation.Horizontal)
 
         self.verticalLayout_25.addWidget(self.fixSpeed)
@@ -2330,7 +2348,7 @@ class Ui_MainWindow(object):
         self.widget_11 = QWidget(self.widget_9)
         self.widget_11.setObjectName(u"widget_11")
         self.widget_11.setMinimumSize(QSize(0, 0))
-        self.widget_11.setMaximumSize(QSize(16777215, 16777215))
+        self.widget_11.setMaximumSize(QSize(400, 16777215))
         self.widget_11.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.verticalLayout_14 = QVBoxLayout(self.widget_11)
         self.verticalLayout_14.setSpacing(10)
@@ -2514,8 +2532,17 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_16.addWidget(self.widget_12)
 
+        self.lblPreSpeed = QLabel(self.frameXPos_2)
+        self.lblPreSpeed.setObjectName(u"lblPreSpeed")
+        self.lblPreSpeed.setMaximumSize(QSize(16777215, 40))
+        self.lblPreSpeed.setFont(font3)
+
+        self.verticalLayout_16.addWidget(self.lblPreSpeed)
+
         self.preSpeed = QSlider(self.frameXPos_2)
         self.preSpeed.setObjectName(u"preSpeed")
+        self.preSpeed.setMinimum(1)
+        self.preSpeed.setMaximum(100)
         self.preSpeed.setOrientation(Qt.Orientation.Horizontal)
 
         self.verticalLayout_16.addWidget(self.preSpeed)
@@ -2767,7 +2794,7 @@ class Ui_MainWindow(object):
         self.widget_28 = QWidget(self.widget_26)
         self.widget_28.setObjectName(u"widget_28")
         self.widget_28.setMinimumSize(QSize(0, 0))
-        self.widget_28.setMaximumSize(QSize(16777215, 16777215))
+        self.widget_28.setMaximumSize(QSize(400, 16777215))
         self.widget_28.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.verticalLayout_38 = QVBoxLayout(self.widget_28)
         self.verticalLayout_38.setSpacing(10)
@@ -2919,8 +2946,17 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_27.addWidget(self.widget_29)
 
+        self.lblPostSpeed = QLabel(self.frameXPos_4)
+        self.lblPostSpeed.setObjectName(u"lblPostSpeed")
+        self.lblPostSpeed.setMaximumSize(QSize(16777215, 40))
+        self.lblPostSpeed.setFont(font3)
+
+        self.verticalLayout_27.addWidget(self.lblPostSpeed)
+
         self.postSpeed = QSlider(self.frameXPos_4)
         self.postSpeed.setObjectName(u"postSpeed")
+        self.postSpeed.setMinimum(1)
+        self.postSpeed.setMaximum(100)
         self.postSpeed.setOrientation(Qt.Orientation.Horizontal)
 
         self.verticalLayout_27.addWidget(self.postSpeed)
@@ -3032,7 +3068,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(7)
+        self.stackedWidget.setCurrentIndex(8)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -3118,6 +3154,7 @@ class Ui_MainWindow(object):
         self.btnBackLin1mm.setText(QCoreApplication.translate("MainWindow", u"-1 \u043c\u043c", None))
         self.btnForwardLin1mm.setText(QCoreApplication.translate("MainWindow", u"+1 \u043c\u043c", None))
         self.btnForwardLin5mm.setText(QCoreApplication.translate("MainWindow", u"+5 \u043c\u043c", None))
+        self.lblLinSpeed.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u044f: --%", None))
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c", None))
         self.btnSaveLinPos1.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0438\u044e 1", None))
         self.btnSaveLinPos2.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0438\u044e 2", None))
@@ -3134,6 +3171,7 @@ class Ui_MainWindow(object):
         self.btnBackFix1grad.setText(QCoreApplication.translate("MainWindow", u"-1\u00b0", None))
         self.btnForwardFix1grad.setText(QCoreApplication.translate("MainWindow", u"+1\u00b0", None))
         self.btnForwardFix5grad.setText(QCoreApplication.translate("MainWindow", u"+5\u00b0", None))
+        self.lblFixSpeed.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c \u0444\u0438\u043a\u0441\u0430\u0446\u0438\u0438: --%", None))
         self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c", None))
         self.pushButton_26.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0441\u0438\u043b\u0443 \u0442\u043e\u043a\u0430", None))
         self.pushButton_27.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0438\u044e\n"
@@ -3151,6 +3189,7 @@ class Ui_MainWindow(object):
         self.btnUpPre1mm.setText(QCoreApplication.translate("MainWindow", u"-1 \u043c\u043c", None))
         self.btnDownPre1mm.setText(QCoreApplication.translate("MainWindow", u"+1 \u043c\u043c", None))
         self.btnDownPre5mm.setText(QCoreApplication.translate("MainWindow", u"+5 \u043c\u043c", None))
+        self.lblPreSpeed.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u044f: --%", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c", None))
         self.pushButton_18.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0443\u0441\u0438\u043b\u0438\u0435", None))
         self.pushButton_20.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0435\u043c\u0435\u0441\u0442\u0438\u0442\u044c\u0441\u044f \u0434\u043e \u0443\u0441\u0438\u043b\u0438\u044f", None))
@@ -3167,6 +3206,7 @@ class Ui_MainWindow(object):
         self.pushButton_34.setText(QCoreApplication.translate("MainWindow", u"-1\u00b0", None))
         self.pushButton_35.setText(QCoreApplication.translate("MainWindow", u"+1\u00b0", None))
         self.pushButton_36.setText(QCoreApplication.translate("MainWindow", u"+5\u00b0", None))
+        self.lblPostSpeed.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c \u043e\u0431\u0436\u0438\u043c\u0430: --%", None))
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c", None))
         self.pushButton_37.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043c\u043e\u043c\u0435\u043d\u0442", None))
         self.pushButton_38.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0438\u044e\n"
