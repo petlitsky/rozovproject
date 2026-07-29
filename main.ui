@@ -1804,7 +1804,7 @@ QFrame#frameXPos {
                         </widget>
                        </item>
                        <item>
-                        <widget class="QLabel" name="label_38">
+                        <widget class="QLabel" name="lblPostTorqMan">
                          <property name="maximumSize">
                           <size>
                            <width>16777215</width>
@@ -5384,7 +5384,7 @@ QPushButton:pressed {
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="label_19">
+                  <widget class="QLabel" name="lblPreForce">
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
@@ -5831,7 +5831,7 @@ QFrame#framePos {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLabel" name="label_30">
+                     <widget class="QLabel" name="lblPostTorq">
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
@@ -5848,7 +5848,7 @@ QFrame#framePos {
                        <enum>Qt::FocusPolicy::ClickFocus</enum>
                       </property>
                       <property name="text">
-                       <string>3 Н·м</string>
+                       <string>-- Н·м</string>
                       </property>
                      </widget>
                     </item>

@@ -877,15 +877,15 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_20.addWidget(self.label_37)
 
-        self.label_38 = QLabel(self.widget_36)
-        self.label_38.setObjectName(u"label_38")
-        self.label_38.setMaximumSize(QSize(16777215, 40))
+        self.lblPostTorqMan = QLabel(self.widget_36)
+        self.lblPostTorqMan.setObjectName(u"lblPostTorqMan")
+        self.lblPostTorqMan.setMaximumSize(QSize(16777215, 40))
         font8 = QFont()
         font8.setPointSize(20)
         font8.setBold(True)
-        self.label_38.setFont(font8)
+        self.lblPostTorqMan.setFont(font8)
 
-        self.verticalLayout_20.addWidget(self.label_38)
+        self.verticalLayout_20.addWidget(self.lblPostTorqMan)
 
 
         self.verticalLayout_49.addWidget(self.widget_36)
@@ -2622,13 +2622,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_17.addWidget(self.label_18)
 
-        self.label_19 = QLabel(self.framePosAndHome_2)
-        self.label_19.setObjectName(u"label_19")
-        self.label_19.setMaximumSize(QSize(16777215, 40))
-        self.label_19.setFont(font13)
-        self.label_19.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
+        self.lblPreForce = QLabel(self.framePosAndHome_2)
+        self.lblPreForce.setObjectName(u"lblPreForce")
+        self.lblPreForce.setMaximumSize(QSize(16777215, 40))
+        self.lblPreForce.setFont(font13)
+        self.lblPreForce.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
-        self.verticalLayout_17.addWidget(self.label_19)
+        self.verticalLayout_17.addWidget(self.lblPreForce)
 
 
         self.horizontalLayout_7.addWidget(self.framePosAndHome_2)
@@ -2810,13 +2810,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_39.addWidget(self.label_29)
 
-        self.label_30 = QLabel(self.framePos_4)
-        self.label_30.setObjectName(u"label_30")
-        self.label_30.setMaximumSize(QSize(16777215, 40))
-        self.label_30.setFont(font13)
-        self.label_30.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
+        self.lblPostTorq = QLabel(self.framePos_4)
+        self.lblPostTorq.setObjectName(u"lblPostTorq")
+        self.lblPostTorq.setMaximumSize(QSize(16777215, 40))
+        self.lblPostTorq.setFont(font13)
+        self.lblPostTorq.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
-        self.verticalLayout_39.addWidget(self.label_30)
+        self.verticalLayout_39.addWidget(self.lblPostTorq)
 
 
         self.verticalLayout_38.addWidget(self.framePos_4)
@@ -3097,7 +3097,7 @@ class Ui_MainWindow(object):
         self.btnPreHomeMan.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u043c\u043e\u0439", None))
         self.label_36.setText(QCoreApplication.translate("MainWindow", u"\u041c\u043e\u0434\u0443\u043b\u044c \u043f\u043e\u0441\u0442\u043e\u0431\u0436\u0438\u043c\u0430", None))
         self.label_37.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0418\u0419 \u041c\u041e\u041c\u0415\u041d\u0422", None))
-        self.label_38.setText(QCoreApplication.translate("MainWindow", u"--- \u041d\u00b7\u043c", None))
+        self.lblPostTorqMan.setText(QCoreApplication.translate("MainWindow", u"--- \u041d\u00b7\u043c", None))
         self.btnPostBackMan.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0432\u043e\u0434\u0438\u0442\u044c", None))
         self.btnPostForwardMan.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0432\u043e\u0434\u0438\u0442\u044c", None))
         self.toolButton_25.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0430\u0442\u044c", None))
@@ -3175,13 +3175,13 @@ class Ui_MainWindow(object):
         self.pushButton_18.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0443\u0441\u0438\u043b\u0438\u0435", None))
         self.pushButton_20.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0435\u043c\u0435\u0441\u0442\u0438\u0442\u044c\u0441\u044f \u0434\u043e \u0443\u0441\u0438\u043b\u0438\u044f", None))
         self.label_18.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0415\u0415 \u0423\u0421\u0418\u041b\u0418\u0415", None))
-        self.label_19.setText(QCoreApplication.translate("MainWindow", u"--- \u041d", None))
+        self.lblPreForce.setText(QCoreApplication.translate("MainWindow", u"--- \u041d", None))
         self.label_25.setText(QCoreApplication.translate("MainWindow", u"\u041c\u043e\u0434\u0443\u043b\u044c \u043f\u043e\u0441\u0442\u043e\u0431\u0436\u0438\u043c\u0430", None))
         self.btnPostForward.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0430\u0442\u044c", None))
         self.btnPostBack.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0430\u0442\u044c", None))
         self.btnPostHome.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043b\u043d\u043e\u0441\u0442\u044c\u044e \u0440\u0430\u0437\u0436\u0430\u0442\u044c", None))
         self.label_29.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0418\u0419 \u041c\u041e\u041c\u0415\u041d\u0422", None))
-        self.label_30.setText(QCoreApplication.translate("MainWindow", u"3 \u041d\u00b7\u043c", None))
+        self.lblPostTorq.setText(QCoreApplication.translate("MainWindow", u"-- \u041d\u00b7\u043c", None))
         self.label_31.setText(QCoreApplication.translate("MainWindow", u"\u0422\u043e\u0447\u043d\u043e\u0435 \u0437\u0430\u0436\u0430\u0442\u0438\u0435", None))
         self.btnPre5mm.setText(QCoreApplication.translate("MainWindow", u"-5\u00b0", None))
         self.pushButton_34.setText(QCoreApplication.translate("MainWindow", u"-1\u00b0", None))
