@@ -503,7 +503,7 @@ class MainWindow(QMainWindow):
         self.is_moving_to_force = True
 
         current_pos = self.config.get("pre_position", 0)
-        target_pos = 35-current_pos
+        target_pos = 40-current_pos
 
         if target_pos < 0 : target_pos = 0
         
