@@ -7,7 +7,7 @@ class FanController(QObject):
     
     def __init__(self, parent=None):
         super().__init__(parent)
-        self._gpio_chip = 0  # Для RPi 4 / RPi 3 обычно chip 0. (Для RPi 5 используется chip 4)
+        self._gpio_chip = 4  # Для RPi 4 / RPi 3 обычно chip 0. (Для RPi 5 используется chip 4)
         self._pwm_pin = 12   # GPIO12 (Физический пин 32)
         self._handle = None
         self._speed = 0      # 0-100%
