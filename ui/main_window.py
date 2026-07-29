@@ -122,14 +122,14 @@ class MainWindow(QMainWindow):
 
             current_pos = self.config.get("pre_position", 0)
             if current_pos == 35:
-                self.arduino.send_command("PRE_SET_SPEED:10")
+                self.arduino.send_command("PRE_SPEED:10")
                 self.arduino.send_command("PRE_DOWN_START")
 
             if value >= target:
                 self.arduino.send_command("PRE_STOP")
                 self.is_moving_to_force = False
                 speed = self.config.get("pre_speed", 30)
-                self.arduino.send_command(f"PRE_SET_SPEED:{speed}")
+                self.arduino.send_command(f"PRE_SPEED:{speed}")
 
         self.ui.lblPreForceMan.setText(f"{value:.1f} Н")
         self.ui.lblPreForce.setText(f"{value:.1f} Н")
