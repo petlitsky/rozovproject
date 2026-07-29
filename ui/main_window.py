@@ -45,6 +45,7 @@ class MainWindow(QMainWindow):
         self.force_sensor = ForceSensorWorker(dout_pin=24, pd_sck_pin=25)
         self.force_sensor.force_updated.connect(self._update_force_labels)
         self.force_sensor.start()
+        self.is_moving_to_force = False
 
         self.torque_worker = TorqueSensorWorker(dout_pin=18, pd_sck_pin=23)
         self.torque_worker.torque_updated.connect(self._update_torque_labels)
@@ -116,6 +117,12 @@ class MainWindow(QMainWindow):
         self.ui.lblDate.setText(now)
     
     def _update_force_labels(self, value: float):
+        if self.is_moving_to_force:
+            target = float(self.config.get("target_pre_force", 0.0))
+            if self.current_force >= target:
+                self.arduino.send_command("PRE_STOP")
+                self.is_moving_to_force = False
+
         self.ui.lblPreForceMan.setText(f"{value:.4f} Н")
         self.ui.lblPreForce.setText(f"{value:.4f} Н")
         
@@ -477,6 +484,7 @@ class MainWindow(QMainWindow):
         target = self.config.get(f"target_pre_force", 0.0)
         current = self.force_sensor.get_current_force()
         
+        self.is_moving_to_force = True
         diff = target - current
         if diff <= 0:
             return
