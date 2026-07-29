@@ -18,6 +18,7 @@ class ManualControls(QObject):
         self._connect_pre_crimp_buttons()
         self._connect_post_crimp_buttons()
         self._connect_speed_sliders()
+        self._connect_fan_radio()
     
     def _connect_linear_buttons(self) -> None:
         buttons = [
@@ -138,3 +139,8 @@ class ManualControls(QObject):
     def _on_fan_speed_changed(self, value: int) -> None:
         self.ui.lblFanSpeed.setText(f"{value}%")
         self.main.set_fan_speed(value)
+
+    def _connect_speed_sliders(self) -> None:
+        self.ui.getAutoFan.clicked.connect(self._process_auto_fan)
+        self.ui.getManualFan.clicked.connect(self._on_fix_speed_changed)
+        self.ui.fanOff.clicked.connect(self._set_fan_off)

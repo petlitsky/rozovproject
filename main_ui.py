@@ -1108,12 +1108,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_64.setSpacing(5)
         self.verticalLayout_64.setObjectName(u"verticalLayout_64")
         self.verticalLayout_64.setContentsMargins(10, 10, 10, 10)
-        self.radioButton = QRadioButton(self.groupBox_2)
-        self.radioButton.setObjectName(u"radioButton")
+        self.getAutoFan = QRadioButton(self.groupBox_2)
+        self.getAutoFan.setObjectName(u"getAutoFan")
         font9 = QFont()
         font9.setBold(True)
-        self.radioButton.setFont(font9)
-        self.radioButton.setStyleSheet(u"QRadioButton {\n"
+        self.getAutoFan.setFont(font9)
+        self.getAutoFan.setStyleSheet(u"QRadioButton {\n"
 "    color: #2C3E50;\n"
 "    font-size: 12px;\n"
 "    padding: 5px;\n"
@@ -1128,15 +1128,15 @@ class Ui_MainWindow(object):
 "QRadioButton::indicator:checked {\n"
 "    border-color: #4A8AB5;\n"
 "}")
-        self.radioButton.setChecked(True)
+        self.getAutoFan.setChecked(True)
 
-        self.verticalLayout_64.addWidget(self.radioButton)
+        self.verticalLayout_64.addWidget(self.getAutoFan)
 
-        self.radioButton_2 = QRadioButton(self.groupBox_2)
-        self.radioButton_2.setObjectName(u"radioButton_2")
-        self.radioButton_2.setFont(font9)
-        self.radioButton_2.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
-        self.radioButton_2.setStyleSheet(u"QRadioButton {\n"
+        self.getManualFan = QRadioButton(self.groupBox_2)
+        self.getManualFan.setObjectName(u"getManualFan")
+        self.getManualFan.setFont(font9)
+        self.getManualFan.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
+        self.getManualFan.setStyleSheet(u"QRadioButton {\n"
 "    color: #2C3E50;\n"
 "    font-size: 12px;\n"
 "    padding: 5px;\n"
@@ -1151,16 +1151,16 @@ class Ui_MainWindow(object):
 "QRadioButton::indicator:checked {\n"
 "    border-color: #4A8AB5;\n"
 "}")
-        self.radioButton_2.setChecked(False)
-        self.radioButton_2.setAutoRepeat(False)
-        self.radioButton_2.setAutoExclusive(True)
+        self.getManualFan.setChecked(False)
+        self.getManualFan.setAutoRepeat(False)
+        self.getManualFan.setAutoExclusive(True)
 
-        self.verticalLayout_64.addWidget(self.radioButton_2)
+        self.verticalLayout_64.addWidget(self.getManualFan)
 
-        self.radioButton_3 = QRadioButton(self.groupBox_2)
-        self.radioButton_3.setObjectName(u"radioButton_3")
-        self.radioButton_3.setFont(font9)
-        self.radioButton_3.setStyleSheet(u"QRadioButton {\n"
+        self.fanOff = QRadioButton(self.groupBox_2)
+        self.fanOff.setObjectName(u"fanOff")
+        self.fanOff.setFont(font9)
+        self.fanOff.setStyleSheet(u"QRadioButton {\n"
 "\n"
 "    color: #2C3E50;\n"
 "    font-size: 12px;\n"
@@ -1177,7 +1177,7 @@ class Ui_MainWindow(object):
 "    border-color: #4A8AB5;\n"
 "}")
 
-        self.verticalLayout_64.addWidget(self.radioButton_3)
+        self.verticalLayout_64.addWidget(self.fanOff)
 
 
         self.verticalLayout_62.addWidget(self.groupBox_2)
@@ -1260,8 +1260,9 @@ class Ui_MainWindow(object):
         self.tempMin.setFont(font11)
         self.tempMin.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.tempMin.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
-        self.tempMin.setMinimum(20)
-        self.tempMin.setMaximum(100)
+        self.tempMin.setMinimum(1)
+        self.tempMin.setMaximum(40)
+        self.tempMin.setValue(10)
 
         self.gridLayout_4.addWidget(self.tempMin, 0, 1, 1, 1)
 
@@ -1287,7 +1288,8 @@ class Ui_MainWindow(object):
         self.tempMax.setFont(font11)
         self.tempMax.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.tempMax.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
-        self.tempMax.setMinimum(40)
+        self.tempMax.setMinimum(20)
+        self.tempMax.setValue(30)
 
         self.gridLayout_4.addWidget(self.tempMax, 1, 1, 1, 1)
 
@@ -1313,7 +1315,8 @@ class Ui_MainWindow(object):
         self.startSpeed.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.startSpeed.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
         self.startSpeed.setMinimum(5)
-        self.startSpeed.setMaximum(40)
+        self.startSpeed.setMaximum(70)
+        self.startSpeed.setValue(10)
 
         self.gridLayout_4.addWidget(self.startSpeed, 2, 1, 1, 1)
 
@@ -3050,7 +3053,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(7)
+        self.stackedWidget.setCurrentIndex(4)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -3110,9 +3113,9 @@ class Ui_MainWindow(object):
         self.label_8.setText(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f \u0432\u0435\u043d\u0442\u0438\u043b\u044f\u0442\u043e\u0440\u043e\u043c \u043a\u043e\u0440\u043f\u0443\u0441\u0430", None))
         self.label_9.setText("")
         self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"\u0420\u0435\u0436\u0438\u043c \u0440\u0430\u0431\u043e\u0442\u044b", None))
-        self.radioButton.setText(QCoreApplication.translate("MainWindow", u"\u0410\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0440\u0435\u0436\u0438\u043c (\u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u043c\u044b\u0439)", None))
-        self.radioButton_2.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0443\u0447\u043d\u043e\u0439 \u0440\u0435\u0436\u0438\u043c (\u0444\u0438\u043a\u0441\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u0430\u044f \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c)", None))
-        self.radioButton_3.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u043a\u043b\u044e\u0447\u0438\u0442\u044c", None))
+        self.getAutoFan.setText(QCoreApplication.translate("MainWindow", u"\u0410\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0440\u0435\u0436\u0438\u043c (\u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u043c\u044b\u0439)", None))
+        self.getManualFan.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0443\u0447\u043d\u043e\u0439 \u0440\u0435\u0436\u0438\u043c (\u0444\u0438\u043a\u0441\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u0430\u044f \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c)", None))
+        self.fanOff.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u043a\u043b\u044e\u0447\u0438\u0442\u044c", None))
         self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u0440\u0443\u0447\u043d\u043e\u0433\u043e \u0440\u0435\u0436\u0438\u043c\u0430", None))
         self.label_32.setText(QCoreApplication.translate("MainWindow", u"\u0424\u0438\u043a\u0441\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u0430\u044f \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c (0-100%):", None))
         self.lblFanSpeed.setText(QCoreApplication.translate("MainWindow", u"50%", None))
