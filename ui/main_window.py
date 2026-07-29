@@ -496,12 +496,11 @@ class MainWindow(QMainWindow):
         if diff <= 0:
             return
 
-        #current_pos = self.config.get("pre_position", 0)
-        #target_pos = 35-current_pos
+        current_pos = self.config.get("pre_position", 0)
+        target_pos = 35-current_pos
 
-        #if target_pos < 0 : target = 0
-        self.arduino.send_command("PRE_DOWN_START")
-
+        if target_pos < 0 : target = 0
+        
         self.pre_move_steps(target)
 
     def pre_stop(self) -> None:
