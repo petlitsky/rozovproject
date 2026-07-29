@@ -30,6 +30,7 @@ class ForceSensorWorker(QThread):
                     # Расчет усилия
                     force = (raw_val - zero_offset) / scale_ratio
                     self.force_updated.emit(force)
+                    print(force)
 
                 # Используем msleep вместо time.sleep для лучшей интеграции с Qt
                 self.msleep(100)
