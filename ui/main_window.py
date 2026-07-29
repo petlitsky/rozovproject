@@ -130,8 +130,8 @@ class MainWindow(QMainWindow):
                 speed = self.config.get("pre_speed", 30)
                 self.arduino.send_command(f"PRE_SET_SPEED:{speed}")
 
-        self.ui.lblPreForceMan.setText(f"{value:.4f} Н")
-        self.ui.lblPreForce.setText(f"{value:.4f} Н")
+        self.ui.lblPreForceMan.setText(f"{value:.1f} Н")
+        self.ui.lblPreForce.setText(f"{value:.1f} Н")
         
     def _update_torque_labels(self, value: float):
         self.ui.lblPostTorqMan.setText(f"{value:.3f} Н·м")
