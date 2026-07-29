@@ -491,10 +491,12 @@ class MainWindow(QMainWindow):
         target = self.config.get(f"target_pre_force", 0.0)
         current = self.force_sensor.get_current_force()
         
-        self.is_moving_to_force = True
+        
         diff = target - current
         if diff <= 0:
             return
+
+        self.is_moving_to_force = True
 
         current_pos = self.config.get("pre_position", 0)
         target_pos = 35-current_pos
