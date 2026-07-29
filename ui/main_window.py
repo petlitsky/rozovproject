@@ -46,6 +46,7 @@ class MainWindow(QMainWindow):
         self.force_sensor.force_updated.connect(self._update_force_labels)
         self.force_sensor.start()
         self.is_moving_to_force = False
+        self.pre_slowed_force = False
 
         self.torque_worker = TorqueSensorWorker(dout_pin=18, pd_sck_pin=23)
         self.torque_worker.torque_updated.connect(self._update_torque_labels)
@@ -121,13 +122,15 @@ class MainWindow(QMainWindow):
             target = float(self.config.get("target_pre_force", 0.0))
 
             current_pos = self.config.get("pre_position", 0)
-            if current_pos == 35:
-                self.arduino.send_command("PRE_SPEED:10")
+            if current_pos >= 40 and !self.pre_slowed_force:
+                self.pre_slowed_force = True
+                self.arduino.send_command("PRE_SPEED:5")
                 self.arduino.send_command("PRE_DOWN_START")
 
             if value >= target:
                 self.arduino.send_command("PRE_STOP")
                 self.is_moving_to_force = False
+                self.pre_slowed_force = False
                 speed = self.config.get("pre_speed", 30)
                 self.arduino.send_command(f"PRE_SPEED:{speed}")
 
