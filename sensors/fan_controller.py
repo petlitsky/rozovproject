@@ -1,5 +1,5 @@
-import time
 import threading
+import time
 import gpiod
 from PySide6.QtCore import QObject, Signal
 
@@ -8,16 +8,15 @@ class FanController(QObject):
     fan_speed_updated = Signal(int)  # скорость в %
 
     def __init__(self, chip_name="gpiochip4", pin_offset=12, parent=None):
-        """
-        На Raspberry Pi 5 основной разъем GPIO обычно находится на gpiochip4.
-        GPIO12 на разъеме = pin_offset 12.
-        """
+        # Обязательно передаем parent в QObject!
         super().__init__(parent)
-        self._chip_name = chip_name
-        self._pin_offset = pin_offset
+
+        self._chip_name = str(chip_name)
+        self._pin_offset = int(pin_offset)  # Пин должен быть строго int!
         self._speed = 0  # 0-100%
         self._is_initialized = False
 
+        self._chip = None
         self._line = None
         self._pwm_thread = None
         self._running = False
@@ -26,9 +25,13 @@ class FanController(QObject):
 
     def _init_gpio(self):
         try:
-            # Открываем чип и запрашиваем линию
-            chip = gpiod.Chip(self._chip_name)
-            self._line = chip.get_line(self._pin_offset)
+            # 1. Открываем чип
+            self._chip = gpiod.Chip(self._chip_name)
+
+            # 2. Получаем линию по номеру пина (int)
+            self._line = self._chip.get_line(self._pin_offset)
+
+            # 3. Запрашиваем управление пином на выход
             self._line.request(
                 consumer="FanController", type=gpiod.LINE_REQ_DIR_OUT
             )
@@ -36,41 +39,47 @@ class FanController(QObject):
             self._is_initialized = True
             self._running = True
 
-            # Запускаем фоновый поток для генерации ШИМ
+            # 4. Запускаем фоновый поток ШИМ
             self._pwm_thread = threading.Thread(
                 target=self._pwm_loop, daemon=True
             )
             self._pwm_thread.start()
-            print("[FAN] Успешно инициализирован через gpiod")
+            print(
+                f"[FAN] Успешно инициализирован gpiod на пине {self._pin_offset}"
+            )
 
         except Exception as e:
             self._is_initialized = False
             print(f"[FAN] Ошибка инициализации gpiod: {e}")
 
     def _pwm_loop(self):
-        """Фоновый цикл генерации ШИМ (период 10 мс = 100 Гц)"""
+        """Фоновый цикл ШИМ (период 10 мс = 100 Гц)"""
         period = 0.01  # 10 мс
         while self._running:
             if self._speed <= 0:
-                self._line.set_value(0)
+                if self._line:
+                    self._line.set_value(0)
                 time.sleep(period)
             elif self._speed >= 100:
-                self._line.set_value(1)
+                if self._line:
+                    self._line.set_value(1)
                 time.sleep(period)
             else:
                 high_time = period * (self._speed / 100.0)
                 low_time = period - high_time
 
-                self._line.set_value(1)
+                if self._line:
+                    self._line.set_value(1)
                 time.sleep(high_time)
-                self._line.set_value(0)
+                if self._line:
+                    self._line.set_value(0)
                 time.sleep(low_time)
 
     def set_speed(self, speed: int) -> None:
         if not self._is_initialized:
             return
 
-        speed = max(0, min(100, speed))
+        speed = max(0, min(100, int(speed)))
         self._speed = speed
         self.fan_speed_updated.emit(speed)
 
@@ -84,6 +93,10 @@ class FanController(QObject):
         self._running = False
         if self._pwm_thread and self._pwm_thread.is_alive():
             self._pwm_thread.join(timeout=0.2)
+
         if self._line:
             self._line.set_value(0)
             self._line.release()
+
+        if self._chip:
+            self._chip.close()
