@@ -50,7 +50,7 @@ class ForceSensorWorker(QThread):
                 raw_val = self._read_average(3)
                 if raw_val is not None:
                     # 1. Расчет массы в граммах
-                    weight_grams = (raw_val - zero_offset) / self.scale_ratio
+                    weight_grams = (raw_val - self.zero_offset) / self.scale_ratio
                     
                     # 2. Перевод граммов в Ньютоны (Н): (г / 1000) * 9.80665
                     force_newtons = (weight_grams / 1000.0) * 9.80665
