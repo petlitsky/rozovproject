@@ -127,7 +127,7 @@ class MainWindow(QMainWindow):
                 self.arduino.send_command("PRE_SPEED:5")
                 self.arduino.send_command("PRE_DOWN_START")
 
-            if value >= target:
+            if value >= target-10:
                 self.arduino.send_command("PRE_STOP")
                 self.is_moving_to_force = False
                 self.pre_slowed_force = False
