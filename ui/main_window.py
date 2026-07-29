@@ -134,6 +134,7 @@ class MainWindow(QMainWindow):
                 speed = self.config.get("pre_speed", 30)
                 self.arduino.send_command(f"PRE_SPEED:{speed}")
 
+        if value < 0.5 : value = 0
         self.ui.lblPreForceMan.setText(f"{value:.1f} Н")
         self.ui.lblPreForce.setText(f"{value:.1f} Н")
         
