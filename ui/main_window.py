@@ -495,8 +495,13 @@ class MainWindow(QMainWindow):
         diff = target - current
         if diff <= 0:
             return
-        
-        self.arduino.send_command("PRE_DOWN_START")
+
+        current_pos = self.config.get("pre_position", 0)
+        target_pos = 35-current_pos
+
+        if target_pos < 0 : target = 0
+
+        self.pre_move_steps(target)
 
     def pre_stop(self) -> None:
         self.arduino.send_command("PRE_STOP")
@@ -512,7 +517,7 @@ class MainWindow(QMainWindow):
     
     def pre_move_steps(self, mm: float) -> None:
         steps = int(mm * 200)
-        self.arduino.send_command(f"PRE_MOVE:{-steps}")
+        self.arduino.send_command(f"PRE_MOVE:{steps}")
     
     def pre_down_exact(self) -> None:
         mm = self.ui.exPrePos.value()
