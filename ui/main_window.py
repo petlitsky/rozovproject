@@ -501,9 +501,9 @@ class MainWindow(QMainWindow):
         current_pos = self.config.get("pre_position", 0)
         target_pos = 5-current_pos
 
-        if target_pos < 0 : target = 0
+        if target_pos < 0 : target_pos = 0
         
-        self.pre_move_steps(target)
+        self.pre_move_steps(target_pos)
 
     def pre_stop(self) -> None:
         self.arduino.send_command("PRE_STOP")
