@@ -19,17 +19,20 @@ class ForceSensorWorker(QThread):
         self.sck_line = None
         self.zero_offset = 0
 
+    def _get_chip(self):
+        """Универсальное открытие gpiochip для Pi 4 и Pi 5"""
+        # Пробуем доступные пути к чипам (Pi 5 обычно /dev/gpiochip4, Pi 4 /dev/gpiochip0)
+        for chip_path in ["/dev/gpiochip4", "/dev/gpiochip0", "gpiochip4", "gpiochip0"]:
+            try:
+                return gpiod.Chip(chip_path)
+            except Exception:
+                continue
+        raise RuntimeError("Не удалось найти доступный gpiochip в системе")
+
     def run(self):
         try:
-            print(f"[Force Sensor] Запуск на GPIO (DOUT={self.dout_pin}, SCK={self.pd_sck_pin}) via gpiod...")
-            
-            # На Pi 5 используется gpiochip4 (чип RP1), на Pi 4 и старше — gpiochip0
-            chip_name = "gpiochip4"
-            try:
-                self.chip = gpiod.Chip(chip_name)
-            except Exception:
-                chip_name = "gpiochip0"
-                self.chip = gpiod.Chip(chip_name)
+            print(f"[Force Sensor] Инициализация GPIO (DOUT={self.dout_pin}, SCK={self.pd_sck_pin})...")
+            self.chip = self._get_chip()
 
             self.dout_line = self.chip.get_line(self.dout_pin)
             self.sck_line = self.chip.get_line(self.pd_sck_pin)
@@ -45,10 +48,8 @@ class ForceSensorWorker(QThread):
             while self._running:
                 raw_val = self._read_average(3)
                 if raw_val is not None:
-                    # Расчет чистого веса/силы
                     val = (raw_val - self.zero_offset) / self.scale_ratio
                     
-                    # Отсечка шума
                     if abs(val) < 0.1:
                         val = 0.0
 
@@ -64,9 +65,7 @@ class ForceSensorWorker(QThread):
             self._cleanup()
 
     def _read_raw(self):
-        """Прямой чтение 24 бит данных с чипа HX711 без зависимостей от RPi.GPIO"""
         count = 0
-        # Ожидание готовности HX711 (DOUT становится LOW)
         timeout = 100
         while self.dout_line.get_value() != 0 and timeout > 0:
             time.sleep(0.001)
@@ -75,17 +74,14 @@ class ForceSensorWorker(QThread):
         if timeout <= 0:
             return None
 
-        # Чтение 24 бит
         for _ in range(24):
             self.sck_line.set_value(1)
             count = (count << 1) | self.dout_line.get_value()
             self.sck_line.set_value(0)
 
-        # 25-й импульс для установки усиления 128 (Канал A)
         self.sck_line.set_value(1)
         self.sck_line.set_value(0)
 
-        # Преобразование дополнения до двух для знакового 24-битного числа
         if count & 0x800000:
             count -= 0x1000000
 

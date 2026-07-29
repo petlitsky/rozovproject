@@ -19,23 +19,25 @@ class TorqueSensorWorker(QThread):
         self.sck_line = None
         self.zero_offset = 0
 
+    def _get_chip(self):
+        """Универсальное открытие gpiochip для Pi 4 и Pi 5"""
+        for chip_path in ["/dev/gpiochip4", "/dev/gpiochip0", "gpiochip4", "gpiochip0"]:
+            try:
+                return gpiod.Chip(chip_path)
+            except Exception:
+                continue
+        raise RuntimeError("Не удалось найти доступный gpiochip в системе")
+
     def run(self):
         try:
-            print(f"[Torque BTQ-403A] Запуск на GPIO (DOUT={self.dout_pin}, SCK={self.pd_sck_pin}) via gpiod...")
-            
-            # На Pi 5 используется gpiochip4, на Pi 4 — gpiochip0
-            chip_name = "gpiochip4"
-            try:
-                self.chip = gpiod.Chip(chip_name)
-            except Exception:
-                chip_name = "gpiochip0"
-                self.chip = gpiod.Chip(chip_name)
+            print(f"[Torque BTQ-403A] Инициализация GPIO (DOUT={self.dout_pin}, SCK={self.pd_sck_pin})...")
+            self.chip = self._get_chip()
 
             self.dout_line = self.chip.get_line(self.dout_pin)
             self.sck_line = self.chip.get_line(self.pd_sck_pin)
 
             self.dout_line.request(consumer="HX711_TORQUE_DOUT", type=gpiod.LINE_REQ_DIR_IN)
-            self.sck_line.request(consumer="HX711_TORQUE_SCK", type=gpiod.LINE_REQ_DIR_OUT, defaultvals=[0])
+            self.sck_line.request(consumer="HX711_TORQUE_SCK", type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
 
             # Тарировка (обнуление)
             self.msleep(500)
@@ -45,10 +47,8 @@ class TorqueSensorWorker(QThread):
             while self._running:
                 raw_val = self._read_average(3)
                 if raw_val is not None:
-                    # Расчет крутящего момента
                     val = (raw_val - self.zero_offset) / self.scale_ratio
                     
-                    # Отсечка шума
                     if abs(val) < 0.05:
                         val = 0.0
 
@@ -64,7 +64,6 @@ class TorqueSensorWorker(QThread):
             self._cleanup()
 
     def _read_raw(self):
-        """Прямое чтение 24 бит данных с чипа HX711"""
         count = 0
         timeout = 100
         while self.dout_line.get_value() != 0 and timeout > 0:
@@ -79,7 +78,6 @@ class TorqueSensorWorker(QThread):
             count = (count << 1) | self.dout_line.get_value()
             self.sck_line.set_value(0)
 
-        # 25-й импульс (усиление 128)
         self.sck_line.set_value(1)
         self.sck_line.set_value(0)
 
