@@ -122,7 +122,7 @@ class MainWindow(QMainWindow):
             target = float(self.config.get("target_pre_force", 0.0))
 
             current_pos = self.config.get("pre_position", 0)
-            if current_pos >= 40 and !self.pre_slowed_force:
+            if current_pos >= 40 and not self.pre_slowed_force:
                 self.pre_slowed_force = True
                 self.arduino.send_command("PRE_SPEED:5")
                 self.arduino.send_command("PRE_DOWN_START")
