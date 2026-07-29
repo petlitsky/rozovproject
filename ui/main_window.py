@@ -119,9 +119,16 @@ class MainWindow(QMainWindow):
     def _update_force_labels(self, value: float):
         if self.is_moving_to_force:
             target = float(self.config.get("target_pre_force", 0.0))
+
+            current_pos = self.config.get("pre_position", 0)
+            if position == 35:
+                self.arduino.send_command("PRE_SET_SPEED:10")
+
             if value >= target:
                 self.arduino.send_command("PRE_STOP")
                 self.is_moving_to_force = False
+                speed = self.config.get("pre_speed", 30)
+                self.arduino.send_command(f"PRE_SET_SPEED:{speed}")
 
         self.ui.lblPreForceMan.setText(f"{value:.4f} Н")
         self.ui.lblPreForce.setText(f"{value:.4f} Н")
