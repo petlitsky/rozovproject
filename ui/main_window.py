@@ -42,11 +42,11 @@ class MainWindow(QMainWindow):
 
         self._load_saved_values()
 
-        self.force_sensor = ForceSensorWorker(dout_pin=24, pd_sck_pin=25)
+        self.force_sensor = ForceSensorWorker(dout_pin=18, pd_sck_pin=22)
         self.force_sensor.force_updated.connect(self._update_force_labels)
         self.force_sensor.start()
 
-        self.torque_worker = TorqueSensorWorker(dout_pin=18, pd_sck_pin=23)
+        self.torque_worker = TorqueSensorWorker(dout_pin=12, pd_sck_pin=16)
         self.torque_worker.torque_updated.connect(self._update_torque_labels)
         self.torque_worker.start()
         

@@ -9,7 +9,7 @@ class ForceSensorWorker(QThread):
     # Сигнал для передачи ошибок в GUI (если датчик отключится)
     error_occurred = Signal(str)
 
-    def __init__(self, dout_pin=24, pd_sck_pin=25, parent=None):
+    def __init__(self, dout_pin=18, pd_sck_pin=22, parent=None):
         super().__init__(parent)
         self.dout_pin = dout_pin
         self.pd_sck_pin = pd_sck_pin
