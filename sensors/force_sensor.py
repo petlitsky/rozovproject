@@ -6,7 +6,7 @@ class ForceSensorWorker(QThread):
     force_updated = Signal(float)
     
     # Имена параметров dout и sck (по умолчанию 24 и 23)
-    def __init__(self, dout_pin=24, pd_sck_pin=23):
+    def __init__(self, dout_pin=24, pd_sck_pin=25):
         super().__init__()
         self.dout_pin = dout_pin
         self.pd_sck_pin = pd_sck_pin
