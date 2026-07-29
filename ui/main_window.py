@@ -471,6 +471,7 @@ class MainWindow(QMainWindow):
     def save_pre_force(self) -> None:
         force = self.force_sensor.get_current_force()
         self.config.set("target_pre_force", force)
+        print("save " + force)
 
     def go_to_pre_force(self) -> None:
         target = self.config.get(f"target_pre_force", 0.0)

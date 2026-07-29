@@ -60,6 +60,7 @@ class ForceSensorWorker(QThread):
                         force_newtons = 0.0
 
                     last_force = force_newtons
+                    print(last_force)
                     # Отправляем усилие в Ньютонах
                     self.force_updated.emit(float(force_newtons))
                 
