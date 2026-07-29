@@ -140,7 +140,7 @@ class ManualControls(QObject):
         self.ui.lblFanSpeed.setText(f"{value}%")
         self.main.set_fan_speed(value)
 
-    def _connect_speed_sliders(self) -> None:
+    def _connect_fan_radio(self) -> None:
         self.ui.getAutoFan.clicked.connect(self.main._process_auto_fan)
         self.ui.getManualFan.clicked.connect(self.main._on_manual_fan_slider_changed)
         self.ui.fanOff.clicked.connect(self.main._set_fan_off)
