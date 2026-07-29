@@ -180,6 +180,9 @@ class MainWindow(QMainWindow):
 
         self.fan.set_speed(target_speed)
     
+    def _set_fan_off(self):
+        self.fan.set_speed(0)
+
     def _load_saved_values(self) -> None:
         speeds = [
             ('lin_speed', self.ui.linSpeed, self.ui.lblLinSpeed, "Скорость перемещения: {}%"),
