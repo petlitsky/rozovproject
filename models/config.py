@@ -14,7 +14,8 @@ DEFAULT_CONFIG = {
     "lin_position": 0,
     "pre_position": 0,
     "lin_pos1": 0,
-    "lin_pos2": 0
+    "lin_pos2": 0,
+    "target_pre_force": 0.0,
 }
 
 
