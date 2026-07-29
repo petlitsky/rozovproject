@@ -6,6 +6,7 @@ class ForceSensorWorker(QThread):
     # Передает силу в Ньютонах (Н)
     force_updated = Signal(float)
     error_occurred = Signal(str)
+    last_force = 0.0
 
     def __init__(self, dout_pin=24, pd_sck_pin=25, parent=None):
         super().__init__(parent)
@@ -49,7 +50,7 @@ class ForceSensorWorker(QThread):
                 raw_val = self._read_average(3)
                 if raw_val is not None:
                     # 1. Расчет массы в граммах
-                    weight_grams = (raw_val) / self.scale_ratio
+                    weight_grams = (raw_val - zero_offset) / self.scale_ratio
                     
                     # 2. Перевод граммов в Ньютоны (Н): (г / 1000) * 9.80665
                     force_newtons = (weight_grams / 1000.0) * 9.80665
@@ -58,6 +59,7 @@ class ForceSensorWorker(QThread):
                     if abs(force_newtons) < 0.01:
                         force_newtons = 0.0
 
+                    last_force = force_newtons
                     # Отправляем усилие в Ньютонах
                     self.force_updated.emit(float(force_newtons))
                 
@@ -103,6 +105,10 @@ class ForceSensorWorker(QThread):
                 values.append(v)
             time.sleep(0.002)
         return sum(values) / len(values) if values else None
+
+    def get_current_force(self) -> float:
+
+        return self.last_force
 
     def stop(self):
         self._running = False

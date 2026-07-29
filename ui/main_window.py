@@ -118,8 +118,7 @@ class MainWindow(QMainWindow):
     def _update_force_labels(self, value: float):
         self.ui.lblPreForceMan.setText(f"{value:.1f} Н")
         self.ui.lblPreForce.setText(f"{value:.1f} Н")
-        return value
-
+        
     def _update_torque_labels(self, value: float):
         self.ui.lblPostTorqMan.setText(f"{value:.3f} Н·м")
         self.ui.lblPostTorq.setText(f"{value:.3f} Н·м")
@@ -470,12 +469,12 @@ class MainWindow(QMainWindow):
     
 
     def save_pre_force(self) -> None:
-        force = self._update_force_labels()
+        force = self.force_sensor.get_current_force()
         self.config.set("target_pre_force", force)
 
     def go_to_pre_force(self) -> None:
         target = self.config.get(f"target_pre_force", 0.0)
-        current = self._update_force_labels()
+        current = self.force_sensor.get_current_force()
         
         diff = target - current
         if diff <= 0:
