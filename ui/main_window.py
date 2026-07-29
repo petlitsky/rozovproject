@@ -47,7 +47,7 @@ class MainWindow(QMainWindow):
         self.force_sensor.start()
 
         self.torque_worker = TorqueSensorWorker(dout_pin=18, pd_sck_pin=23)
-        self.torque_worker.torque_updated.connect(self.update_torque_labels)
+        self.torque_worker.torque_updated.connect(self._update_torque_labels)
         self.torque_worker.start()
         
         QTimer.singleShot(500, self._connect_arduino)
