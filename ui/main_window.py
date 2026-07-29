@@ -27,7 +27,7 @@ class MainWindow(QMainWindow):
         self.config = Config()
         self.arduino = ArduinoController(self)
         self.bme280 = BME280Sensor(self)
-        self.fan = FanController(self)
+        self.fan = FanController(self, pin_offset=12)
         self.manual = ManualControls(self)
         
         # Состояние
@@ -106,12 +106,33 @@ class MainWindow(QMainWindow):
         self.bme280.temperature_updated.connect(self._update_temperature)
         
         self.fan.fan_speed_updated.connect(self._update_fan_speed)
+
+        # Переключение режимов работы вентилятора (Радиокнопки)
+        if hasattr(self.ui, 'fanOff'):
+            self.ui.fanOff.toggled.connect(self._on_fan_mode_changed)
+        if hasattr(self.ui, 'getManualFan'):
+            self.ui.getManualFan.toggled.connect(self._on_fan_mode_changed)
+        if hasattr(self.ui, 'getAutoFan'):
+            self.ui.getAutoFan.toggled.connect(self._on_fan_mode_changed)
+
+        # Обновление параметров Авто-режима при изменении SpinBox на лету
+        if hasattr(self.ui, 'tempMin'):
+            self.ui.tempMin.valueChanged.connect(self._on_auto_fan_params_changed)
+        if hasattr(self.ui, 'tempMax'):
+            self.ui.tempMax.valueChanged.connect(self._on_auto_fan_params_changed)
+        if hasattr(self.ui, 'startSpeed'):
+            self.ui.startSpeed.valueChanged.connect(self._on_auto_fan_params_changed)
     
     def _setup_timer(self) -> None:
         self.timer = QTimer()
         self.timer.timeout.connect(self._update_datetime)
         self.timer.start(1000)
         self._update_datetime()
+
+        # Таймер для проверки температуры процессора в Авто-режиме (раз в 2 сек)
+        self.auto_fan_timer = QTimer(self)
+        self.auto_fan_timer.timeout.connect(self._process_auto_fan)
+        self.auto_fan_timer.start(2000)
     
     def _update_datetime(self) -> None:
         now = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
@@ -146,7 +167,60 @@ class MainWindow(QMainWindow):
         self.ui.lblTemp.setText(f"Температура: {temp:.1f}°C")
     
     def _update_fan_speed(self, speed: int) -> None:
-        self.ui.lblFanSpeed.setText(f"{speed}%")
+        if hasattr(self.ui, 'lblFanSpeed'):
+            self.ui.lblFanSpeed.setText(f"{speed}%")
+
+    # ===== Логика Авто и Ручного управления вентилятором =====
+
+    def _on_fan_mode_changed(self) -> None:
+        """Переключение между ВЫКЛ, Ручным и Авто-режимами вентилятора."""
+        if hasattr(self.ui, 'fanOff') and self.ui.fanOff.isChecked():
+            self.fan.stop()
+
+        elif hasattr(self.ui, 'getManualFan') and self.ui.getManualFan.isChecked():
+            manual_val = self.ui.fanSpeed.value() if hasattr(self.ui, 'fanSpeed') else 50
+            self.set_fan_speed(manual_val)
+
+        elif hasattr(self.ui, 'getAutoFan') and self.ui.getAutoFan.isChecked():
+            self._process_auto_fan()
+
+    def _on_auto_fan_params_changed(self) -> None:
+        """Реакция на изменения значений SpinBox (tempMin/tempMax/startSpeed)."""
+        if hasattr(self.ui, 'getAutoFan') and self.ui.getAutoFan.isChecked():
+            self._process_auto_fan()
+
+    def _process_auto_fan(self) -> None:
+        """Расчет скорости вентилятора по температуре ЦП."""
+        if not (hasattr(self.ui, 'getAutoFan') and self.ui.getAutoFan.isChecked()):
+            return
+
+        min_temp = float(self.ui.tempMin.value()) if hasattr(self.ui, 'tempMin') else 40.0
+        max_temp = float(self.ui.tempMax.value()) if hasattr(self.ui, 'tempMax') else 70.0
+        start_speed = int(self.ui.startSpeed.value()) if hasattr(self.ui, 'startSpeed') else 30
+
+        current_temp = self._get_cpu_temperature()
+
+        if current_temp < min_temp:
+            target_speed = 0
+        elif current_temp >= max_temp:
+            target_speed = 100
+        else:
+            temp_range = max_temp - min_temp
+            if temp_range > 0:
+                progress = (current_temp - min_temp) / temp_range
+                target_speed = int(start_speed + progress * (100 - start_speed))
+            else:
+                target_speed = start_speed
+
+        self.fan.set_speed(target_speed)
+
+    def _get_cpu_temperature(self) -> float:
+        """Чтение текущей температуры процессора Raspberry Pi."""
+        try:
+            with open("/sys/class/thermal/thermal_zone0/temp", "r") as f:
+                return float(f.read().strip()) / 1000.0
+        except Exception:
+            return 40.0
     
     def _load_saved_values(self) -> None:
         speeds = [
@@ -172,8 +246,13 @@ class MainWindow(QMainWindow):
             label.setText(template.format(value))
         
         fan_value = self.config.get('fan_speed', 50)
-        self.ui.fanSpeed.setValue(fan_value)
-        self.ui.lblFanSpeed.setText(f"{fan_value}%")
+        if hasattr(self.ui, 'fanSpeed'):
+            self.ui.fanSpeed.setValue(fan_value)
+        if hasattr(self.ui, 'lblFanSpeed'):
+            self.ui.lblFanSpeed.setText(f"{fan_value}%")
+
+        # Применяем стартовое состояние кнопок режима вентилятора
+        self._on_fan_mode_changed()
     
     def _connect_arduino(self) -> None:
         if not self.arduino.connect():

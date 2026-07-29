@@ -6,13 +6,14 @@ from PySide6.QtCore import QObject, Signal
 
 
 class FanController(QObject):
-    fan_speed_updated = Signal(int)  # скорость в %
+    fan_speed_updated = Signal(int)  # Скорость в %
 
     def __init__(self, parent=None, pin_offset=12):
+        # parent строго на первом месте для совместимости с Qt
         super().__init__(parent)
 
         self._pin_offset = int(pin_offset)
-        self._speed = 0
+        self._speed = 0  # 0-100%
         self._is_initialized = False
 
         self._request = None
@@ -22,7 +23,7 @@ class FanController(QObject):
         self._init_gpio()
 
     def _find_chip_path(self):
-        """Ищет реальный путь к gpiochip в /dev/"""
+        """Сканирует /dev/ и находит чип, у которого есть нужный пин."""
         dev_files = sorted(
             [f for f in os.listdir("/dev") if f.startswith("gpiochip")]
         )
@@ -30,7 +31,6 @@ class FanController(QObject):
         for dev in dev_files:
             chip_path = f"/dev/{dev}"
             try:
-                # Проверяем доступность чипа в gpiod v2
                 with gpiod.Chip(chip_path) as chip:
                     info = chip.get_info()
                     if self._pin_offset < info.num_lines:
@@ -47,8 +47,7 @@ class FanController(QObject):
                     f"Не найден чип в /dev/, содержащий пин №{self._pin_offset}"
                 )
 
-            # --- НОВЫЙ СИНТАКСИС GPIOD v2 ---
-            # Создаем конфигурацию направления (OUTPUT)
+            # Настройка для gpiod v2 (Debian Bookworm / RPi 5)
             line_cfg = {
                 self._pin_offset: gpiod.LineSettings(
                     direction=gpiod.line.Direction.OUTPUT,
@@ -56,7 +55,6 @@ class FanController(QObject):
                 )
             }
 
-            # Запрашиваем линию у ядра
             self._request = gpiod.request_lines(
                 chip_path, consumer="FanController", config=line_cfg
             )
@@ -64,13 +62,13 @@ class FanController(QObject):
             self._is_initialized = True
             self._running = True
 
-            # Запускаем фоновый ШИМ-поток
+            # Запуск фонового потока генерации ШИМ
             self._pwm_thread = threading.Thread(
                 target=self._pwm_loop, daemon=True
             )
             self._pwm_thread.start()
             print(
-                f"[FAN] Вентилятор инициализирован (gpiod v2) на {chip_path}, пин {self._pin_offset}"
+                f"[FAN] Вентилятор инициализирован ({chip_path}, пин {self._pin_offset})"
             )
 
         except Exception as e:
@@ -78,8 +76,8 @@ class FanController(QObject):
             print(f"[FAN] Ошибка инициализации gpiod v2: {e}")
 
     def _pwm_loop(self):
-        """Фоновый цикл генерации ШИМ под gpiod v2"""
-        period = 0.01  # 10 мс (100 Гц)
+        """Фоновый цикл софтового ШИМ (период 10 мс = 100 Гц)"""
+        period = 0.01
         VAL_ON = gpiod.line.Value.ACTIVE
         VAL_OFF = gpiod.line.Value.INACTIVE
 
@@ -104,10 +102,17 @@ class FanController(QObject):
                 time.sleep(low_time)
 
     def set_speed(self, speed: int) -> None:
+        """Установка скорости (0-100%)"""
         if not self._is_initialized:
             return
 
         speed = max(0, min(100, int(speed)))
+
+        # Небольшой импульс для уверенного старта с нуля
+        if self._speed == 0 and speed > 0:
+            self._speed = 100
+            time.sleep(0.1)
+
         self._speed = speed
         self.fan_speed_updated.emit(speed)
 
