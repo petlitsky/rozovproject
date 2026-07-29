@@ -121,8 +121,9 @@ class MainWindow(QMainWindow):
             target = float(self.config.get("target_pre_force", 0.0))
 
             current_pos = self.config.get("pre_position", 0)
-            if current_pos == 5:
+            if current_pos == 35:
                 self.arduino.send_command("PRE_SET_SPEED:10")
+                self.arduino.send_command("PRE_DOWN_START")
 
             if value >= target:
                 self.arduino.send_command("PRE_STOP")
@@ -499,7 +500,7 @@ class MainWindow(QMainWindow):
         self.is_moving_to_force = True
 
         current_pos = self.config.get("pre_position", 0)
-        target_pos = 5-current_pos
+        target_pos = 35-current_pos
 
         if target_pos < 0 : target_pos = 0
         
