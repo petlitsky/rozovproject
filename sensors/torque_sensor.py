@@ -46,7 +46,7 @@ class TorqueSensorWorker(QThread):
             while self._running:
                 raw_val = self._read_average(3)
                 if raw_val is not None:
-                    val = (raw_val - self.zero_offset) / self.scale_ratio
+                    val = (raw_val) / self.scale_ratio
                     
                     if abs(val) < 0.05:
                         val = 0.0
