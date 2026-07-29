@@ -37,7 +37,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.widget = QWidget(self.centralwidget)
         self.widget.setObjectName(u"widget")
-        self.widget.setMinimumSize(QSize(0, 70))
+        self.widget.setMinimumSize(QSize(0, 40))
         self.widget.setMaximumSize(QSize(16777215, 60))
         self.widget.setStyleSheet(u"background: #F5F6F8;")
         self.horizontalLayout_2 = QHBoxLayout(self.widget)
@@ -49,32 +49,12 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.lblDate)
 
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_2.addItem(self.horizontalSpacer_2)
-
         self.widget_4 = QWidget(self.widget)
         self.widget_4.setObjectName(u"widget_4")
         self.verticalLayout_5 = QVBoxLayout(self.widget_4)
         self.verticalLayout_5.setSpacing(5)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.label_5 = QLabel(self.widget_4)
-        self.label_5.setObjectName(u"label_5")
-        font = QFont()
-        font.setBold(True)
-        self.label_5.setFont(font)
-
-        self.verticalLayout_5.addWidget(self.label_5)
-
-        self.horizontalSlider = QSlider(self.widget_4)
-        self.horizontalSlider.setObjectName(u"horizontalSlider")
-        self.horizontalSlider.setMinimum(1)
-        self.horizontalSlider.setMaximum(100)
-        self.horizontalSlider.setOrientation(Qt.Orientation.Horizontal)
-
-        self.verticalLayout_5.addWidget(self.horizontalSlider)
-
 
         self.horizontalLayout_2.addWidget(self.widget_4)
 
@@ -211,9 +191,9 @@ class Ui_MainWindow(object):
         self.lblTemp.setObjectName(u"lblTemp")
         self.lblTemp.setMinimumSize(QSize(0, 20))
         self.lblTemp.setMaximumSize(QSize(16777215, 36))
-        font1 = QFont()
-        font1.setPointSize(9)
-        self.lblTemp.setFont(font1)
+        font = QFont()
+        font.setPointSize(9)
+        self.lblTemp.setFont(font)
         self.lblTemp.setStyleSheet(u"padding-left: 10px;")
 
         self.verticalLayout_2.addWidget(self.lblTemp)
@@ -230,10 +210,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_30.setObjectName(u"verticalLayout_30")
         self.label = QLabel(self.pageAutoMode)
         self.label.setObjectName(u"label")
-        font2 = QFont()
-        font2.setPointSize(16)
-        font2.setBold(True)
-        self.label.setFont(font2)
+        font1 = QFont()
+        font1.setPointSize(16)
+        font1.setBold(True)
+        self.label.setFont(font1)
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_30.addWidget(self.label)
@@ -279,10 +259,10 @@ class Ui_MainWindow(object):
         self.label_42.setObjectName(u"label_42")
         self.label_42.setMinimumSize(QSize(0, 0))
         self.label_42.setMaximumSize(QSize(16777215, 25))
-        font3 = QFont()
-        font3.setPointSize(11)
-        font3.setBold(True)
-        self.label_42.setFont(font3)
+        font2 = QFont()
+        font2.setPointSize(11)
+        font2.setBold(True)
+        self.label_42.setFont(font2)
 
         self.verticalLayout_56.addWidget(self.label_42)
 
@@ -295,9 +275,9 @@ class Ui_MainWindow(object):
         self.label_43 = QLabel(self.widget_42)
         self.label_43.setObjectName(u"label_43")
         self.label_43.setMaximumSize(QSize(16777215, 23))
-        font4 = QFont()
-        font4.setPointSize(8)
-        self.label_43.setFont(font4)
+        font3 = QFont()
+        font3.setPointSize(8)
+        self.label_43.setFont(font3)
         self.label_43.setWordWrap(True)
 
         self.horizontalLayout_4.addWidget(self.label_43)
@@ -312,10 +292,10 @@ class Ui_MainWindow(object):
         self.lblLinPosMan = QLabel(self.widget_42)
         self.lblLinPosMan.setObjectName(u"lblLinPosMan")
         self.lblLinPosMan.setMaximumSize(QSize(16777215, 23))
-        font5 = QFont()
-        font5.setPointSize(13)
-        font5.setBold(True)
-        self.lblLinPosMan.setFont(font5)
+        font4 = QFont()
+        font4.setPointSize(13)
+        font4.setBold(True)
+        self.lblLinPosMan.setFont(font4)
 
         self.horizontalLayout_4.addWidget(self.lblLinPosMan)
 
@@ -352,10 +332,10 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnLinForwardMan.sizePolicy().hasHeightForWidth())
         self.btnLinForwardMan.setSizePolicy(sizePolicy)
         self.btnLinForwardMan.setMinimumSize(QSize(0, 60))
-        font6 = QFont()
-        font6.setPointSize(10)
-        font6.setBold(True)
-        self.btnLinForwardMan.setFont(font6)
+        font5 = QFont()
+        font5.setPointSize(10)
+        font5.setBold(True)
+        self.btnLinForwardMan.setFont(font5)
         self.btnLinForwardMan.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -379,7 +359,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnLinBackMan.sizePolicy().hasHeightForWidth())
         self.btnLinBackMan.setSizePolicy(sizePolicy)
         self.btnLinBackMan.setMinimumSize(QSize(0, 60))
-        self.btnLinBackMan.setFont(font6)
+        self.btnLinBackMan.setFont(font5)
         self.btnLinBackMan.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -401,7 +381,7 @@ class Ui_MainWindow(object):
         self.btnGoLinPos1Man = QPushButton(self.widget_43)
         self.btnGoLinPos1Man.setObjectName(u"btnGoLinPos1Man")
         self.btnGoLinPos1Man.setMinimumSize(QSize(0, 60))
-        self.btnGoLinPos1Man.setFont(font6)
+        self.btnGoLinPos1Man.setFont(font5)
         self.btnGoLinPos1Man.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -418,7 +398,7 @@ class Ui_MainWindow(object):
         self.btnGoLinPos2Man = QPushButton(self.widget_43)
         self.btnGoLinPos2Man.setObjectName(u"btnGoLinPos2Man")
         self.btnGoLinPos2Man.setMinimumSize(QSize(0, 60))
-        self.btnGoLinPos2Man.setFont(font6)
+        self.btnGoLinPos2Man.setFont(font5)
         self.btnGoLinPos2Man.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -446,7 +426,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnLinHomeMan.sizePolicy().hasHeightForWidth())
         self.btnLinHomeMan.setSizePolicy(sizePolicy)
         self.btnLinHomeMan.setMinimumSize(QSize(0, 60))
-        self.btnLinHomeMan.setFont(font6)
+        self.btnLinHomeMan.setFont(font5)
         self.btnLinHomeMan.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         self.btnLinHomeMan.setAutoFillBackground(False)
         self.btnLinHomeMan.setStyleSheet(u"QToolButton {\n"
@@ -500,7 +480,7 @@ class Ui_MainWindow(object):
         self.label_39.setObjectName(u"label_39")
         self.label_39.setMinimumSize(QSize(0, 0))
         self.label_39.setMaximumSize(QSize(16777215, 25))
-        self.label_39.setFont(font3)
+        self.label_39.setFont(font2)
 
         self.verticalLayout_53.addWidget(self.label_39)
 
@@ -521,7 +501,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnFixBackMan.sizePolicy().hasHeightForWidth())
         self.btnFixBackMan.setSizePolicy(sizePolicy)
         self.btnFixBackMan.setMinimumSize(QSize(0, 60))
-        self.btnFixBackMan.setFont(font6)
+        self.btnFixBackMan.setFont(font5)
         self.btnFixBackMan.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -545,7 +525,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnFixForwardMan.sizePolicy().hasHeightForWidth())
         self.btnFixForwardMan.setSizePolicy(sizePolicy)
         self.btnFixForwardMan.setMinimumSize(QSize(0, 60))
-        self.btnFixForwardMan.setFont(font6)
+        self.btnFixForwardMan.setFont(font5)
         self.btnFixForwardMan.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -578,7 +558,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.toolButton_28.sizePolicy().hasHeightForWidth())
         self.toolButton_28.setSizePolicy(sizePolicy)
         self.toolButton_28.setMinimumSize(QSize(0, 60))
-        self.toolButton_28.setFont(font6)
+        self.toolButton_28.setFont(font5)
         self.toolButton_28.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -600,7 +580,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.toolButton_29.sizePolicy().hasHeightForWidth())
         self.toolButton_29.setSizePolicy(sizePolicy)
         self.toolButton_29.setMinimumSize(QSize(0, 60))
-        self.toolButton_29.setFont(font6)
+        self.toolButton_29.setFont(font5)
         self.toolButton_29.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -657,10 +637,10 @@ class Ui_MainWindow(object):
         self.label_45.setObjectName(u"label_45")
         self.label_45.setMinimumSize(QSize(0, 0))
         self.label_45.setMaximumSize(QSize(16777215, 25))
-        font7 = QFont()
-        font7.setPointSize(12)
-        font7.setBold(True)
-        self.label_45.setFont(font7)
+        font6 = QFont()
+        font6.setPointSize(12)
+        font6.setBold(True)
+        self.label_45.setFont(font6)
 
         self.verticalLayout_59.addWidget(self.label_45)
 
@@ -679,7 +659,7 @@ class Ui_MainWindow(object):
         self.label_46 = QLabel(self.widget_47)
         self.label_46.setObjectName(u"label_46")
         self.label_46.setMaximumSize(QSize(16777215, 30))
-        self.label_46.setFont(font4)
+        self.label_46.setFont(font3)
         self.label_46.setWordWrap(True)
 
         self.verticalLayout_60.addWidget(self.label_46)
@@ -687,10 +667,10 @@ class Ui_MainWindow(object):
         self.lblPrePosMan = QLabel(self.widget_47)
         self.lblPrePosMan.setObjectName(u"lblPrePosMan")
         self.lblPrePosMan.setMaximumSize(QSize(16777215, 40))
-        font8 = QFont()
-        font8.setPointSize(18)
-        font8.setBold(True)
-        self.lblPrePosMan.setFont(font8)
+        font7 = QFont()
+        font7.setPointSize(18)
+        font7.setBold(True)
+        self.lblPrePosMan.setFont(font7)
 
         self.verticalLayout_60.addWidget(self.lblPrePosMan)
 
@@ -716,17 +696,17 @@ class Ui_MainWindow(object):
         self.label_48 = QLabel(self.widget_48)
         self.label_48.setObjectName(u"label_48")
         self.label_48.setMaximumSize(QSize(16777215, 30))
-        self.label_48.setFont(font4)
+        self.label_48.setFont(font3)
         self.label_48.setWordWrap(True)
 
         self.verticalLayout_61.addWidget(self.label_48)
 
-        self.label_49 = QLabel(self.widget_48)
-        self.label_49.setObjectName(u"label_49")
-        self.label_49.setMaximumSize(QSize(16777215, 40))
-        self.label_49.setFont(font8)
+        self.lblPreForceMan = QLabel(self.widget_48)
+        self.lblPreForceMan.setObjectName(u"lblPreForceMan")
+        self.lblPreForceMan.setMaximumSize(QSize(16777215, 40))
+        self.lblPreForceMan.setFont(font7)
 
-        self.verticalLayout_61.addWidget(self.label_49)
+        self.verticalLayout_61.addWidget(self.lblPreForceMan)
 
 
         self.horizontalLayout_27.addWidget(self.widget_48)
@@ -761,7 +741,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnPreUpMan.sizePolicy().hasHeightForWidth())
         self.btnPreUpMan.setSizePolicy(sizePolicy)
         self.btnPreUpMan.setMinimumSize(QSize(0, 60))
-        self.btnPreUpMan.setFont(font6)
+        self.btnPreUpMan.setFont(font5)
         self.btnPreUpMan.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -785,7 +765,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnPreDownMan.sizePolicy().hasHeightForWidth())
         self.btnPreDownMan.setSizePolicy(sizePolicy)
         self.btnPreDownMan.setMinimumSize(QSize(0, 60))
-        self.btnPreDownMan.setFont(font6)
+        self.btnPreDownMan.setFont(font5)
         self.btnPreDownMan.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -809,7 +789,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnPreDown11.sizePolicy().hasHeightForWidth())
         self.btnPreDown11.setSizePolicy(sizePolicy)
         self.btnPreDown11.setMinimumSize(QSize(0, 60))
-        self.btnPreDown11.setFont(font6)
+        self.btnPreDown11.setFont(font5)
         self.btnPreDown11.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -833,7 +813,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnPreHomeMan.sizePolicy().hasHeightForWidth())
         self.btnPreHomeMan.setSizePolicy(sizePolicy)
         self.btnPreHomeMan.setMinimumSize(QSize(0, 60))
-        self.btnPreHomeMan.setFont(font6)
+        self.btnPreHomeMan.setFont(font5)
         self.btnPreHomeMan.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -879,7 +859,7 @@ class Ui_MainWindow(object):
         self.label_36.setObjectName(u"label_36")
         self.label_36.setMinimumSize(QSize(0, 0))
         self.label_36.setMaximumSize(QSize(16777215, 25))
-        self.label_36.setFont(font3)
+        self.label_36.setFont(font2)
 
         self.verticalLayout_49.addWidget(self.label_36)
 
@@ -892,7 +872,7 @@ class Ui_MainWindow(object):
         self.label_37 = QLabel(self.widget_36)
         self.label_37.setObjectName(u"label_37")
         self.label_37.setMaximumSize(QSize(16777215, 30))
-        self.label_37.setFont(font4)
+        self.label_37.setFont(font3)
         self.label_37.setWordWrap(True)
 
         self.verticalLayout_20.addWidget(self.label_37)
@@ -900,10 +880,10 @@ class Ui_MainWindow(object):
         self.label_38 = QLabel(self.widget_36)
         self.label_38.setObjectName(u"label_38")
         self.label_38.setMaximumSize(QSize(16777215, 40))
-        font9 = QFont()
-        font9.setPointSize(20)
-        font9.setBold(True)
-        self.label_38.setFont(font9)
+        font8 = QFont()
+        font8.setPointSize(20)
+        font8.setBold(True)
+        self.label_38.setFont(font8)
 
         self.verticalLayout_20.addWidget(self.label_38)
 
@@ -937,7 +917,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnPostBackMan.sizePolicy().hasHeightForWidth())
         self.btnPostBackMan.setSizePolicy(sizePolicy)
         self.btnPostBackMan.setMinimumSize(QSize(0, 60))
-        self.btnPostBackMan.setFont(font6)
+        self.btnPostBackMan.setFont(font5)
         self.btnPostBackMan.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -959,7 +939,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnPostForwardMan.sizePolicy().hasHeightForWidth())
         self.btnPostForwardMan.setSizePolicy(sizePolicy)
         self.btnPostForwardMan.setMinimumSize(QSize(0, 60))
-        self.btnPostForwardMan.setFont(font6)
+        self.btnPostForwardMan.setFont(font5)
         self.btnPostForwardMan.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -990,7 +970,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.toolButton_25.sizePolicy().hasHeightForWidth())
         self.toolButton_25.setSizePolicy(sizePolicy)
         self.toolButton_25.setMinimumSize(QSize(0, 60))
-        self.toolButton_25.setFont(font6)
+        self.toolButton_25.setFont(font5)
         self.toolButton_25.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -1012,7 +992,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.toolButton_26.sizePolicy().hasHeightForWidth())
         self.toolButton_26.setSizePolicy(sizePolicy)
         self.toolButton_26.setMinimumSize(QSize(0, 60))
-        self.toolButton_26.setFont(font6)
+        self.toolButton_26.setFont(font5)
         self.toolButton_26.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -1051,7 +1031,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
         self.label_2 = QLabel(self.pageCalibration)
         self.label_2.setObjectName(u"label_2")
-        self.label_2.setFont(font2)
+        self.label_2.setFont(font1)
         self.label_2.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.horizontalLayout_17.addWidget(self.label_2)
@@ -1063,7 +1043,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
         self.label_3 = QLabel(self.pageDebug)
         self.label_3.setObjectName(u"label_3")
-        self.label_3.setFont(font2)
+        self.label_3.setFont(font1)
         self.label_3.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.horizontalLayout_18.addWidget(self.label_3)
@@ -1093,7 +1073,7 @@ class Ui_MainWindow(object):
         self.label_8 = QLabel(self.widget_51)
         self.label_8.setObjectName(u"label_8")
         self.label_8.setMaximumSize(QSize(16777215, 40))
-        self.label_8.setFont(font5)
+        self.label_8.setFont(font4)
         self.label_8.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.label_8.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -1122,7 +1102,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_62.setObjectName(u"verticalLayout_62")
         self.groupBox_2 = QGroupBox(self.widget_53)
         self.groupBox_2.setObjectName(u"groupBox_2")
-        self.groupBox_2.setFont(font7)
+        self.groupBox_2.setFont(font6)
         self.groupBox_2.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.verticalLayout_64 = QVBoxLayout(self.groupBox_2)
         self.verticalLayout_64.setSpacing(5)
@@ -1130,7 +1110,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_64.setContentsMargins(10, 10, 10, 10)
         self.radioButton = QRadioButton(self.groupBox_2)
         self.radioButton.setObjectName(u"radioButton")
-        self.radioButton.setFont(font)
+        font9 = QFont()
+        font9.setBold(True)
+        self.radioButton.setFont(font9)
         self.radioButton.setStyleSheet(u"QRadioButton {\n"
 "    color: #2C3E50;\n"
 "    font-size: 12px;\n"
@@ -1152,7 +1134,7 @@ class Ui_MainWindow(object):
 
         self.radioButton_2 = QRadioButton(self.groupBox_2)
         self.radioButton_2.setObjectName(u"radioButton_2")
-        self.radioButton_2.setFont(font)
+        self.radioButton_2.setFont(font9)
         self.radioButton_2.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
         self.radioButton_2.setStyleSheet(u"QRadioButton {\n"
 "    color: #2C3E50;\n"
@@ -1177,7 +1159,7 @@ class Ui_MainWindow(object):
 
         self.radioButton_3 = QRadioButton(self.groupBox_2)
         self.radioButton_3.setObjectName(u"radioButton_3")
-        self.radioButton_3.setFont(font)
+        self.radioButton_3.setFont(font9)
         self.radioButton_3.setStyleSheet(u"QRadioButton {\n"
 "\n"
 "    color: #2C3E50;\n"
@@ -1214,7 +1196,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_63.setObjectName(u"verticalLayout_63")
         self.groupBox_3 = QGroupBox(self.widget_54)
         self.groupBox_3.setObjectName(u"groupBox_3")
-        self.groupBox_3.setFont(font7)
+        self.groupBox_3.setFont(font6)
         self.groupBox_3.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.gridLayout_3 = QGridLayout(self.groupBox_3)
         self.gridLayout_3.setSpacing(5)
@@ -1233,7 +1215,7 @@ class Ui_MainWindow(object):
         self.fanSpeed = QSlider(self.groupBox_3)
         self.fanSpeed.setObjectName(u"fanSpeed")
         self.fanSpeed.setMinimumSize(QSize(0, 0))
-        self.fanSpeed.setFont(font1)
+        self.fanSpeed.setFont(font)
         self.fanSpeed.setStyleSheet(u"")
         self.fanSpeed.setMaximum(100)
         self.fanSpeed.setValue(50)
@@ -1260,7 +1242,7 @@ class Ui_MainWindow(object):
 
         self.groupBox_4 = QGroupBox(self.widget_54)
         self.groupBox_4.setObjectName(u"groupBox_4")
-        self.groupBox_4.setFont(font7)
+        self.groupBox_4.setFont(font6)
         self.groupBox_4.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.gridLayout_4 = QGridLayout(self.groupBox_4)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
@@ -1382,7 +1364,7 @@ class Ui_MainWindow(object):
         self.label_6 = QLabel(self.widget_5)
         self.label_6.setObjectName(u"label_6")
         self.label_6.setMaximumSize(QSize(16777215, 50))
-        self.label_6.setFont(font7)
+        self.label_6.setFont(font6)
         self.label_6.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.label_6.setStyleSheet(u"QLabel {\n"
 "	padding-left: 10px;\n"
@@ -1414,7 +1396,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnLinForward.sizePolicy().hasHeightForWidth())
         self.btnLinForward.setSizePolicy(sizePolicy)
         self.btnLinForward.setMinimumSize(QSize(0, 60))
-        self.btnLinForward.setFont(font7)
+        self.btnLinForward.setFont(font6)
         self.btnLinForward.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -1436,7 +1418,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnLinBack.sizePolicy().hasHeightForWidth())
         self.btnLinBack.setSizePolicy(sizePolicy)
         self.btnLinBack.setMinimumSize(QSize(0, 60))
-        self.btnLinBack.setFont(font7)
+        self.btnLinBack.setFont(font6)
         self.btnLinBack.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -1466,7 +1448,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnLinHome.sizePolicy().hasHeightForWidth())
         self.btnLinHome.setSizePolicy(sizePolicy)
         self.btnLinHome.setMinimumSize(QSize(0, 120))
-        self.btnLinHome.setFont(font7)
+        self.btnLinHome.setFont(font6)
         self.btnLinHome.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -1588,7 +1570,7 @@ class Ui_MainWindow(object):
         self.label_14.setObjectName(u"label_14")
         self.label_14.setMinimumSize(QSize(0, 25))
         self.label_14.setMaximumSize(QSize(16777215, 40))
-        self.label_14.setFont(font5)
+        self.label_14.setFont(font4)
         self.label_14.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.verticalLayout_11.addWidget(self.label_14)
@@ -1679,7 +1661,7 @@ class Ui_MainWindow(object):
         self.lblLinSpeed = QLabel(self.frameXPos)
         self.lblLinSpeed.setObjectName(u"lblLinSpeed")
         self.lblLinSpeed.setMaximumSize(QSize(16777215, 40))
-        self.lblLinSpeed.setFont(font3)
+        self.lblLinSpeed.setFont(font2)
 
         self.verticalLayout_11.addWidget(self.lblLinSpeed)
 
@@ -1768,7 +1750,7 @@ class Ui_MainWindow(object):
         self.btnGoLinPos1 = QPushButton(self.framePosAndHome)
         self.btnGoLinPos1.setObjectName(u"btnGoLinPos1")
         self.btnGoLinPos1.setMinimumSize(QSize(0, 60))
-        self.btnGoLinPos1.setFont(font4)
+        self.btnGoLinPos1.setFont(font3)
         self.btnGoLinPos1.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -1785,7 +1767,7 @@ class Ui_MainWindow(object):
         self.btnGoLinPos2 = QPushButton(self.framePosAndHome)
         self.btnGoLinPos2.setObjectName(u"btnGoLinPos2")
         self.btnGoLinPos2.setMinimumSize(QSize(0, 60))
-        self.btnGoLinPos2.setFont(font4)
+        self.btnGoLinPos2.setFont(font3)
         self.btnGoLinPos2.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -1832,7 +1814,7 @@ class Ui_MainWindow(object):
         self.label_20 = QLabel(self.widget_17)
         self.label_20.setObjectName(u"label_20")
         self.label_20.setMaximumSize(QSize(16777215, 50))
-        self.label_20.setFont(font7)
+        self.label_20.setFont(font6)
         self.label_20.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.label_20.setStyleSheet(u"QLabel {\n"
 "	padding-left: 10px;\n"
@@ -1862,7 +1844,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnFixForward.sizePolicy().hasHeightForWidth())
         self.btnFixForward.setSizePolicy(sizePolicy)
         self.btnFixForward.setMinimumSize(QSize(0, 60))
-        self.btnFixForward.setFont(font7)
+        self.btnFixForward.setFont(font6)
         self.btnFixForward.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -1884,7 +1866,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnFixBack.sizePolicy().hasHeightForWidth())
         self.btnFixBack.setSizePolicy(sizePolicy)
         self.btnFixBack.setMinimumSize(QSize(0, 60))
-        self.btnFixBack.setFont(font7)
+        self.btnFixBack.setFont(font6)
         self.btnFixBack.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -1917,7 +1899,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnFixHome.sizePolicy().hasHeightForWidth())
         self.btnFixHome.setSizePolicy(sizePolicy)
         self.btnFixHome.setMinimumSize(QSize(0, 120))
-        self.btnFixHome.setFont(font7)
+        self.btnFixHome.setFont(font6)
         self.btnFixHome.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -2007,7 +1989,7 @@ class Ui_MainWindow(object):
         self.label_23.setObjectName(u"label_23")
         self.label_23.setMinimumSize(QSize(0, 40))
         self.label_23.setMaximumSize(QSize(16777215, 40))
-        self.label_23.setFont(font5)
+        self.label_23.setFont(font4)
         self.label_23.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.verticalLayout_25.addWidget(self.label_23)
@@ -2098,7 +2080,7 @@ class Ui_MainWindow(object):
         self.lblFixSpeed = QLabel(self.frameXPos_3)
         self.lblFixSpeed.setObjectName(u"lblFixSpeed")
         self.lblFixSpeed.setMaximumSize(QSize(16777215, 40))
-        self.lblFixSpeed.setFont(font3)
+        self.lblFixSpeed.setFont(font2)
 
         self.verticalLayout_25.addWidget(self.lblFixSpeed)
 
@@ -2233,7 +2215,7 @@ class Ui_MainWindow(object):
         self.label_7 = QLabel(self.widget_10)
         self.label_7.setObjectName(u"label_7")
         self.label_7.setMaximumSize(QSize(16777215, 50))
-        self.label_7.setFont(font7)
+        self.label_7.setFont(font6)
         self.label_7.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.label_7.setStyleSheet(u"QLabel {\n"
 "	padding-left: 10px;\n"
@@ -2265,7 +2247,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnPreUp.sizePolicy().hasHeightForWidth())
         self.btnPreUp.setSizePolicy(sizePolicy)
         self.btnPreUp.setMinimumSize(QSize(0, 60))
-        self.btnPreUp.setFont(font7)
+        self.btnPreUp.setFont(font6)
         self.btnPreUp.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -2287,7 +2269,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnDownBack.sizePolicy().hasHeightForWidth())
         self.btnDownBack.setSizePolicy(sizePolicy)
         self.btnDownBack.setMinimumSize(QSize(0, 60))
-        self.btnDownBack.setFont(font7)
+        self.btnDownBack.setFont(font6)
         self.btnDownBack.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -2322,7 +2304,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnPreHome.sizePolicy().hasHeightForWidth())
         self.btnPreHome.setSizePolicy(sizePolicy)
         self.btnPreHome.setMinimumSize(QSize(0, 120))
-        self.btnPreHome.setFont(font7)
+        self.btnPreHome.setFont(font6)
         self.btnPreHome.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -2444,7 +2426,7 @@ class Ui_MainWindow(object):
         self.label_16.setObjectName(u"label_16")
         self.label_16.setMinimumSize(QSize(0, 40))
         self.label_16.setMaximumSize(QSize(16777215, 40))
-        self.label_16.setFont(font5)
+        self.label_16.setFont(font4)
         self.label_16.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.verticalLayout_16.addWidget(self.label_16)
@@ -2535,7 +2517,7 @@ class Ui_MainWindow(object):
         self.lblPreSpeed = QLabel(self.frameXPos_2)
         self.lblPreSpeed.setObjectName(u"lblPreSpeed")
         self.lblPreSpeed.setMaximumSize(QSize(16777215, 40))
-        self.lblPreSpeed.setFont(font3)
+        self.lblPreSpeed.setFont(font2)
 
         self.verticalLayout_16.addWidget(self.lblPreSpeed)
 
@@ -2681,7 +2663,7 @@ class Ui_MainWindow(object):
         self.label_25 = QLabel(self.widget_27)
         self.label_25.setObjectName(u"label_25")
         self.label_25.setMaximumSize(QSize(16777215, 50))
-        self.label_25.setFont(font7)
+        self.label_25.setFont(font6)
         self.label_25.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.label_25.setStyleSheet(u"QLabel {\n"
 "	padding-left: 10px;\n"
@@ -2713,7 +2695,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnPostForward.sizePolicy().hasHeightForWidth())
         self.btnPostForward.setSizePolicy(sizePolicy)
         self.btnPostForward.setMinimumSize(QSize(0, 60))
-        self.btnPostForward.setFont(font7)
+        self.btnPostForward.setFont(font6)
         self.btnPostForward.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -2735,7 +2717,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnPostBack.sizePolicy().hasHeightForWidth())
         self.btnPostBack.setSizePolicy(sizePolicy)
         self.btnPostBack.setMinimumSize(QSize(0, 60))
-        self.btnPostBack.setFont(font7)
+        self.btnPostBack.setFont(font6)
         self.btnPostBack.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -2768,7 +2750,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btnPostHome.sizePolicy().hasHeightForWidth())
         self.btnPostHome.setSizePolicy(sizePolicy)
         self.btnPostHome.setMinimumSize(QSize(0, 120))
-        self.btnPostHome.setFont(font7)
+        self.btnPostHome.setFont(font6)
         self.btnPostHome.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -2858,7 +2840,7 @@ class Ui_MainWindow(object):
         self.label_31.setObjectName(u"label_31")
         self.label_31.setMinimumSize(QSize(0, 40))
         self.label_31.setMaximumSize(QSize(16777215, 40))
-        self.label_31.setFont(font5)
+        self.label_31.setFont(font4)
         self.label_31.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.verticalLayout_27.addWidget(self.label_31)
@@ -2949,7 +2931,7 @@ class Ui_MainWindow(object):
         self.lblPostSpeed = QLabel(self.frameXPos_4)
         self.lblPostSpeed.setObjectName(u"lblPostSpeed")
         self.lblPostSpeed.setMaximumSize(QSize(16777215, 40))
-        self.lblPostSpeed.setFont(font3)
+        self.lblPostSpeed.setFont(font2)
 
         self.verticalLayout_27.addWidget(self.lblPostSpeed)
 
@@ -3077,7 +3059,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.lblDate.setText(QCoreApplication.translate("MainWindow", u"date", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u044f: 30%", None))
         self.btnExit.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0445\u043e\u0434", None))
         self.btnAutoMode.setText(QCoreApplication.translate("MainWindow", u"\u0410\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0440\u0435\u0436\u0438\u043c", None))
         self.btnManualMode.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0443\u0447\u043d\u043e\u0439 \u0440\u0435\u0436\u0438\u043c", None))
@@ -3109,7 +3090,7 @@ class Ui_MainWindow(object):
         self.label_46.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0410\u042f \u041f\u041e\u0417\u0418\u0426\u0418\u042f", None))
         self.lblPrePosMan.setText(QCoreApplication.translate("MainWindow", u"--- \u043c\u043c", None))
         self.label_48.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0415\u0415 \u0423\u0421\u0418\u041b\u0418\u0415", None))
-        self.label_49.setText(QCoreApplication.translate("MainWindow", u"--- \u041d", None))
+        self.lblPreForceMan.setText(QCoreApplication.translate("MainWindow", u"--- \u041d", None))
         self.btnPreUpMan.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0440\u0445", None))
         self.btnPreDownMan.setText(QCoreApplication.translate("MainWindow", u"\u0412\u043d\u0438\u0437", None))
         self.btnPreDown11.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e \u0443\u0441\u0438\u043b\u0438\u044f", None))
