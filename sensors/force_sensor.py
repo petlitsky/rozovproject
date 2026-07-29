@@ -4,51 +4,66 @@ from hx711_gpiozero import HX711
 
 
 class ForceSensorWorker(QThread):
+    # Сигнал передает измеренное значение силы/веса в GUI
     force_updated = Signal(float)
+    # Сигнал для передачи ошибок в GUI (если датчик отключится)
     error_occurred = Signal(str)
 
     def __init__(self, dout_pin=24, pd_sck_pin=25, parent=None):
         super().__init__(parent)
         self.dout_pin = dout_pin
         self.pd_sck_pin = pd_sck_pin
+        self.scale_ratio = 0.00234  # Ваш скалирующий коэффициент
         self._running = True
-        self.hx = None
+        self.scale = None
 
     def run(self):
         try:
-            # Инициализация датчика
-            self.hx = HX711(dout=self.dout_pin, sck=self.pd_sck_pin)
+            print(f"[HX711] Инициализация на пинах select_pin={self.dout_pin}, clock_pin={self.pd_sck_pin}...")
+            # Передаем пины в точности, как в вашем рабочем скрипте
+            self.scale = HX711(select_pin=self.dout_pin, clock_pin=self.pd_sck_pin)
 
-            # Безопасное получение начального смещения (тарировка)
-            zero_offset = self.hx.value
-            scale_ratio = 420.0  # Калибровочный коэффициент
+            # Стабилизация датчика
+            self.msleep(2000)
+
+            # Чтение значения пустой тары (обнуление)
+            init_reading = self.scale.value
+            print(f"[HX711] Значение тары зафиксировано: {init_reading}")
 
             while self._running:
-                raw_val = self.hx.value
+                raw_value = self.scale.value
 
-                if raw_val is not None:
-                    # Расчет усилия
-                    force = (raw_val - zero_offset) / scale_ratio
-                    self.force_updated.emit(force)
-                    print(force)
+                if raw_value is not None:
+                    # Расчет чистого веса/усилия по вашей формуле
+                    current_weight = (raw_value - init_reading) * self.scale_ratio
 
-                # Используем msleep вместо time.sleep для лучшей интеграции с Qt
+                    # Отсечение шума около нуля
+                    if abs(current_weight) < 0.1:
+                        current_weight = 0.0
+
+                    # Отправка значения в основной UI поток
+                    self.force_updated.emit(float(current_weight))
+
+                # Пауза 100 мс для стабильности цикла
                 self.msleep(100)
 
         except Exception as e:
-            self.error_occurred.emit(f"Ошибка чтения HX711: {e}")
+            error_msg = f"Ошибка работы HX711: {e}"
+            print(f"[HX711 Error] {error_msg}")
+            self.error_occurred.emit(error_msg)
         finally:
             self._cleanup()
 
     def stop(self):
-        """Плавная остановка потока."""
+        """Безопасная остановка потока из главного окна GUI."""
         self._running = False
-        self.wait()  # Ожидаем завершения run()
+        self.wait()  # Ожидаем корректного завершения run()
 
     def _cleanup(self):
-        """Очистка ресурсов GPIO."""
-        if self.hx and hasattr(self.hx, "close"):
+        """Освобождение ресурсов GPIO при закрытии."""
+        if self.scale and hasattr(self.scale, "close"):
             try:
-                self.hx.close()
+                self.scale.close()
             except Exception:
                 pass
+            print("[HX711] Ресурсы GPIO успешно освобождены")
