@@ -3,6 +3,7 @@ from PySide6.QtCore import QThread, Signal
 import gpiod
 
 class ForceSensorWorker(QThread):
+    # Передает силу в Ньютонах (Н)
     force_updated = Signal(float)
     error_occurred = Signal(str)
 
@@ -10,7 +11,9 @@ class ForceSensorWorker(QThread):
         super().__init__(parent)
         self.dout_pin = dout_pin
         self.pd_sck_pin = pd_sck_pin
-        self.scale_ratio = 420.0
+        
+        # Калибровочный коэффициент для перевода сырых отсчетов в ГРАММЫ
+        self.scale_ratio = 420.0  
         self._running = True
 
         self.request = None
@@ -20,14 +23,12 @@ class ForceSensorWorker(QThread):
         try:
             print(f"[Force Sensor] Инициализация GPIO (DOUT={self.dout_pin}, SCK={self.pd_sck_pin}) via gpiod v2...")
             
-            # В gpiod v2 линия запрашивается через request_lines
             chip_path = "/dev/gpiochip4"
             try:
                 gpiod.Chip(chip_path).close()
             except Exception:
                 chip_path = "/dev/gpiochip0"
 
-            # Настройка конфигурации линий для gpiod v2
             config = {
                 self.dout_pin: gpiod.LineSettings(direction=gpiod.line.Direction.INPUT),
                 self.pd_sck_pin: gpiod.LineSettings(direction=gpiod.line.Direction.OUTPUT, output_value=gpiod.line.Value.INACTIVE)
@@ -47,12 +48,18 @@ class ForceSensorWorker(QThread):
             while self._running:
                 raw_val = self._read_average(3)
                 if raw_val is not None:
-                    val = (raw_val - self.zero_offset) / self.scale_ratio
+                    # 1. Расчет массы в граммах
+                    weight_grams = (raw_val - self.zero_offset) / self.scale_ratio
                     
-                    if abs(val) < 0.1:
-                        val = 0.0
+                    # 2. Перевод граммов в Ньютоны (Н): (г / 1000) * 9.80665
+                    force_newtons = (weight_grams / 1000.0) * 9.80665
 
-                    self.force_updated.emit(float(val))
+                    # Отсечка мелких шумов около нуля (менее ~0.01 Н)
+                    if abs(force_newtons) < 0.01:
+                        force_newtons = 0.0
+
+                    # Отправляем усилие в Ньютонах
+                    self.force_updated.emit(float(force_newtons))
                 
                 self.msleep(100)
 
@@ -67,7 +74,6 @@ class ForceSensorWorker(QThread):
         count = 0
         timeout = 100
         
-        # Ожидание LOW уровня на DOUT
         while self.request.get_value(self.dout_pin) != gpiod.line.Value.INACTIVE and timeout > 0:
             time.sleep(0.001)
             timeout -= 1
@@ -75,14 +81,12 @@ class ForceSensorWorker(QThread):
         if timeout <= 0:
             return None
 
-        # Чтение 24 бит
         for _ in range(24):
             self.request.set_value(self.pd_sck_pin, gpiod.line.Value.ACTIVE)
             bit_val = 1 if self.request.get_value(self.dout_pin) == gpiod.line.Value.ACTIVE else 0
             count = (count << 1) | bit_val
             self.request.set_value(self.pd_sck_pin, gpiod.line.Value.INACTIVE)
 
-        # 25-й импульс (Gain 128)
         self.request.set_value(self.pd_sck_pin, gpiod.line.Value.ACTIVE)
         self.request.set_value(self.pd_sck_pin, gpiod.line.Value.INACTIVE)
 

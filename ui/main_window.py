@@ -116,13 +116,12 @@ class MainWindow(QMainWindow):
         self.ui.lblDate.setText(now)
     
     def _update_force_labels(self, value: float):
-        text_val = f"{value:.2f}"
-        self.ui.lblPreForceMan.setText(text_val)
-        self.ui.lblPreForce.setText(text_val)
+        self.ui.lblPreForceMan.setText(f"{value:.1f} Н")
+        self.ui.lblPreForce.setText(f"{value:.1f} Н")
 
     def _update_torque_labels(self, value: float):
-        self.ui.lblPostTorqMan.setText(f"{torque:.3f} Н·м")
-        self.ui.lblPostTorq.setText(f"{torque:.3f} Н·м")
+        self.ui.lblPostTorqMan.setText(f"{value:.3f} Н·м")
+        self.ui.lblPostTorq.setText(f"{value:.3f} Н·м")
 
     def _update_temperature(self, temp: float) -> None:
         self.ui.lblTemp.setText(f"Температура: {temp:.1f}°C")

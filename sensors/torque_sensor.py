@@ -6,7 +6,7 @@ class TorqueSensorWorker(QThread):
     torque_updated = Signal(float)
     error_occurred = Signal(str)
 
-    def __init__(self, dout_pin=12, pd_sck_pin=16, parent=None):
+    def __init__(self, dout_pin=18, pd_sck_pin=23, parent=None):
         super().__init__(parent)
         self.dout_pin = dout_pin
         self.pd_sck_pin = pd_sck_pin
