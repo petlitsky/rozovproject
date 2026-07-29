@@ -7,7 +7,7 @@ from PySide6.QtCore import QObject, Signal
 class FanController(QObject):
     fan_speed_updated = Signal(int)  # скорость в %
 
-    def __init__(self, chip_name="gpiochip4", pin_offset=12, parent=None):
+    def __init__(self, chip_name="gpiochip0", pin_offset=12, parent=None):
         # Обязательно передаем parent в QObject!
         super().__init__(parent)
 
