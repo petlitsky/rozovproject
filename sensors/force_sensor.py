@@ -1,13 +1,14 @@
-from PySide6.QtCore import QThread, Signal
 import time
+from PySide6.QtCore import QThread, Signal
 from hx711_gpiozero import HX711
+
 
 class ForceSensorWorker(QThread):
     force_updated = Signal(float)
-    
-    # Имена параметров dout и sck (по умолчанию 24 и 23)
-    def __init__(self, dout_pin=24, pd_sck_pin=25):
-        super().__init__()
+    error_occurred = Signal(str)
+
+    def __init__(self, dout_pin=24, pd_sck_pin=25, parent=None):
+        super().__init__(parent)
         self.dout_pin = dout_pin
         self.pd_sck_pin = pd_sck_pin
         self._running = True
@@ -15,23 +16,38 @@ class ForceSensorWorker(QThread):
 
     def run(self):
         try:
-            # Передаем dout и sck вместо pd_sck
-            self.hx = HX711(self.dout_pin, self.pd_sck_pin)
-            
-            # В hx711-gpiozero для чтения значения используется свойство .value
-            # Потребуется тарировка (смещение):
+            # Инициализация датчика
+            self.hx = HX711(dout_pin=self.dout_pin, sck_pin=self.pd_sck_pin)
+
+            # Безопасное получение начального смещения (тарировка)
             zero_offset = self.hx.value
             scale_ratio = 420.0  # Калибровочный коэффициент
 
             while self._running:
                 raw_val = self.hx.value
-                # Расчет усилия
-                force = (raw_val - zero_offset) / scale_ratio
-                self.force_updated.emit(force)
-                time.sleep(0.1)
-                
+
+                if raw_val is not None:
+                    # Расчет усилия
+                    force = (raw_val - zero_offset) / scale_ratio
+                    self.force_updated.emit(force)
+
+                # Используем msleep вместо time.sleep для лучшей интеграции с Qt
+                self.msleep(100)
+
         except Exception as e:
-            print(f"Ошибка чтения HX711: {e}")
+            self.error_occurred.emit(f"Ошибка чтения HX711: {e}")
+        finally:
+            self._cleanup()
 
     def stop(self):
+        """Плавная остановка потока."""
         self._running = False
+        self.wait()  # Ожидаем завершения run()
+
+    def _cleanup(self):
+        """Очистка ресурсов GPIO."""
+        if self.hx and hasattr(self.hx, "close"):
+            try:
+                self.hx.close()
+            except Exception:
+                pass
