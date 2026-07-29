@@ -2571,10 +2571,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_17.setSpacing(5)
         self.verticalLayout_17.setObjectName(u"verticalLayout_17")
         self.verticalLayout_17.setContentsMargins(10, 10, 10, 10)
-        self.pushButton_18 = QPushButton(self.framePosAndHome_2)
-        self.pushButton_18.setObjectName(u"pushButton_18")
-        self.pushButton_18.setMinimumSize(QSize(0, 60))
-        self.pushButton_18.setStyleSheet(u"QPushButton {\n"
+        self.btnSavPreForce = QPushButton(self.framePosAndHome_2)
+        self.btnSavPreForce.setObjectName(u"btnSavPreForce")
+        self.btnSavPreForce.setMinimumSize(QSize(0, 60))
+        self.btnSavPreForce.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -2585,12 +2585,12 @@ class Ui_MainWindow(object):
 "\n"
 "}")
 
-        self.verticalLayout_17.addWidget(self.pushButton_18)
+        self.verticalLayout_17.addWidget(self.btnSavPreForce)
 
-        self.pushButton_20 = QPushButton(self.framePosAndHome_2)
-        self.pushButton_20.setObjectName(u"pushButton_20")
-        self.pushButton_20.setMinimumSize(QSize(0, 60))
-        self.pushButton_20.setStyleSheet(u"QPushButton {\n"
+        self.btnGoPreForce = QPushButton(self.framePosAndHome_2)
+        self.btnGoPreForce.setObjectName(u"btnGoPreForce")
+        self.btnGoPreForce.setMinimumSize(QSize(0, 60))
+        self.btnGoPreForce.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -2601,7 +2601,7 @@ class Ui_MainWindow(object):
 "\n"
 "}")
 
-        self.verticalLayout_17.addWidget(self.pushButton_20)
+        self.verticalLayout_17.addWidget(self.btnGoPreForce)
 
         self.line_5 = QFrame(self.framePosAndHome_2)
         self.line_5.setObjectName(u"line_5")
@@ -3050,7 +3050,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(7)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -3172,8 +3172,8 @@ class Ui_MainWindow(object):
         self.btnDownPre5mm.setText(QCoreApplication.translate("MainWindow", u"+5 \u043c\u043c", None))
         self.lblPreSpeed.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u044f: --%", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u0423\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0442\u044c", None))
-        self.pushButton_18.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0443\u0441\u0438\u043b\u0438\u0435", None))
-        self.pushButton_20.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0435\u043c\u0435\u0441\u0442\u0438\u0442\u044c\u0441\u044f \u0434\u043e \u0443\u0441\u0438\u043b\u0438\u044f", None))
+        self.btnSavPreForce.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0443\u0441\u0438\u043b\u0438\u0435", None))
+        self.btnGoPreForce.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0435\u043c\u0435\u0441\u0442\u0438\u0442\u044c\u0441\u044f \u0434\u043e \u0443\u0441\u0438\u043b\u0438\u044f", None))
         self.label_18.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0415\u0415 \u0423\u0421\u0418\u041b\u0418\u0415", None))
         self.lblPreForce.setText(QCoreApplication.translate("MainWindow", u"--- \u041d", None))
         self.label_25.setText(QCoreApplication.translate("MainWindow", u"\u041c\u043e\u0434\u0443\u043b\u044c \u043f\u043e\u0441\u0442\u043e\u0431\u0436\u0438\u043c\u0430", None))
