@@ -27,7 +27,7 @@ class MainWindow(QMainWindow):
         self.config = Config()
         self.arduino = ArduinoController(self)
         self.bme280 = BME280Sensor(self)
-        self.fan = FanController(self)
+        self.fan = FanController(12)
         self.manual = ManualControls(self)
         
         # Состояние

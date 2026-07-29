@@ -10,11 +10,11 @@ class FanController(QObject):
     def __init__(self, pin_offset=12, parent=None):
         # Обязательно передаем parent в QObject!
         super().__init__(parent)
-        chip_name = "/dev/gpiochip4"
+        chip_path = "/dev/gpiochip4"
         try:
-            gpiod.Chip(chip_name).close()
+            gpiod.Chip(chip_path).close()
         except Exception:
-            chip_name = "/dev/gpiochip0"
+            chip_path = "/dev/gpiochip0"
 
         self._chip_name = str(chip_name)
         self._pin_offset = int(pin_offset)  # Пин должен быть строго int!
