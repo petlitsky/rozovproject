@@ -108,8 +108,7 @@ class ForceSensorWorker(QThread):
         return sum(values) / len(values) if values else None
 
     def get_current_force(self) -> float:
-
-        return self.last_force
+        return last_force
 
     def stop(self):
         self._running = False
