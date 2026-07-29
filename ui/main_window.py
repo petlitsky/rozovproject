@@ -12,7 +12,7 @@ from models.config import Config
 from sensors.bme280_sensor import BME280Sensor
 from sensors.fan_controller import FanController
 from sensors.force_sensor import ForceSensorWorker
-from sensors.torque_worker import TorqueSensorWorker
+from sensors.torque_sensor import TorqueSensorWorker
 
 
 class MainWindow(QMainWindow):
