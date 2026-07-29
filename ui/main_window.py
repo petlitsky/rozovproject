@@ -120,7 +120,7 @@ class MainWindow(QMainWindow):
         self.ui.lblPreForceMan.setText(text_val)
         self.ui.lblPreForce.setText(text_val)
 
-    def _update_force_labels(self, value: float):
+    def _update_torque_labels(self, value: float):
         self.ui.lblPostTorqMan.setText(f"{torque:.3f} Н·м")
         self.ui.lblPostTorq.setText(f"{torque:.3f} Н·м")
 
