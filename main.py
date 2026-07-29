@@ -1,8 +1,8 @@
 from hx711_gpiozero import HX711
 from time import sleep
 
-# Инициализация датчика с новыми пинами: DT = 24, SCK = 25
-scale = HX711(dout=24, pdsck=25)
+# Правильная инициализация для пинов: DT = 24, SCK = 25
+scale = HX711(select_pin=24, clock_pin=25)
 
 print("Инициализация...")
 init_reading = scale.value
