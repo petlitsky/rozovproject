@@ -1,20 +1,21 @@
-import time
 from hx711_gpiozero import HX711
+from time import sleep
 
-print("1. Запуск теста HX711...")
+# Инициализация датчика с новыми пинами: DT = 24, SCK = 25
+scale = HX711(dout=24, pdsck=25)
 
-try:
-    # Важно: имена параметров строго 'dout' и 'sck'
-    hx = HX711(24, 25)
-    print("2. Датчик успешно инициализирован.")
-    
-    print("3. Пробуем прочитать 5 значений:")
-    for i in range(5):
-        val = hx.value
-        print(f"  Замер {i+1}: {val}")
-        time.sleep(0.5)
+print("Инициализация...")
+init_reading = scale.value
+sleep(1)
 
-except Exception as e:
-    print(f"❌ Ошибка: {e}")
+# Введите известный вес для калибровки
+known_weight = float(input("Введите вес эталона в граммах: "))
+rel_reading = scale.value
+scale_ratio = known_weight / (rel_reading - init_reading)
+sleep(1)
 
-print("4. Тест завершен.")
+# Бесконечный цикл чтения веса
+while True:
+  current_weight = (scale.value - init_reading) * scale_ratio
+  print(f"Вес: {current_weight:.2f} г")
+  sleep(1)
