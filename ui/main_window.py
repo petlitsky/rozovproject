@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
         
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self) 
-        # self.setFixedSize(1024,600)
+        #self.setFixedSize(1024,600)
         self.showFullScreen()
         
         self.config = Config()
@@ -41,8 +41,7 @@ class MainWindow(QMainWindow):
 
         self._load_saved_values()
 
-        # Инициализация и запуск тензодатчика (HX711 / Force Sensor)
-        self.force_sensor = ForceSensorWorker(dout_pin=24, pd_sck_pin=23)
+        self.force_sensor = ForceSensorWorker(dout_pin=24, pd_sck_pin=25)
         self.force_sensor.force_updated.connect(self._update_force_labels)
         self.force_sensor.start()
         
@@ -111,20 +110,21 @@ class MainWindow(QMainWindow):
         now = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
         self.ui.lblDate.setText(now)
     
+    def _update_force_labels(self, value: float):
+        """Обновление значений в lblPreForceMan и lblPreForce"""
+        text_val = f"{value:.2f}"
+
+        if hasattr(self.ui, "lblPreForceMan"):
+            self.ui.lblPreForceMan.setText(text_val)
+
+        if hasattr(self.ui, "lblPreForce"):
+            self.ui.lblPreForce.setText(text_val)
+
     def _update_temperature(self, temp: float) -> None:
         self.ui.lblTemp.setText(f"Температура: {temp:.1f}°C")
     
     def _update_fan_speed(self, speed: int) -> None:
         self.ui.lblFanSpeed.setText(f"{speed}%")
-
-    # ДОБАВЛЕНО: Обработчик обновления данных тензодатчика
-    def _update_force_labels(self, force: float) -> None:
-        """Обновляет значение усилия на UI-элементах."""
-        formatted_force = f"{force:.2f} Н"
-        if hasattr(self.ui, 'lblForce'):
-            self.ui.lblForce.setText(formatted_force)
-        if hasattr(self.ui, 'lblForceMan'):
-            self.ui.lblForceMan.setText(formatted_force)
     
     def _load_saved_values(self) -> None:
         speeds = [
@@ -162,6 +162,7 @@ class MainWindow(QMainWindow):
         if not self.arduino.is_connected:
             return
 
+        # 1. Читаем настройки из Config
         lin_speed = self.config.get("lin_speed", 50)
         fix_speed = self.config.get("fix_speed", 30)
         pre_speed = self.config.get("pre_speed", 30)
@@ -509,12 +510,8 @@ class MainWindow(QMainWindow):
         
         dialog = PasswordDialog(self)
         if dialog.exec() == PasswordDialog.Accepted:
-            # Остановка воркера датчика силы при закрытии
-            if hasattr(self, 'force_sensor') and self.force_sensor.isRunning():
-                self.force_sensor.stop()  # Убедитесь, что метод stop() реализован в ForceSensorWorker
-                self.force_sensor.wait() 
-            
             self.fan.cleanup()
+            self.force_sensor.stop()
             self._close_homing_dialog()
             self.arduino.send_command("EMERGENCY_STOP")
             self.arduino.disconnect()
