@@ -17,7 +17,7 @@ class ForceSensorWorker(QThread):
     def run(self):
         try:
             # Инициализация датчика
-            self.hx = HX711(dout_pin=self.dout_pin, sck_pin=self.pd_sck_pin)
+            self.hx = HX711(dout=self.dout_pin, sck=self.pd_sck_pin)
 
             # Безопасное получение начального смещения (тарировка)
             zero_offset = self.hx.value
