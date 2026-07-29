@@ -59,8 +59,8 @@ class ForceSensorWorker(QThread):
                     if abs(force_newtons) < 0.01:
                         force_newtons = 0.0
 
-                    last_force = force_newtons
-                    print(last_force)
+                    self.last_force = force_newtons
+                    print(self.last_force)
                     # Отправляем усилие в Ньютонах
                     self.force_updated.emit(float(force_newtons))
                 
@@ -108,7 +108,7 @@ class ForceSensorWorker(QThread):
         return sum(values) / len(values) if values else None
 
     def get_current_force(self) -> float:
-        return last_force
+        return self.last_force
 
     def stop(self):
         self._running = False
