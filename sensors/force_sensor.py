@@ -16,7 +16,7 @@ class ForceSensorWorker(QThread):
     def run(self):
         try:
             # Передаем dout и sck вместо pd_sck
-            self.hx = HX711(dout=self.dout_pin, sck=self.pd_sck_pin)
+            self.hx = HX711(self.dout_pin, self.pd_sck_pin)
             
             # В hx711-gpiozero для чтения значения используется свойство .value
             # Потребуется тарировка (смещение):
