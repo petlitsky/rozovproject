@@ -2,7 +2,6 @@ import time
 from PySide6.QtCore import QThread, Signal
 import gpiod
 
-
 class ForceSensorWorker(QThread):
     force_updated = Signal(float)
     error_occurred = Signal(str)
@@ -11,34 +10,34 @@ class ForceSensorWorker(QThread):
         super().__init__(parent)
         self.dout_pin = dout_pin
         self.pd_sck_pin = pd_sck_pin
-        self.scale_ratio = 420.0  # Калибровочный коэффициент
+        self.scale_ratio = 420.0
         self._running = True
 
-        self.chip = None
-        self.dout_line = None
-        self.sck_line = None
+        self.request = None
         self.zero_offset = 0
-
-    def _get_chip(self):
-        """Универсальное открытие gpiochip для Pi 4 и Pi 5"""
-        # Пробуем доступные пути к чипам (Pi 5 обычно /dev/gpiochip4, Pi 4 /dev/gpiochip0)
-        for chip_path in ["/dev/gpiochip4", "/dev/gpiochip0", "gpiochip4", "gpiochip0"]:
-            try:
-                return gpiod.Chip(chip_path)
-            except Exception:
-                continue
-        raise RuntimeError("Не удалось найти доступный gpiochip в системе")
 
     def run(self):
         try:
-            print(f"[Force Sensor] Инициализация GPIO (DOUT={self.dout_pin}, SCK={self.pd_sck_pin})...")
-            self.chip = self._get_chip()
+            print(f"[Force Sensor] Инициализация GPIO (DOUT={self.dout_pin}, SCK={self.pd_sck_pin}) via gpiod v2...")
+            
+            # В gpiod v2 линия запрашивается через request_lines
+            chip_path = "/dev/gpiochip4"
+            try:
+                gpiod.Chip(chip_path).close()
+            except Exception:
+                chip_path = "/dev/gpiochip0"
 
-            self.dout_line = self.chip.get_line(self.dout_pin)
-            self.sck_line = self.chip.get_line(self.pd_sck_pin)
+            # Настройка конфигурации линий для gpiod v2
+            config = {
+                self.dout_pin: gpiod.LineSettings(direction=gpiod.line.Direction.INPUT),
+                self.pd_sck_pin: gpiod.LineSettings(direction=gpiod.line.Direction.OUTPUT, output_value=gpiod.line.Value.INACTIVE)
+            }
 
-            self.dout_line.request(consumer="HX711_DOUT", type=gpiod.LINE_REQ_DIR_IN)
-            self.sck_line.request(consumer="HX711_SCK", type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
+            self.request = gpiod.request_lines(
+                chip_path,
+                consumer="HX711_FORCE",
+                config=config
+            )
 
             # Тарировка (обнуление)
             self.msleep(500)
@@ -67,20 +66,25 @@ class ForceSensorWorker(QThread):
     def _read_raw(self):
         count = 0
         timeout = 100
-        while self.dout_line.get_value() != 0 and timeout > 0:
+        
+        # Ожидание LOW уровня на DOUT
+        while self.request.get_value(self.dout_pin) != gpiod.line.Value.INACTIVE and timeout > 0:
             time.sleep(0.001)
             timeout -= 1
 
         if timeout <= 0:
             return None
 
+        # Чтение 24 бит
         for _ in range(24):
-            self.sck_line.set_value(1)
-            count = (count << 1) | self.dout_line.get_value()
-            self.sck_line.set_value(0)
+            self.request.set_value(self.pd_sck_pin, gpiod.line.Value.ACTIVE)
+            bit_val = 1 if self.request.get_value(self.dout_pin) == gpiod.line.Value.ACTIVE else 0
+            count = (count << 1) | bit_val
+            self.request.set_value(self.pd_sck_pin, gpiod.line.Value.INACTIVE)
 
-        self.sck_line.set_value(1)
-        self.sck_line.set_value(0)
+        # 25-й импульс (Gain 128)
+        self.request.set_value(self.pd_sck_pin, gpiod.line.Value.ACTIVE)
+        self.request.set_value(self.pd_sck_pin, gpiod.line.Value.INACTIVE)
 
         if count & 0x800000:
             count -= 0x1000000
@@ -101,13 +105,9 @@ class ForceSensorWorker(QThread):
         self.wait()
 
     def _cleanup(self):
-        try:
-            if self.dout_line:
-                self.dout_line.release()
-            if self.sck_line:
-                self.sck_line.release()
-            if self.chip:
-                self.chip.close()
-        except Exception:
-            pass
+        if self.request:
+            try:
+                self.request.release()
+            except Exception:
+                pass
         print("[Force Sensor] Ресурсы gpiod освобождены.")
