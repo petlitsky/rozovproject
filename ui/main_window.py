@@ -512,7 +512,7 @@ class MainWindow(QMainWindow):
             # Остановка воркера датчика силы при закрытии
             if hasattr(self, 'force_sensor') and self.force_sensor.isRunning():
                 self.force_sensor.stop()  # Убедитесь, что метод stop() реализован в ForceSensorWorker
-                self.force_sensor.wait()
+                self.force_sensor.wait() 
             
             self.fan.cleanup()
             self._close_homing_dialog()
