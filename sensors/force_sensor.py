@@ -1,12 +1,11 @@
-# sensors/force_sensor.py
 from PySide6.QtCore import QThread, Signal
 import time
-# Использование gpiozero снизу решает проблему совместимости с Pi 5
-from hx711_gpiozero import HX711 
+from hx711_gpiozero import HX711
 
 class ForceSensorWorker(QThread):
     force_updated = Signal(float)
     
+    # Имена параметров dout и sck (по умолчанию 24 и 23)
     def __init__(self, dout_pin=24, pd_sck_pin=23):
         super().__init__()
         self.dout_pin = dout_pin
@@ -16,16 +15,19 @@ class ForceSensorWorker(QThread):
 
     def run(self):
         try:
-            # Инициализация HX711
-            self.hx = HX711(dout=self.dout_pin, pd_sck=self.pd_sck_pin)
-            # Установка калибровочного коэффициента (подберите под свои весы)
-            self.hx.set_reference_unit(420) 
-            self.hx.reset()
-            self.hx.tare()
+            # Передаем dout и sck вместо pd_sck
+            self.hx = HX711(dout=self.dout_pin, sck=self.pd_sck_pin)
+            
+            # В hx711-gpiozero для чтения значения используется свойство .value
+            # Потребуется тарировка (смещение):
+            zero_offset = self.hx.value
+            scale_ratio = 420.0  # Калибровочный коэффициент
 
             while self._running:
-                val = self.hx.get_weight(5)
-                self.force_updated.emit(val)
+                raw_val = self.hx.value
+                # Расчет усилия
+                force = (raw_val - zero_offset) / scale_ratio
+                self.force_updated.emit(force)
                 time.sleep(0.1)
                 
         except Exception as e:
