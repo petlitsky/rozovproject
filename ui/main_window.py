@@ -12,6 +12,7 @@ from models.config import Config
 from sensors.bme280_sensor import BME280Sensor
 from sensors.fan_controller import FanController
 from sensors.force_sensor import ForceSensorWorker
+from sensors.torque_worker import TorqueSensorWorker
 
 
 class MainWindow(QMainWindow):
@@ -44,6 +45,10 @@ class MainWindow(QMainWindow):
         self.force_sensor = ForceSensorWorker(dout_pin=24, pd_sck_pin=25)
         self.force_sensor.force_updated.connect(self._update_force_labels)
         self.force_sensor.start()
+
+        self.torque_worker = TorqueSensorWorker(dout_pin=18, pd_sck_pin=23)
+        self.torque_worker.torque_updated.connect(self.update_torque_label)
+        self.torque_worker.start()
         
         QTimer.singleShot(500, self._connect_arduino)
         QTimer.singleShot(3000, self._send_saved_values)
@@ -111,14 +116,13 @@ class MainWindow(QMainWindow):
         self.ui.lblDate.setText(now)
     
     def _update_force_labels(self, value: float):
-        """Обновление значений в lblPreForceMan и lblPreForce"""
         text_val = f"{value:.2f}"
+        self.ui.lblPreForceMan.setText(text_val)
+        self.ui.lblPreForce.setText(text_val)
 
-        if hasattr(self.ui, "lblPreForceMan"):
-            self.ui.lblPreForceMan.setText(text_val)
-
-        if hasattr(self.ui, "lblPreForce"):
-            self.ui.lblPreForce.setText(text_val)
+    def _update_force_labels(self, value: float):
+        self.ui.lblPostTorqMan.setText(f"{torque:.3f} Н·м")
+        self.ui.lblPostTorq.setText(f"{torque:.3f} Н·м")
 
     def _update_temperature(self, temp: float) -> None:
         self.ui.lblTemp.setText(f"Температура: {temp:.1f}°C")
@@ -512,6 +516,7 @@ class MainWindow(QMainWindow):
         if dialog.exec() == PasswordDialog.Accepted:
             self.fan.cleanup()
             self.force_sensor.stop()
+            self.torque_worker.stop()
             self._close_homing_dialog()
             self.arduino.send_command("EMERGENCY_STOP")
             self.arduino.disconnect()
