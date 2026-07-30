@@ -580,7 +580,7 @@ class MainWindow(QMainWindow):
         steps = int(degrees * STEPS_PER_DEGREE)
         
         if steps != 0:
-            self.arduino.send_command(f"POST_MOVE:{steps}")
+            self.arduino.send_command(f"POST_MOVE:{-steps}")
         else:
             return
             
