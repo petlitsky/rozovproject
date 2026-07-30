@@ -784,13 +784,13 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.btnPreDownMan, 1, 0, 1, 1)
 
-        self.btnPreDown11 = QToolButton(self.widget_46)
-        self.btnPreDown11.setObjectName(u"btnPreDown11")
-        sizePolicy.setHeightForWidth(self.btnPreDown11.sizePolicy().hasHeightForWidth())
-        self.btnPreDown11.setSizePolicy(sizePolicy)
-        self.btnPreDown11.setMinimumSize(QSize(0, 60))
-        self.btnPreDown11.setFont(font5)
-        self.btnPreDown11.setStyleSheet(u"QToolButton {\n"
+        self.btnGoPreForceMan = QToolButton(self.widget_46)
+        self.btnGoPreForceMan.setObjectName(u"btnGoPreForceMan")
+        sizePolicy.setHeightForWidth(self.btnGoPreForceMan.sizePolicy().hasHeightForWidth())
+        self.btnGoPreForceMan.setSizePolicy(sizePolicy)
+        self.btnGoPreForceMan.setMinimumSize(QSize(0, 60))
+        self.btnGoPreForceMan.setFont(font5)
+        self.btnGoPreForceMan.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -802,11 +802,11 @@ class Ui_MainWindow(object):
 "}")
         icon7 = QIcon()
         icon7.addFile(u":/icons/icons/press.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btnPreDown11.setIcon(icon7)
-        self.btnPreDown11.setIconSize(QSize(35, 35))
-        self.btnPreDown11.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        self.btnGoPreForceMan.setIcon(icon7)
+        self.btnGoPreForceMan.setIconSize(QSize(35, 35))
+        self.btnGoPreForceMan.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
 
-        self.gridLayout_2.addWidget(self.btnPreDown11, 0, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.btnGoPreForceMan, 0, 1, 1, 1)
 
         self.btnPreHomeMan = QToolButton(self.widget_46)
         self.btnPreHomeMan.setObjectName(u"btnPreHomeMan")
@@ -2985,7 +2985,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(8)
+        self.stackedWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -3028,7 +3028,7 @@ class Ui_MainWindow(object):
         self.lblPreForceMan.setText(QCoreApplication.translate("MainWindow", u"--- \u041d", None))
         self.btnPreUpMan.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0440\u0445", None))
         self.btnPreDownMan.setText(QCoreApplication.translate("MainWindow", u"\u0412\u043d\u0438\u0437", None))
-        self.btnPreDown11.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e \u0443\u0441\u0438\u043b\u0438\u044f", None))
+        self.btnGoPreForceMan.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e \u0443\u0441\u0438\u043b\u0438\u044f", None))
         self.btnPreHomeMan.setText(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u043c\u043e\u0439", None))
         self.label_36.setText(QCoreApplication.translate("MainWindow", u"\u041c\u043e\u0434\u0443\u043b\u044c \u043f\u043e\u0441\u0442\u043e\u0431\u0436\u0438\u043c\u0430", None))
         self.label_37.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0418\u0419 \u041c\u041e\u041c\u0415\u041d\u0422", None))

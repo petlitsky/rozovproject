@@ -91,6 +91,7 @@ class ManualControls(QObject):
 
         self.ui.btnSavPreForce.clicked.connect(self.main.save_pre_force)
         self.ui.btnGoPreForce.clicked.connect(self.main.go_to_pre_force)
+        self.ui.btnGoPreForceMan.clicked.connect(self.main.go_to_pre_force)
     
     def _connect_post_crimp_buttons(self) -> None:
         buttons = [
