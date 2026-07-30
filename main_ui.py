@@ -37,8 +37,8 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.widget = QWidget(self.centralwidget)
         self.widget.setObjectName(u"widget")
-        self.widget.setMinimumSize(QSize(0, 40))
-        self.widget.setMaximumSize(QSize(16777215, 60))
+        self.widget.setMinimumSize(QSize(0, 50))
+        self.widget.setMaximumSize(QSize(16777215, 50))
         self.widget.setStyleSheet(u"background: #F5F6F8;")
         self.horizontalLayout_2 = QHBoxLayout(self.widget)
         self.horizontalLayout_2.setSpacing(5)
@@ -1081,15 +1081,39 @@ class Ui_MainWindow(object):
         self.widget_8.setObjectName(u"widget_8")
         self.widget_8.setMaximumSize(QSize(16777215, 95))
         self.verticalLayout_31 = QVBoxLayout(self.widget_8)
-        self.verticalLayout_31.setSpacing(10)
         self.verticalLayout_31.setObjectName(u"verticalLayout_31")
-        self.verticalLayout_31.setContentsMargins(10, 10, 10, 10)
-        self.label_3 = QLabel(self.widget_8)
+        self.widget_14 = QWidget(self.widget_8)
+        self.widget_14.setObjectName(u"widget_14")
+        self.horizontalLayout_6 = QHBoxLayout(self.widget_14)
+        self.horizontalLayout_6.setSpacing(0)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.label_3 = QLabel(self.widget_14)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setMaximumSize(QSize(16777215, 30))
         self.label_3.setFont(font6)
 
-        self.verticalLayout_31.addWidget(self.label_3)
+        self.horizontalLayout_6.addWidget(self.label_3)
+
+        self.btnResetStats = QPushButton(self.widget_14)
+        self.btnResetStats.setObjectName(u"btnResetStats")
+        self.btnResetStats.setMinimumSize(QSize(0, 30))
+        self.btnResetStats.setMaximumSize(QSize(180, 30))
+        self.btnResetStats.setStyleSheet(u"QPushButton {\n"
+"	background: #bdcfdd;\n"
+"	border: 2px solid #a6b8c6;\n"
+"	border-radius: 5px;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"	background: #cfddeb;\n"
+"\n"
+"}")
+
+        self.horizontalLayout_6.addWidget(self.btnResetStats)
+
+
+        self.verticalLayout_31.addWidget(self.widget_14)
 
         self.comboBoxSensor = QComboBox(self.widget_8)
         self.comboBoxSensor.addItem("")
@@ -2060,13 +2084,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_24.addWidget(self.label_21)
 
-        self.label_22 = QLabel(self.framePos_3)
-        self.label_22.setObjectName(u"label_22")
-        self.label_22.setMaximumSize(QSize(16777215, 40))
-        self.label_22.setFont(font13)
-        self.label_22.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
+        self.lblFixCur = QLabel(self.framePos_3)
+        self.lblFixCur.setObjectName(u"lblFixCur")
+        self.lblFixCur.setMaximumSize(QSize(16777215, 40))
+        self.lblFixCur.setFont(font13)
+        self.lblFixCur.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
-        self.verticalLayout_24.addWidget(self.label_22)
+        self.verticalLayout_24.addWidget(self.lblFixCur)
 
 
         self.verticalLayout_23.addWidget(self.framePos_3)
@@ -3165,7 +3189,8 @@ class Ui_MainWindow(object):
         self.toolButton_26.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0430\u0442\u044c", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u0423\u043f\u0441\u0441... \u041f\u0443\u0441\u0442\u043e(\n"
 "\u0417\u0434\u0435\u0441\u044c \u0441\u043a\u043e\u0440\u043e \u0447\u0442\u043e-\u0442\u043e \u0431\u0443\u0434\u0435\u0442!", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0434\u0430\u0442\u0447\u0438\u043a", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0434\u0430\u0442\u0447\u0438\u043a:", None))
+        self.btnResetStats.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0435 \u043e\u0442\u043a\u043b\u0430\u0434\u043a\u0438", None))
         self.comboBoxSensor.setItemText(0, QCoreApplication.translate("MainWindow", u"\u0414\u0430\u0442\u0447\u0438\u043a \u043c\u043e\u043c\u0435\u043d\u0442\u0430 BTQ-403A", None))
         self.comboBoxSensor.setItemText(1, QCoreApplication.translate("MainWindow", u"\u0414\u0430\u0442\u0447\u0438\u043a \u0443\u0441\u0438\u043b\u0438\u044f TCF-715A", None))
         self.comboBoxSensor.setItemText(2, QCoreApplication.translate("MainWindow", u"\u0414\u0430\u0442\u0447\u0438\u043a \u0442\u043e\u043a\u0430 ACS712", None))
@@ -3217,7 +3242,7 @@ class Ui_MainWindow(object):
         self.btnFixBack.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0430\u0442\u044c", None))
         self.btnFixHome.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043b\u043d\u043e\u0441\u0442\u044c\u044e \u0440\u0430\u0437\u0436\u0430\u0442\u044c", None))
         self.label_21.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0410\u042f \u0421\u0418\u041b\u0410 \u0422\u041e\u041a\u0410", None))
-        self.label_22.setText(QCoreApplication.translate("MainWindow", u"--- \u0410", None))
+        self.lblFixCur.setText(QCoreApplication.translate("MainWindow", u"--- \u0410", None))
         self.label_23.setText(QCoreApplication.translate("MainWindow", u"\u0422\u043e\u0447\u043d\u043e\u0435 \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u0435", None))
         self.btnBackFix5grad.setText(QCoreApplication.translate("MainWindow", u"-5\u00b0", None))
         self.btnBackFix1grad.setText(QCoreApplication.translate("MainWindow", u"-1\u00b0", None))

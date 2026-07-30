@@ -2,7 +2,6 @@ import sys
 from datetime import datetime
 from typing import Optional
 import subprocess
-import random
 from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout
 from PySide6.QtCore import Qt, QTimer, QPropertyAnimation, QEasingCurve, QSize
 from main_ui import Ui_MainWindow
@@ -86,6 +85,15 @@ class MainWindow(QMainWindow):
         self.ui.btnManualMode.setChecked(True)
         self.ui.subMenu.setVisible(True)
         self.ui.subMenu.setMaximumSize(QSize(16777215, 189))
+        
+        # Настройка вентилятора - по умолчанию Auto
+        self.ui.getAutoFan.setChecked(True)
+        self.ui.getManualFan.setChecked(False)
+        self.ui.fanOff.setChecked(False)
+        self.ui.fanSpeed.setEnabled(False)
+        
+        # Кнопка сброса статистики
+        self.ui.btnResetStats.clicked.connect(self._reset_stats)
     
     def _setup_graphs(self):
         """Инициализация графиков"""
@@ -95,7 +103,7 @@ class MainWindow(QMainWindow):
             layout.setContentsMargins(0, 0, 0, 0)
         
         # Создаем виджет графика с поддержкой нескольких линий
-        self.graph_widget = GraphWidget(self, max_points=300)
+        self.graph_widget = GraphWidget(self, max_points=500)  # 500 точек = 50 секунд при 10Гц
         
         # Добавляем линии для всех датчиков (без легенды)
         self.graph_widget.add_line("Момент", '#00ff88')    # Зеленый
@@ -105,15 +113,15 @@ class MainWindow(QMainWindow):
         
         layout.addWidget(self.graph_widget)
         
-        # Таймер для обновления данных на графике (5 Гц)
+        # Таймер для обновления данных на графике (10 Гц)
         self.graph_update_timer = QTimer()
         self.graph_update_timer.timeout.connect(self._update_graphs)
-        self.graph_update_timer.start(200)  # 5 Гц (каждые 200мс)
+        self.graph_update_timer.start(100)  # 10 Гц
         
         # Таймер для обновления вида (скролл) - отдельно, реже
         self.view_update_timer = QTimer()
         self.view_update_timer.timeout.connect(self._update_view)
-        self.view_update_timer.start(500)  # 2 Гц (каждые 500мс)
+        self.view_update_timer.start(500)  # 2 Гц
         
         # Таймер для обновления текста (медленно - 1 Гц)
         self.text_update_timer = QTimer()
@@ -142,7 +150,11 @@ class MainWindow(QMainWindow):
         self.force_avg = 0.0
         self.force_count = 0
         
-        self.current_value = 0.0  # Текущее значение тока
+        self.current_max = self.config.get("current_max", 0.0)
+        self.current_min = self.config.get("current_min", 0.0)
+        self.current_avg = 0.0
+        self.current_count = 0
+        self.current_value = 0.0
         
         # Текущий режим отображения
         self.current_graph_mode = self.ui.comboBoxSensor.currentIndex()
@@ -177,6 +189,12 @@ class MainWindow(QMainWindow):
         self.bme280.temperature_updated.connect(self._update_temperature)
         
         self.fan.fan_speed_updated.connect(self._update_fan_speed)
+        
+        # Подключение режимов вентилятора
+        self.ui.getAutoFan.clicked.connect(self._on_fan_auto)
+        self.ui.getManualFan.clicked.connect(self._on_fan_manual)
+        self.ui.fanOff.clicked.connect(self._on_fan_off)
+        self.ui.fanSpeed.valueChanged.connect(self._on_fan_speed_slider)
     
     def _setup_timer(self) -> None:
         self.timer = QTimer()
@@ -203,16 +221,97 @@ class MainWindow(QMainWindow):
         
         self.ui.lblTimeStart.setText(f"{total_seconds} {word}")
     
+    # ===== Вентилятор =====
+    
+    def _on_fan_auto(self):
+        """Режим Auto - управление по температуре"""
+        self.ui.getAutoFan.setChecked(True)
+        self.ui.getManualFan.setChecked(False)
+        self.ui.fanOff.setChecked(False)
+        self.ui.fanSpeed.setEnabled(False)
+        self._process_auto_fan()
+    
+    def _on_fan_manual(self):
+        """Режим Manual - ручное управление"""
+        self.ui.getAutoFan.setChecked(False)
+        self.ui.getManualFan.setChecked(True)
+        self.ui.fanOff.setChecked(False)
+        self.ui.fanSpeed.setEnabled(True)
+        # Применяем текущее значение слайдера
+        speed = self.ui.fanSpeed.value()
+        self.fan.set_speed(speed)
+    
+    def _on_fan_off(self):
+        """Режим Off - вентилятор выключен"""
+        self.ui.getAutoFan.setChecked(False)
+        self.ui.getManualFan.setChecked(False)
+        self.ui.fanOff.setChecked(True)
+        self.ui.fanSpeed.setEnabled(False)
+        self.fan.set_speed(0)
+    
+    def _on_fan_speed_slider(self, value: int):
+        """Изменение скорости в ручном режиме"""
+        if self.ui.getManualFan.isChecked():
+            self.fan.set_speed(value)
+            self.ui.lblFanSpeed.setText(f"{value}%")
+    
+    def _process_auto_fan(self) -> None:
+        """Вычисление скорости вентилятора по температуре"""
+        if not self.ui.getAutoFan.isChecked():
+            return
+
+        min_temp = float(self.ui.tempMin.value()) if hasattr(self.ui, 'tempMin') else 40.0
+        max_temp = float(self.ui.tempMax.value()) if hasattr(self.ui, 'tempMax') else 70.0
+        start_speed = int(self.ui.startSpeed.value()) if hasattr(self.ui, 'startSpeed') else 30
+
+        current_temp = self.bme280.get_temperature()
+
+        if current_temp <= min_temp:
+            target_speed = 0
+        elif current_temp >= max_temp:
+            target_speed = 100
+        else:
+            temp_range = max_temp - min_temp
+            if temp_range > 0:
+                progress = (current_temp - min_temp) / temp_range
+                target_speed = int(start_speed + progress * (100 - start_speed))
+            else:
+                target_speed = start_speed
+
+        self.fan.set_speed(target_speed)
+    
+    def _update_fan_speed(self, speed: int) -> None:
+        """Обновление отображения скорости вентилятора"""
+        self.ui.lblFanSpeed.setText(f"{speed}%")
+        if not self.ui.getManualFan.isChecked() and not self.ui.fanOff.isChecked():
+            # В режиме Auto обновляем слайдер для отображения
+            self.ui.fanSpeed.setValue(speed)
+    
+    # ===== Датчики =====
+    
     def _update_current(self, value: float):
         """Обновление тока с ACS712"""
         self.current_value = value
         # Сохраняем данные для графика
         self.current_data.append(value)
-        if len(self.current_data) > 300:
+        if len(self.current_data) > 500:
             self.current_data.pop(0)
         
         # Добавляем данные в график (всегда)
         self.graph_widget.add_data_point("Ток", value)
+        
+        # Обновляем lblFixCur
+        self.ui.lblFixCur.setText(f"{value:.2f} А")
+        
+        # Обновляем статистику
+        self.current_count += 1
+        if value > self.current_max:
+            self.current_max = value
+            self.config.set("current_max", value)
+        if value < self.current_min or self.current_count == 1:
+            self.current_min = value
+            self.config.set("current_min", value)
+        self.current_avg = ((self.current_avg * (self.current_count - 1)) + value) / self.current_count
         
         # Если выбран режим тока - обновляем текст
         if self.current_graph_mode == 2:
@@ -241,7 +340,7 @@ class MainWindow(QMainWindow):
         
         # Сохраняем данные для графика
         self.force_data.append(value)
-        if len(self.force_data) > 300:
+        if len(self.force_data) > 500:
             self.force_data.pop(0)
         
         # Обновляем статистику
@@ -263,7 +362,7 @@ class MainWindow(QMainWindow):
         
         # Сохраняем данные для графика
         self.torque_data.append(value)
-        if len(self.torque_data) > 300:
+        if len(self.torque_data) > 500:
             self.torque_data.pop(0)
         
         # Обновляем статистику
@@ -284,46 +383,49 @@ class MainWindow(QMainWindow):
         
         # Сохраняем данные для графика
         self.temp_data.append(temp)
-        if len(self.temp_data) > 300:
+        if len(self.temp_data) > 500:
             self.temp_data.pop(0)
         
         # Добавляем данные в график
         self.graph_widget.add_data_point("Температура", temp)
+        
+        # В режиме Auto - обновляем скорость вентилятора
+        if self.ui.getAutoFan.isChecked():
+            self._process_auto_fan()
     
-    def _update_fan_speed(self, speed: int) -> None:
-        self.ui.lblFanSpeed.setText(f"{speed}%")
-
-    def _on_manual_fan_slider_changed(self, value: int) -> None:
-        if hasattr(self.ui, 'getManualFan') and self.ui.getManualFan.isChecked():
-            self.set_fan_speed(value)
-
-    def _process_auto_fan(self) -> None:
-        if not (hasattr(self.ui, 'getAutoFan') and self.ui.getAutoFan.isChecked()):
-            return
-
-        min_temp = float(self.ui.tempMin.value()) if hasattr(self.ui, 'tempMin') else 40.0
-        max_temp = float(self.ui.tempMax.value()) if hasattr(self.ui, 'tempMax') else 70.0
-        start_speed = int(self.ui.startSpeed.value()) if hasattr(self.ui, 'startSpeed') else 30
-
-        current_temp = self.bme280.get_temperature()
-
-        if current_temp <= min_temp:
-            target_speed = 0
-        elif current_temp >= max_temp:
-            target_speed = 100
-        else:
-            temp_range = max_temp - min_temp
-            if temp_range > 0:
-                progress = (current_temp - min_temp) / temp_range
-                target_speed = int(start_speed + progress * (100 - start_speed))
-            else:
-                target_speed = start_speed
-
-        self.fan.set_speed(target_speed)
+    # ===== Сброс статистики =====
     
-    def _set_fan_off(self):
-        self.fan.set_speed(0)
-
+    def _reset_stats(self):
+        """Сброс максимальных и минимальных значений"""
+        # Сбрасываем момент
+        self.torque_max = 0.0
+        self.torque_min = 0.0
+        self.torque_avg = 0.0
+        self.torque_count = 0
+        self.config.set("torque_max", 0.0)
+        self.config.set("torque_min", 0.0)
+        
+        # Сбрасываем усилие
+        self.force_max = 0.0
+        self.force_min = 0.0
+        self.force_avg = 0.0
+        self.force_count = 0
+        self.config.set("force_max", 0.0)
+        self.config.set("force_min", 0.0)
+        
+        # Сбрасываем ток
+        self.current_max = 0.0
+        self.current_min = 0.0
+        self.current_avg = 0.0
+        self.current_count = 0
+        self.config.set("current_max", 0.0)
+        self.config.set("current_min", 0.0)
+        
+        # Обновляем отображение
+        self._update_text_slow()
+    
+    # ===== Остальные методы =====
+    
     def _load_saved_values(self) -> None:
         speeds = [
             ('lin_speed', self.ui.linSpeed, self.ui.lblLinSpeed, "Скорость перемещения: {}%"),
@@ -757,15 +859,18 @@ class MainWindow(QMainWindow):
         self._update_text_slow()
     
     def _update_graphs(self):
-        """Обновление данных на графике (5 Гц)"""
-        # Ток приходит с Arduino через сигнал current_updated
-        # Остальные датчики обновляются через свои сигналы
-        # Ничего не делаем здесь, только обновляем вид
+        """Обновление данных на графике (10 Гц)"""
+        # Данные приходят через сигналы, ничего не делаем
         pass
     
     def _update_view(self):
-        """Обновление вида графика (скролл) - отдельно, чтобы не мешать"""
-        self.graph_widget.update_view()
+        """Обновление вида графика (скролл) - ограничение 50 секунд"""
+        if self.graph_widget.is_auto_scroll and self.graph_widget.lines_data:
+            first_line = next(iter(self.graph_widget.lines_data.values()))
+            if first_line['x']:
+                max_time = first_line['x'][-1]
+                min_time = max(0, max_time - 50)  # Показываем последние 50 секунд
+                self.graph_widget.plot_widget.setXRange(min_time, max_time, padding=0)
     
     def _update_text_slow(self):
         """Медленное обновление текста (1 Гц)"""
@@ -776,11 +881,7 @@ class MainWindow(QMainWindow):
         elif mode == 1:  # Усилие
             self._update_sensor_info_force()
         elif mode == 2:  # Ток
-            if self.current_data:
-                current_val = self.current_data[-1]
-                self.ui.lblSensData.setText(f"Ток: {current_val:.2f} А")
-            else:
-                self.ui.lblSensData.setText("Ток: 0.00 А")
+            self._update_sensor_info_current()
         elif mode == 3:  # Температура
             self._update_sensor_info_temp()
     
@@ -808,6 +909,19 @@ class MainWindow(QMainWindow):
             )
         else:
             info = "Нет данных по усилию"
+        self.ui.lblSensData.setText(info)
+    
+    def _update_sensor_info_current(self):
+        """Обновление информации о токе"""
+        if self.current_count > 0:
+            info = (
+                f"Макс: {self.current_max:.2f} А | "
+                f"Мин: {self.current_min:.2f} А | "
+                f"Сред: {self.current_avg:.2f} А | "
+                f"Текущий: {self.current_data[-1] if self.current_data else 0:.2f} А"
+            )
+        else:
+            info = "Нет данных по току"
         self.ui.lblSensData.setText(info)
     
     def _update_sensor_info_temp(self):

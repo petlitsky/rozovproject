@@ -20,6 +20,8 @@ DEFAULT_CONFIG = {
     "torque_min": 0.0,
     "force_max": 0.0,
     "force_min": 0.0,
+    "current_max": 0.0,
+    "current_min": 0.0,
 }
 
 

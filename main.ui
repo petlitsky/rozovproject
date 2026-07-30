@@ -44,13 +44,13 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>40</height>
+        <height>50</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>60</height>
+        <height>50</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -2245,38 +2245,75 @@ QToolButton:pressed {
               </size>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_31">
-              <property name="spacing">
-               <number>10</number>
-              </property>
-              <property name="leftMargin">
-               <number>10</number>
-              </property>
-              <property name="topMargin">
-               <number>10</number>
-              </property>
-              <property name="rightMargin">
-               <number>10</number>
-              </property>
-              <property name="bottomMargin">
-               <number>10</number>
-              </property>
               <item>
-               <widget class="QLabel" name="label_3">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Выберите датчик</string>
-                </property>
+               <widget class="QWidget" name="widget_14" native="true">
+                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="label_3">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>12</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Выберите датчик:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="btnResetStats">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>180</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton {
+	background: #bdcfdd;
+	border: 2px solid #a6b8c6;
+	border-radius: 5px;
+}
+
+QPushButton:pressed {
+	background: #cfddeb;
+
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>Сбросить данные откладки</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
               <item>
@@ -4330,7 +4367,7 @@ QFrame#framePos_3 {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLabel" name="label_22">
+                     <widget class="QLabel" name="lblFixCur">
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
