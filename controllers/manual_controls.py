@@ -18,7 +18,6 @@ class ManualControls(QObject):
         self._connect_pre_crimp_buttons()
         self._connect_post_crimp_buttons()
         self._connect_speed_sliders()
-        self._connect_fan_radio()
     
     def _connect_linear_buttons(self) -> None:
         buttons = [
