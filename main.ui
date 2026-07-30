@@ -356,7 +356,7 @@ QPushButton:checked {
           <string notr="true">background: #dde0e7;</string>
          </property>
          <property name="currentIndex">
-          <number>7</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="pageAutoMode">
           <layout class="QVBoxLayout" name="verticalLayout_30">
@@ -2206,23 +2206,116 @@ QToolButton:pressed {
           </layout>
          </widget>
          <widget class="QWidget" name="pageDebug">
-          <layout class="QHBoxLayout" name="horizontalLayout_18">
+          <layout class="QVBoxLayout" name="verticalLayout_28">
+           <property name="spacing">
+            <number>5</number>
+           </property>
+           <property name="leftMargin">
+            <number>10</number>
+           </property>
+           <property name="topMargin">
+            <number>10</number>
+           </property>
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <property name="bottomMargin">
+            <number>10</number>
+           </property>
            <item>
-            <widget class="QLabel" name="label_3">
-             <property name="font">
-              <font>
-               <pointsize>16</pointsize>
-               <bold>true</bold>
-              </font>
+            <widget class="QWidget" name="widget_8" native="true">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>95</height>
+              </size>
              </property>
-             <property name="text">
-              <string>Упсс... Пусто(
-Здесь скоро что-то будет!</string>
+             <layout class="QVBoxLayout" name="verticalLayout_31">
+              <property name="spacing">
+               <number>10</number>
+              </property>
+              <property name="leftMargin">
+               <number>10</number>
+              </property>
+              <property name="topMargin">
+               <number>10</number>
+              </property>
+              <property name="rightMargin">
+               <number>10</number>
+              </property>
+              <property name="bottomMargin">
+               <number>10</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Выберите датчик</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBox">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>35</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Датчик момента BTQ-403A</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Датчик усилия TCF-715A</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Датчик тока ACS712</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Датчик температуры BME280</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="frame">
+             <property name="frameShape">
+              <enum>QFrame::Shape::StyledPanel</enum>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
+             <property name="frameShadow">
+              <enum>QFrame::Shadow::Raised</enum>
              </property>
             </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="widget_13" native="true"/>
            </item>
           </layout>
          </widget>
