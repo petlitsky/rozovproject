@@ -41,7 +41,7 @@ class Ui_MainWindow(object):
         self.widget.setMaximumSize(QSize(16777215, 60))
         self.widget.setStyleSheet(u"background: #F5F6F8;")
         self.horizontalLayout_2 = QHBoxLayout(self.widget)
-        self.horizontalLayout_2.setSpacing(0)
+        self.horizontalLayout_2.setSpacing(5)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(10, 10, 10, 10)
         self.lblDate = QLabel(self.widget)
@@ -57,6 +57,18 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
 
         self.horizontalLayout_2.addWidget(self.widget_4)
+
+        self.line_19 = QFrame(self.widget)
+        self.line_19.setObjectName(u"line_19")
+        self.line_19.setFrameShape(QFrame.Shape.VLine)
+        self.line_19.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.horizontalLayout_2.addWidget(self.line_19)
+
+        self.lblTimeStart = QLabel(self.widget)
+        self.lblTimeStart.setObjectName(u"lblTimeStart")
+
+        self.horizontalLayout_2.addWidget(self.lblTimeStart)
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -3107,6 +3119,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.lblDate.setText(QCoreApplication.translate("MainWindow", u"date", None))
+        self.lblTimeStart.setText(QCoreApplication.translate("MainWindow", u"sec", None))
         self.btnExit.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0445\u043e\u0434", None))
         self.btnAutoMode.setText(QCoreApplication.translate("MainWindow", u"\u0410\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0440\u0435\u0436\u0438\u043c", None))
         self.btnManualMode.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0443\u0447\u043d\u043e\u0439 \u0440\u0435\u0436\u0438\u043c", None))
