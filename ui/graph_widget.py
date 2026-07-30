@@ -11,8 +11,8 @@ class GraphWidget(QWidget):
     def __init__(self, parent=None, max_points=200):
         super().__init__(parent)
         self.max_points = max_points
-        self.data = deque(maxlen=max_points)
-        self.timestamps = deque(maxlen=max_points)
+        self.x_data = []  # Сделали обычными списками для доступа
+        self.y_data = []
         self.time_counter = 0
         
         self._setup_ui()
@@ -61,40 +61,42 @@ class GraphWidget(QWidget):
     def add_data_point(self, value):
         """Добавление новой точки данных"""
         self.time_counter += 0.1  # Шаг 0.1 секунды
-        self.data.append(value)
-        self.timestamps.append(self.time_counter)
+        self.x_data.append(self.time_counter)
+        self.y_data.append(value)
+        
+        # Ограничиваем количество точек
+        if len(self.x_data) > self.max_points:
+            self.x_data.pop(0)
+            self.y_data.pop(0)
         
         # Обновление графика
-        if len(self.data) > 1:
-            x_data = list(self.timestamps)
-            y_data = list(self.data)
-            
-            self.plot_line.setData(x_data, y_data)
+        if len(self.x_data) > 1:
+            self.plot_line.setData(self.x_data, self.y_data)
             
             # Обновляем заливку
             from pyqtgraph import PlotDataItem
             self.plot_fill.setData(
-                PlotDataItem(x_data, y_data),
-                PlotDataItem(x_data, [0] * len(y_data))
+                PlotDataItem(self.x_data, self.y_data),
+                PlotDataItem(self.x_data, [0] * len(self.y_data))
             )
             
             # Обновление текста с текущим значением
-            last_x = x_data[-1] if x_data else 0
-            last_y = y_data[-1] if y_data else 0
+            last_x = self.x_data[-1] if self.x_data else 0
+            last_y = self.y_data[-1] if self.y_data else 0
             self.value_text.setText(f"{last_y:.2f}")
             self.value_text.setPos(last_x, last_y)
             
             # Автоматическое масштабирование по Y
-            if len(y_data) > 1:
-                y_min = min(y_data)
-                y_max = max(y_data)
+            if len(self.y_data) > 1:
+                y_min = min(self.y_data)
+                y_max = max(self.y_data)
                 padding = (y_max - y_min) * 0.1 if y_max > y_min else 1
                 self.plot_widget.setYRange(y_min - padding, y_max + padding)
     
     def clear(self):
         """Очистка графика"""
-        self.data.clear()
-        self.timestamps.clear()
+        self.x_data.clear()
+        self.y_data.clear()
         self.time_counter = 0
         self.plot_line.setData([], [])
         
