@@ -2266,7 +2266,7 @@ QToolButton:pressed {
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox">
+               <widget class="QComboBox" name="comboBoxSensor">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -2299,13 +2299,18 @@ QToolButton:pressed {
                   <string>Датчик температуры BME280</string>
                  </property>
                 </item>
+                <item>
+                 <property name="text">
+                  <string>All</string>
+                 </property>
+                </item>
                </widget>
               </item>
              </layout>
             </widget>
            </item>
            <item>
-            <widget class="QFrame" name="frame">
+            <widget class="QFrame" name="frameGraph">
              <property name="styleSheet">
               <string notr="true">* {
 	background: #e9ecf1;
@@ -2325,7 +2330,29 @@ QFrame {
             </widget>
            </item>
            <item>
-            <widget class="QWidget" name="widget_13" native="true"/>
+            <widget class="QWidget" name="widget_13" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>100</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>100</height>
+              </size>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_32">
+              <item>
+               <widget class="QLabel" name="lblSensData">
+                <property name="text">
+                 <string>sensors data</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </item>
           </layout>
          </widget>

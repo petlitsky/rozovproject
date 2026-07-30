@@ -1079,23 +1079,24 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_31.addWidget(self.label_3)
 
-        self.comboBox = QComboBox(self.widget_8)
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.setObjectName(u"comboBox")
-        self.comboBox.setMinimumSize(QSize(0, 35))
-        self.comboBox.setFont(font5)
+        self.comboBoxSensor = QComboBox(self.widget_8)
+        self.comboBoxSensor.addItem("")
+        self.comboBoxSensor.addItem("")
+        self.comboBoxSensor.addItem("")
+        self.comboBoxSensor.addItem("")
+        self.comboBoxSensor.addItem("")
+        self.comboBoxSensor.setObjectName(u"comboBoxSensor")
+        self.comboBoxSensor.setMinimumSize(QSize(0, 35))
+        self.comboBoxSensor.setFont(font5)
 
-        self.verticalLayout_31.addWidget(self.comboBox)
+        self.verticalLayout_31.addWidget(self.comboBoxSensor)
 
 
         self.verticalLayout_28.addWidget(self.widget_8)
 
-        self.frame = QFrame(self.pageDebug)
-        self.frame.setObjectName(u"frame")
-        self.frame.setStyleSheet(u"* {\n"
+        self.frameGraph = QFrame(self.pageDebug)
+        self.frameGraph.setObjectName(u"frameGraph")
+        self.frameGraph.setStyleSheet(u"* {\n"
 "	background: #e9ecf1;\n"
 "}\n"
 "\n"
@@ -1103,13 +1104,22 @@ class Ui_MainWindow(object):
 "	border-radius: 7px;\n"
 "	border: 1px solid #c1c6cc;\n"
 "}")
-        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Shadow.Raised)
+        self.frameGraph.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frameGraph.setFrameShadow(QFrame.Shadow.Raised)
 
-        self.verticalLayout_28.addWidget(self.frame)
+        self.verticalLayout_28.addWidget(self.frameGraph)
 
         self.widget_13 = QWidget(self.pageDebug)
         self.widget_13.setObjectName(u"widget_13")
+        self.widget_13.setMinimumSize(QSize(0, 100))
+        self.widget_13.setMaximumSize(QSize(16777215, 100))
+        self.verticalLayout_32 = QVBoxLayout(self.widget_13)
+        self.verticalLayout_32.setObjectName(u"verticalLayout_32")
+        self.lblSensData = QLabel(self.widget_13)
+        self.lblSensData.setObjectName(u"lblSensData")
+
+        self.verticalLayout_32.addWidget(self.lblSensData)
+
 
         self.verticalLayout_28.addWidget(self.widget_13)
 
@@ -3144,11 +3154,13 @@ class Ui_MainWindow(object):
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u0423\u043f\u0441\u0441... \u041f\u0443\u0441\u0442\u043e(\n"
 "\u0417\u0434\u0435\u0441\u044c \u0441\u043a\u043e\u0440\u043e \u0447\u0442\u043e-\u0442\u043e \u0431\u0443\u0434\u0435\u0442!", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0434\u0430\u0442\u0447\u0438\u043a", None))
-        self.comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"\u0414\u0430\u0442\u0447\u0438\u043a \u043c\u043e\u043c\u0435\u043d\u0442\u0430 BTQ-403A", None))
-        self.comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"\u0414\u0430\u0442\u0447\u0438\u043a \u0443\u0441\u0438\u043b\u0438\u044f TCF-715A", None))
-        self.comboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"\u0414\u0430\u0442\u0447\u0438\u043a \u0442\u043e\u043a\u0430 ACS712", None))
-        self.comboBox.setItemText(3, QCoreApplication.translate("MainWindow", u"\u0414\u0430\u0442\u0447\u0438\u043a \u0442\u0435\u043c\u043f\u0435\u0440\u0430\u0442\u0443\u0440\u044b BME280", None))
+        self.comboBoxSensor.setItemText(0, QCoreApplication.translate("MainWindow", u"\u0414\u0430\u0442\u0447\u0438\u043a \u043c\u043e\u043c\u0435\u043d\u0442\u0430 BTQ-403A", None))
+        self.comboBoxSensor.setItemText(1, QCoreApplication.translate("MainWindow", u"\u0414\u0430\u0442\u0447\u0438\u043a \u0443\u0441\u0438\u043b\u0438\u044f TCF-715A", None))
+        self.comboBoxSensor.setItemText(2, QCoreApplication.translate("MainWindow", u"\u0414\u0430\u0442\u0447\u0438\u043a \u0442\u043e\u043a\u0430 ACS712", None))
+        self.comboBoxSensor.setItemText(3, QCoreApplication.translate("MainWindow", u"\u0414\u0430\u0442\u0447\u0438\u043a \u0442\u0435\u043c\u043f\u0435\u0440\u0430\u0442\u0443\u0440\u044b BME280", None))
+        self.comboBoxSensor.setItemText(4, QCoreApplication.translate("MainWindow", u"All", None))
 
+        self.lblSensData.setText(QCoreApplication.translate("MainWindow", u"sensors data", None))
         self.label_4.setText("")
         self.label_8.setText(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f \u0432\u0435\u043d\u0442\u0438\u043b\u044f\u0442\u043e\u0440\u043e\u043c \u043a\u043e\u0440\u043f\u0443\u0441\u0430", None))
         self.label_9.setText("")
