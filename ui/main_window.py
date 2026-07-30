@@ -107,9 +107,6 @@ class MainWindow(QMainWindow):
         
         # Кнопка сброса статистики
         self.ui.btnResetStats.clicked.connect(self._reset_stats)
-
-        self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, False)
-        self.setWindowFlag(Qt.WindowType.WindowFullscreenButtonHint, True)
     
     def _setup_graphs(self):
         """Инициализация графиков"""
