@@ -197,7 +197,7 @@ class MainWindow(QMainWindow):
         savepos = [
             ('lin_pos1', self.ui.lblPosLinPre, "Текущая позиция предобжима: {} мм"),
             ('lin_pos2', self.ui.lblPosLinPost, "Текущая позиция постобжима: {} мм"),
-            ('target_pre_force', self.ui.lblSaveForcePre, "Текущее сохраненное усилие: {} Н"),
+            ('target_pre_force', self.ui.lblSaveForcePre, "Текущее сохраненное усилие: {:1.f} Н"),
         ]
         
         for key, slider, label, template in speeds:
@@ -523,7 +523,7 @@ class MainWindow(QMainWindow):
 
     def save_pre_force(self) -> None:
         force = self.force_sensor.get_current_force()
-        self.ui.lblSaveForcePre.setText(f"Текущее сохраненное усилие: {force} Н")
+        self.ui.lblSaveForcePre.setText(f"Текущее сохраненное усилие: {force:1.f} Н")
         self.config.set("target_pre_force", force)
 
     def go_to_pre_force(self) -> None:
