@@ -1,828 +1,107 @@
-import sys
-from datetime import datetime
-from typing import Optional
-import subprocess
-from PySide6.QtWidgets import QApplication, QMainWindow
-from PySide6.QtCore import Qt, QTimer, QPropertyAnimation, QEasingCurve, QSize
-from main_ui import Ui_MainWindow
-from ui.dialogs import PasswordDialog, HomingDialog, ErrorDialog, show_error
-from ui.graph_widget import GraphWidget
-from controllers.arduino_controller import ArduinoController
-from controllers.manual_controls import ManualControls
-from models.config import Config
-from sensors.bme280_sensor import BME280Sensor
-from sensors.fan_controller import FanController
-from sensors.force_sensor import ForceSensorWorker
-from sensors.torque_sensor import TorqueSensorWorker
+# ui/graph_widget.py
+from PySide6.QtWidgets import QWidget, QVBoxLayout
+from PySide6.QtCore import Qt
+import pyqtgraph as pg
+from collections import deque
 
 
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
+class GraphWidget(QWidget):
+    """Виджет для отображения графиков в реальном времени"""
+    
+    def __init__(self, parent=None, max_points=200):
+        super().__init__(parent)
+        self.max_points = max_points
+        self.data = deque(maxlen=max_points)
+        self.timestamps = deque(maxlen=max_points)
+        self.time_counter = 0
         
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self) 
-        self.showFullScreen()
-        
-        self.config = Config()
-        self.arduino = ArduinoController(self)
-        self.bme280 = BME280Sensor(self)
-        self.fan = FanController(self)
-        self.manual = ManualControls(self)
-        
-        # Состояние
-        self.homing_dialog: Optional[HomingDialog] = None
-        self.animation: Optional[QPropertyAnimation] = None
-        self.disconnect_shown = False
-        self._is_closing = False
-                
         self._setup_ui()
-        self._setup_connections()
-        self._setup_timer()
-        self._load_saved_values()
-        self._setup_graphs()
-
-        self.force_sensor = ForceSensorWorker(dout_pin=24, pd_sck_pin=25)
-        self.force_sensor.force_updated.connect(self._update_force_labels)
-        self.force_sensor.start()
-        self.is_moving_to_force = False
-        self.pre_slowed_force = False
-
-        self.torque_worker = TorqueSensorWorker(dout_pin=18, pd_sck_pin=23)
-        self.torque_worker.torque_updated.connect(self._update_torque_labels)
-        self.torque_worker.start()
         
-        QTimer.singleShot(500, self._connect_arduino)
-        QTimer.singleShot(3000, self._send_saved_values)
-        self._update_page_values()
-    
-    def _setup_ui(self) -> None:
-        main_buttons = [
-            self.ui.btnAutoMode,
-            self.ui.btnManualMode,
-            self.ui.btnCalibration,
-            self.ui.btnDebug,
-            self.ui.btnSettings
-        ]
-
-        for btn in main_buttons:
-            btn.setCheckable(True)
+    def _setup_ui(self):
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
         
-        sub_buttons = [
-            self.ui.btnLinear,
-            self.ui.btnFixation,
-            self.ui.btnPreCrimp,
-            self.ui.btnPostCrimp
-        ]
-
-        for btn in sub_buttons:
-            btn.setCheckable(True)
+        # Создаем виджет для графика
+        self.plot_widget = pg.PlotWidget()
+        self.plot_widget.setBackground('#1e1e1e')
+        self.plot_widget.showGrid(x=True, y=True, alpha=0.3)
+        self.plot_widget.setLabel('left', 'Значение', units='')
+        self.plot_widget.setLabel('bottom', 'Время', units='с')
+        self.plot_widget.setXRange(0, 10)
         
-        self.ui.stackedWidget.setCurrentIndex(1)
-        self.ui.btnManualMode.setChecked(True)
-        self.ui.subMenu.setVisible(True)
-        self.ui.subMenu.setMaximumSize(QSize(16777215, 189))
-    
-    def _setup_graphs(self):
-        """Инициализация графиков"""
-        # Создаем виджет графика и вставляем в frameGraph
-        self.graph_widget = GraphWidget(self, max_points=200)
-        layout = self.ui.frameGraph.layout()
-        if layout is None:
-            from PySide6.QtWidgets import QVBoxLayout
-            layout = QVBoxLayout(self.ui.frameGraph)
-            layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(self.graph_widget)
+        # Стиль осей
+        self.plot_widget.getAxis('left').setTextPen('w')
+        self.plot_widget.getAxis('bottom').setTextPen('w')
         
-        # Настройка comboBox
-        self.ui.comboBoxSensor.addItems([
-            "Момент (Н·м)",
-            "Усилие (Н)",
-            "Ток (А)",
-            "Температура (°C)",
-            "Все датчики"
-        ])
-        self.ui.comboBoxSensor.setCurrentIndex(0)
+        layout.addWidget(self.plot_widget)
         
-        # Таймер для обновления графиков
-        self.graph_timer = QTimer()
-        self.graph_timer.timeout.connect(self._update_graphs)
-        self.graph_timer.start(100)  # 10 Гц
+        # Линия графика
+        self.plot_line = self.plot_widget.plot(
+            pen=pg.mkPen(color='#00ff88', width=2)
+        )
         
-        # Данные для графиков
-        self.torque_data = []
-        self.force_data = []
-        self.current_data = []
-        self.temp_data = []
-        self.time_data = []
+        # Заливка под графиком
+        from pyqtgraph import PlotDataItem, FillBetweenItem, mkBrush
+        self.plot_fill = FillBetweenItem(
+            self.plot_line,
+            PlotDataItem([], pen=pg.mkPen(color='#00ff88', width=0)),
+            brush=mkBrush(color=(0, 255, 136, 50))
+        )
+        self.plot_widget.addItem(self.plot_fill)
         
-        # Флаги для сбора статистики
-        self.torque_max = 0.0
-        self.torque_min = 0.0
-        self.torque_avg = 0.0
-        self.torque_count = 0
+        # Текст для отображения текущего значения
+        from pyqtgraph import TextItem
+        self.value_text = TextItem(
+            text="0.0",
+            color='w',
+            anchor=(1, 0)
+        )
+        self.plot_widget.addItem(self.value_text)
         
-        self.force_max = 0.0
-        self.force_min = 0.0
-        self.force_avg = 0.0
-        self.force_count = 0
+    def add_data_point(self, value):
+        """Добавление новой точки данных"""
+        self.time_counter += 0.1  # Шаг 0.1 секунды
+        self.data.append(value)
+        self.timestamps.append(self.time_counter)
         
-        self.current_value = 0.0  # Пока прямая линия
-        
-        # Текущий режим отображения
-        self.current_graph_mode = 0  # 0-момент, 1-усилие, 2-ток, 3-температура, 4-все
-        
-        # Подключение comboBox
-        self.ui.comboBoxSensor.currentIndexChanged.connect(self._on_sensor_changed)
-        
-        # Инициализация данных для тока (прямая линия)
-        self._init_current_data()
-    
-    def _init_current_data(self):
-        """Инициализация данных для тока (имитация)"""
-        # Создаем данные с небольшим шумом около 0.5А
-        import random
-        for i in range(20):
-            self.current_data.append(0.5 + random.uniform(-0.05, 0.05))
-    
-    def _setup_connections(self) -> None:
-        self.ui.btnExit.clicked.connect(self.close)
-        
-        self.ui.btnAutoMode.clicked.connect(lambda: self._on_main_button_clicked(0))
-        self.ui.btnManualMode.clicked.connect(lambda: self._on_main_button_clicked(1))
-        self.ui.btnCalibration.clicked.connect(lambda: self._on_main_button_clicked(2))
-        self.ui.btnDebug.clicked.connect(lambda: self._on_main_button_clicked(3))
-        self.ui.btnSettings.clicked.connect(lambda: self._on_main_button_clicked(4))
-        
-        self.ui.btnLinear.clicked.connect(lambda: self._on_sub_button_clicked(0))
-        self.ui.btnFixation.clicked.connect(lambda: self._on_sub_button_clicked(1))
-        self.ui.btnPreCrimp.clicked.connect(lambda: self._on_sub_button_clicked(2))
-        self.ui.btnPostCrimp.clicked.connect(lambda: self._on_sub_button_clicked(3))
-        
-        self.arduino.position_updated.connect(self._update_position)
-        self.arduino.moving.connect(self._on_moving)
-        self.arduino.home_found.connect(self._on_home_found)
-        self.arduino.limit_reached.connect(self._on_limit_reached)
-        self.arduino.disconnected.connect(self._handle_disconnect)
-        
-        self.bme280.temperature_updated.connect(self._update_temperature)
-        
-        self.fan.fan_speed_updated.connect(self._update_fan_speed)
-    
-    def _setup_timer(self) -> None:
-        self.timer = QTimer()
-        self.timer.timeout.connect(self._update_datetime)
-        self.timer.start(1000)
-        self._update_datetime()
-    
-    def _update_datetime(self) -> None:
-        now = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
-        self.ui.lblDate.setText(now)
-    
-    def _update_force_labels(self, value: float):
-        if self.is_moving_to_force:
-            target = float(self.config.get("target_pre_force", 0.0))
-
-            current_pos = self.config.get("pre_position", 0)
-            if current_pos >= 40 and not self.pre_slowed_force:
-                self.pre_slowed_force = True
-                self.arduino.send_command("PRE_SPEED:5")
-                self.arduino.send_command("PRE_DOWN_START")
-
-            if (target > 50 and value - 15 >= target) or (target > 40 and value - 10 >= target) or value >= target:
-                self.arduino.send_command("PRE_STOP")
-                self.is_moving_to_force = False
-                self.pre_slowed_force = False
-                speed = self.config.get("pre_speed", 30)
-                self.arduino.send_command(f"PRE_SPEED:{speed}")
-
-        if value < 0.5 : value = 0
-        self.ui.lblPreForceMan.setText(f"{value:.1f} Н")
-        self.ui.lblPreForce.setText(f"{value:.1f} Н")
-        
-        # Сохраняем данные для графика
-        self.force_data.append(value)
-        if len(self.force_data) > 200:
-            self.force_data.pop(0)
-        
-        # Обновляем статистику
-        self.force_count += 1
-        if value > self.force_max:
-            self.force_max = value
-        if value < self.force_min or self.force_count == 1:
-            self.force_min = value
-        self.force_avg = ((self.force_avg * (self.force_count - 1)) + value) / self.force_count
-        
-        # Обновляем lblSensData если выбран график усилия
-        if self.current_graph_mode == 1:
-            self._update_sensor_info_force()
-        
-        # Обновляем график если выбран режим усилия или все
-        if self.current_graph_mode in [1, 4]:
-            if self.current_graph_mode == 4:
-                # Для режима "все" обновляем отдельные графики
-                pass
-            else:
-                self.graph_widget.add_data_point(value)
-    
-    def _update_torque_labels(self, value: float):
-        self.ui.lblPostTorqMan.setText(f"{value:.3f} Н·м")
-        self.ui.lblPostTorq.setText(f"{value:.3f} Н·м")
-        
-        # Сохраняем данные для графика
-        self.torque_data.append(value)
-        if len(self.torque_data) > 200:
-            self.torque_data.pop(0)
-        
-        # Обновляем статистику
-        self.torque_count += 1
-        if value > self.torque_max:
-            self.torque_max = value
-        if value < self.torque_min or self.torque_count == 1:
-            self.torque_min = value
-        self.torque_avg = ((self.torque_avg * (self.torque_count - 1)) + value) / self.torque_count
-        
-        # Обновляем lblSensData если выбран график момента
-        if self.current_graph_mode == 0:
-            self._update_sensor_info_torque()
-        
-        # Обновляем график если выбран режим момента или все
-        if self.current_graph_mode in [0, 4]:
-            if self.current_graph_mode == 4:
-                # Для режима "все" обновляем отдельные графики
-                pass
-            else:
-                self.graph_widget.add_data_point(value)
-    
-    def _update_temperature(self, temp: float) -> None:
-        self.ui.lblTemp.setText(f"Температура: {temp:.1f}°C")
-        
-        # Сохраняем данные для графика
-        self.temp_data.append(temp)
-        if len(self.temp_data) > 200:
-            self.temp_data.pop(0)
-        
-        # Обновляем график если выбран режим температуры
-        if self.current_graph_mode == 3:
-            self.graph_widget.add_data_point(temp)
-        elif self.current_graph_mode == 4:
-            # В режиме "все" не обновляем основной график
-            pass
-        
-        # Обновляем lblSensData если выбран график температуры
-        if self.current_graph_mode == 3:
-            self._update_sensor_info_temp(temp)
-    
-    def _update_fan_speed(self, speed: int) -> None:
-        self.ui.lblFanSpeed.setText(f"{speed}%")
-
-    def _on_manual_fan_slider_changed(self, value: int) -> None:
-        if hasattr(self.ui, 'getManualFan') and self.ui.getManualFan.isChecked():
-            self.set_fan_speed(value)
-
-    def _process_auto_fan(self) -> None:
-        """Вычисление скорости вентилятора по ТВОЕМУ датчику BME280"""
-        if not (hasattr(self.ui, 'getAutoFan') and self.ui.getAutoFan.isChecked()):
-            return
-
-        min_temp = float(self.ui.tempMin.value()) if hasattr(self.ui, 'tempMin') else 40.0
-        max_temp = float(self.ui.tempMax.value()) if hasattr(self.ui, 'tempMax') else 70.0
-        start_speed = int(self.ui.startSpeed.value()) if hasattr(self.ui, 'startSpeed') else 30
-
-        current_temp = self.bme280.get_temperature()
-
-        if current_temp <= min_temp:
-            target_speed = 0
-        elif current_temp >= max_temp:
-            target_speed = 100
-        else:
-            temp_range = max_temp - min_temp
-            if temp_range > 0:
-                progress = (current_temp - min_temp) / temp_range
-                target_speed = int(start_speed + progress * (100 - start_speed))
-            else:
-                target_speed = start_speed
-
-        self.fan.set_speed(target_speed)
-    
-    def _set_fan_off(self):
-        self.fan.set_speed(0)
-
-    def _load_saved_values(self) -> None:
-        speeds = [
-            ('lin_speed', self.ui.linSpeed, self.ui.lblLinSpeed, "Скорость перемещения: {}%"),
-            ('fix_speed', self.ui.fixSpeed, self.ui.lblFixSpeed, "Скорость зажатия: {}%"),
-            ('pre_speed', self.ui.preSpeed, self.ui.lblPreSpeed, "Скорость перемещения: {}%"),
-            ('post_speed', self.ui.postSpeed, self.ui.lblPostSpeed, "Скорость зажатия: {}%"),
-        ]
-
-        positions = [
-            ('lin_position', self.ui.lblLinPos, self.ui.lblLinPosMan, "{} мм"),
-            ('pre_position', self.ui.lblPrePos, self.ui.lblPrePosMan, "{} мм"),
-        ]
-
-        savepos = [
-            ('lin_pos1', self.ui.lblPosLinPre, "Текущая позиция предобжима: {} мм"),
-            ('lin_pos2', self.ui.lblPosLinPost, "Текущая позиция постобжима: {} мм"),
-            ('target_pre_force', self.ui.lblSaveForcePre, "Текущее сохраненное усилие: {} Н"),
-        ]
-        
-        for key, slider, label, template in speeds:
-            value = self.config.get(key, 30)
-            slider.setValue(value)
-            label.setText(template.format(value))
-
-        for key, label, labelMan, template in positions:
-            value = self.config.get(key, 0)
-            labelMan.setText(template.format(value))
-            label.setText(template.format(value))
-
-        for key, label, template in savepos:
-            value = self.config.get(key, 0)
-            label.setText(template.format(value))
-        
-        fan_value = self.config.get('fan_speed', 50)
-        self.ui.fanSpeed.setValue(fan_value)
-        self.ui.lblFanSpeed.setText(f"{fan_value}%")
-    
-    def _connect_arduino(self) -> None:
-        if not self.arduino.connect():
-            show_error(self, "Ошибка подключения", "Arduino не найдена!\nПроверьте подключение и порт.")
-            return
-
-    def _send_saved_values(self):
-        if not self.arduino.is_connected:
-            return
-
-        lin_speed = self.config.get("lin_speed", 50)
-        fix_speed = self.config.get("fix_speed", 30)
-        pre_speed = self.config.get("pre_speed", 30)
-        post_speed = self.config.get("post_speed", 30)
-        lin_position = self.config.get("lin_position", 0)
-        pre_position = self.config.get("pre_position", 0)
-
-        commands = [
-            f"LIN_SPEED:{lin_speed}",
-            f"FIX_SPEED:{fix_speed}",
-            f"PRE_SPEED:{pre_speed}",
-            f"POST_SPEED:{post_speed}",
-            f"LIN_SET_POS:{lin_position}",
-            f"PRE_SET_POS:{pre_position}",
-        ]
-
-        for cmd in commands:
-            self.arduino.send_command(cmd)
-        
-    def _on_main_button_clicked(self, index: int) -> None:
-        self._clear_all_selection()
-        
-        buttons = [
-            self.ui.btnAutoMode,
-            self.ui.btnManualMode,
-            self.ui.btnCalibration,
-            self.ui.btnDebug,
-            self.ui.btnSettings
-        ]
-        
-        if index == 1:
-            self._toggle_submenu(True)
-        else:
-            self._toggle_submenu(False)
-        
-        buttons[index].setChecked(True)
-        self._switch_page(index)
-    
-    def _on_sub_button_clicked(self, index: int) -> None:
-        sub_buttons = [self.ui.btnLinear, self.ui.btnFixation, self.ui.btnPreCrimp, self.ui.btnPostCrimp]
-
-        for btn in sub_buttons:
-            btn.setChecked(False)
-        
-        sub_buttons[index].setChecked(True)
-        
-        self.ui.btnManualMode.setChecked(True)
-        self._switch_page(5 + index)
-    
-    def _clear_all_selection(self) -> None:
-        main_buttons = [
-            self.ui.btnAutoMode,
-            self.ui.btnManualMode,
-            self.ui.btnCalibration,
-            self.ui.btnDebug,
-            self.ui.btnSettings
-        ]
-
-        for btn in main_buttons:
-            btn.setChecked(False)
-        
-        sub_buttons = [
-            self.ui.btnLinear,
-            self.ui.btnFixation,
-            self.ui.btnPreCrimp,
-            self.ui.btnPostCrimp
-        ]
-
-        for btn in sub_buttons:
-            btn.setChecked(False)
-    
-    def _toggle_submenu(self, show: bool) -> None:
-        if self.animation:
-            self.animation.stop()
-            self.animation = None
-        
-        if show:
-            self.ui.subMenu.setVisible(True)
-            self.animation = QPropertyAnimation(self.ui.subMenu, b"maximumSize")
-            self.animation.setDuration(200)
-            self.animation.setEasingCurve(QEasingCurve.Type.OutQuad)
-            self.animation.setEndValue(QSize(16777215, 189))
-            self.animation.start()
-        else:
-            self.animation = QPropertyAnimation(self.ui.subMenu, b"maximumSize")
-            self.animation.setDuration(200)
-            self.animation.setEasingCurve(QEasingCurve.Type.InQuad)
-            self.animation.setEndValue(QSize(16777215, 0))
-            self.animation.finished.connect(lambda: self.ui.subMenu.setVisible(False))
-            self.animation.start()
+        # Обновление графика
+        if len(self.data) > 1:
+            x_data = list(self.timestamps)
+            y_data = list(self.data)
             
-            for btn in [self.ui.btnLinear, self.ui.btnFixation, self.ui.btnPreCrimp, self.ui.btnPostCrimp]:
-                btn.setChecked(False)
-    
-    def _switch_page(self, index: int) -> None:
-        self.ui.stackedWidget.setCurrentIndex(index)
-        self._update_page_values()
-    
-    def _update_page_values(self) -> None:
-        if self.arduino.is_connected:
-            self.arduino.send_command("GET_POS")
-    
-    # ===== Обработчики сигналов Arduino =====
-    
-    def _update_position(self, axis: str, position: int) -> None:
-        if axis == "LIN":
-            self.ui.lblLinPos.setText(f"{position} мм")
-            self.ui.lblLinPosMan.setText(f"{position} мм")
-            self.config.set("lin_position", position)
-        elif axis == "PRE":
-            self.ui.lblPrePos.setText(f"{position} мм")
-            self.ui.lblPrePosMan.setText(f"{position} мм")
-            self.config.set("pre_position", position)
-    
-    def _on_moving(self, axis: str) -> None:
-        if axis == "LIN":
-            self.ui.lblLinPos.setText("MOVING...")
-            self.ui.lblLinPosMan.setText("MOVING...")
-        elif axis == "PRE":
-            self.ui.lblPrePos.setText("MOVING...")
-            self.ui.lblPrePosMan.setText("MOVING...")
-    
-    def _on_home_found(self, axis: str) -> None:
-        messages = {
-            "LIN": ("Дом линейного перемещения найден!", "lin"),
-            "PRE": ("Дом предобжима найден!", "pre"),
-            "FIX": ("Дом фиксации найден!", "fix"),
-            "POST": ("Дом постобжима найден!", "post"),
-        }
-        
-        if axis in messages:
-            if axis in ("LIN", "PRE"):
-                if axis == "LIN":
-                    self.ui.lblLinPos.setText("0 мм")
-                    self.ui.lblLinPosMan.setText("0 мм")
-                else:
-                    self.ui.lblPrePos.setText("0 мм")
-                    self.ui.lblPrePosMan.setText("0 мм")
-                self.config.set("lin_position" if axis == "LIN" else "pre_position", 0)
+            self.plot_line.setData(x_data, y_data)
             
-            self._close_homing_dialog()
-    
-    def _on_limit_reached(self, axis: str, direction: str) -> None:
-        messages = {
-            ("LIN", "BACK"): ("Достигнут концевик НАЗАД", "lin"),
-            ("LIN", "FORWARD"): ("Достигнут концевик ВПЕРЕД", "lin"),
-            ("PRE", "UP"): ("Достигнут концевик предобжима ВВЕРХ", "pre"),
-            ("PRE", "DOWN"): ("Достигнут концевик предобжима ВНИЗ", "pre"),
-        }
-        
-        if (axis, direction) in messages:
-            self._close_homing_dialog()
-    
-    def _handle_disconnect(self) -> None:
-        if self._is_closing:
-            return
-        
-        if self.disconnect_shown:
-            return
-        
-        self.disconnect_shown = True
-        self._close_homing_dialog()
-                
-        show_error(self, "Потеря соединения", "Arduino отключена!\nПроверьте подключение.")
-    
-    # ===== Утилиты для диалогов =====
-    
-    def show_homing_dialog(self, text: str) -> None:
-        if not self.arduino.is_connected:
-            return
-        
-        if self.homing_dialog is None or not self.homing_dialog.isVisible():
-            self.homing_dialog = HomingDialog(self, text)
-            self.homing_dialog.show()
-    
-    def _close_homing_dialog(self) -> None:
-        if self.homing_dialog and self.homing_dialog.isVisible():
-            self.homing_dialog.accept()
-            self.homing_dialog = None
-        
-    def set_lin_speed(self, value: int) -> None:
-        self.config.set("lin_speed", value)
-        self.arduino.send_command(f"LIN_SPEED:{value}")
-    
-    def set_fix_speed(self, value: int) -> None:
-        self.config.set("fix_speed", value)
-        self.arduino.send_command(f"FIX_SPEED:{value}")
-    
-    def set_pre_speed(self, value: int) -> None:
-        self.config.set("pre_speed", value)
-        self.arduino.send_command(f"PRE_SPEED:{value}")
-    
-    def set_post_speed(self, value: int) -> None:
-        self.config.set("post_speed", value)
-        self.arduino.send_command(f"POST_SPEED:{value}")
-    
-    def set_fan_speed(self, value: int) -> None:
-        self.config.set("fan_speed", value)
-        self.fan.set_speed(value)
-        
-    def lin_forward_start(self) -> None:
-        self.arduino.send_command("LIN_FORWARD_START")
-    
-    def lin_back_start(self) -> None:
-        self.arduino.send_command("LIN_BACK_START")
-    
-    def lin_stop(self) -> None:
-        self.arduino.send_command("LIN_STOP")
-    
-    def lin_home(self) -> None:
-        self.show_homing_dialog("Поиск дома линейного перемещения...")
-        self.arduino.send_command("LIN_HOME_START")
-    
-    def lin_reset_position(self) -> None:
-        self.ui.lblLinPos.setText("0 мм")
-        self.ui.lblLinPosMan.setText("0 мм")
-        self.config.set("lin_position", 0)
-    
-    def lin_move_steps(self, mm: float) -> None:
-        steps = int(mm * 100)
-        self.arduino.send_command(f"LIN_MOVE:{steps}")
-    
-    def lin_back_exact(self) -> None:
-        mm = self.ui.exLinPos.value()
-        if mm > 0:
-            steps = int(mm * 100)
-            self.arduino.send_command(f"LIN_MOVE:{-steps}")
-            
-    def lin_forward_exact(self) -> None:
-        mm = self.ui.exLinPos.value()
-        if mm > 0:
-            steps = int(mm * 100)
-            self.arduino.send_command(f"LIN_MOVE:{steps}")
-            
-    def _get_current_lin_position(self) -> int:
-        text = self.ui.lblLinPos.text().replace(" мм", "").replace("MOVING...", "")
-        try:
-            return int(text) if text else 0
-        except ValueError:
-            return 0
-    
-    def save_lin_position_1(self) -> None:
-        pos = self._get_current_lin_position()
-        self.ui.lblPosLinPre.setText(f"Текущая позиция предобжима: {pos} мм")
-        self.config.set("lin_pos1", pos)
-    
-    def save_lin_position_2(self) -> None:
-        pos = self._get_current_lin_position()
-        self.ui.lblPosLinPost.setText(f"Текущая позиция постобжима: {pos} мм")
-        self.config.set("lin_pos2", pos)
-
-    def go_to_lin_position(self, pos_num: int) -> None:
-        target = self.config.get(f"lin_pos{pos_num}", 0)
-        current = self._get_current_lin_position()
-        
-        diff = target - current
-        if diff == 0:
-            return
-        
-        steps = diff * 100
-        self.arduino.send_command(f"LIN_MOVE:{steps}")
-    
-    def fix_forward_start(self) -> None:
-        self.arduino.send_command("FIX_FORWARD_START")
-    
-    def fix_back_start(self) -> None:
-        self.arduino.send_command("FIX_BACK_START")
-    
-    def fix_stop(self) -> None:
-        self.arduino.send_command("FIX_STOP")
-    
-    def fix_move_degrees(self, degrees: float) -> None:
-        STEPS_PER_DEGREE = 10.666
-        steps = int(degrees * STEPS_PER_DEGREE)
-        
-        if steps > 0:
-            self.arduino.send_command(f"FIX_MOVE:{steps}")
-        elif steps < 0:
-            self.arduino.send_command(f"FIX_MOVE:{steps}")
-        else:
-            return
-                
-    def fix_home(self) -> None:
-        self.show_homing_dialog("Поиск дома фиксации...")
-        self.arduino.send_command("FIX_HOME_START")
-            
-    def pre_up_start(self) -> None:
-        self.arduino.send_command("PRE_UP_START")
-    
-    def pre_down_start(self) -> None:
-        self.arduino.send_command("PRE_DOWN_START")
-    
-
-    def save_pre_force(self) -> None:
-        force = round(self.force_sensor.get_current_force(), 1)
-        self.ui.lblSaveForcePre.setText(f"Текущее сохраненное усилие: {force} Н")
-        self.config.set("target_pre_force", force)
-
-    def go_to_pre_force(self) -> None:
-        target = self.config.get(f"target_pre_force", 0.0)
-        current = self.force_sensor.get_current_force()
-        
-        
-        diff = target - current
-        if diff <= 0:
-            return
-
-        self.is_moving_to_force = True
-
-        current_pos = self.config.get("pre_position", 0)
-        target_pos = 40-current_pos
-
-        if target_pos < 0 : target_pos = 0
-        
-        self.pre_move_steps(target_pos)
-
-    def pre_stop(self) -> None:
-        self.arduino.send_command("PRE_STOP")
-    
-    def pre_home(self) -> None:
-        self.show_homing_dialog("Поиск дома предобжима...")
-        self.arduino.send_command("PRE_HOME_START")
-    
-    def pre_reset_position(self) -> None:
-        self.ui.lblPrePos.setText("0 мм")
-        self.ui.lblPrePosMan.setText("0 мм")
-        self.config.set("pre_position", 0)
-    
-    def pre_move_steps(self, mm: float) -> None:
-        steps = int(mm * 200)
-        self.arduino.send_command(f"PRE_MOVE:{steps}")
-    
-    def pre_down_exact(self) -> None:
-        mm = self.ui.exPrePos.value()
-        if mm > 0:
-            steps = int(mm * 200)
-            self.arduino.send_command(f"PRE_MOVE:{steps}")
-        
-    def pre_up_exact(self) -> None:
-        mm = self.ui.exPrePos.value()
-        if mm > 0:
-            steps = int(mm * 200)
-            self.arduino.send_command(f"PRE_MOVE:{-steps}")
-        
-    def post_forward_start(self) -> None:
-        self.arduino.send_command("POST_FORWARD_START")
-    
-    def post_back_start(self) -> None:
-        self.arduino.send_command("POST_BACK_START")
-    
-    def post_stop(self) -> None:
-        self.arduino.send_command("POST_STOP")
-    
-    def post_home(self) -> None:
-        self.show_homing_dialog("Поиск дома постобжима...")
-        self.arduino.send_command("POST_HOME_START")
-
-    def post_move_degrees(self, degrees: float) -> None:
-        STEPS_PER_DEGREE = 10.666
-        steps = int(degrees * STEPS_PER_DEGREE)
-        
-        if steps != 0:
-            self.arduino.send_command(f"POST_MOVE:{-steps}")
-        else:
-            return
-    
-    # ===== Методы для графиков =====
-    
-    def _on_sensor_changed(self, index: int):
-        """Обработка изменения выбора датчика в comboBox"""
-        self.current_graph_mode = index
-        
-        # Очищаем график
-        self.graph_widget.clear()
-        
-        # Очищаем lblSensData
-        self.ui.lblSensData.setText("")
-        
-        # В зависимости от выбранного датчика
-        if index == 0:  # Момент
-            self._update_sensor_info_torque()
-            # Загружаем последние данные момента
-            if self.torque_data:
-                for val in self.torque_data[-20:]:  # Показываем последние 20 точек
-                    self.graph_widget.add_data_point(val)
-        elif index == 1:  # Усилие
-            self._update_sensor_info_force()
-            if self.force_data:
-                for val in self.force_data[-20:]:
-                    self.graph_widget.add_data_point(val)
-        elif index == 2:  # Ток (прямая линия)
-            # Генерируем данные тока
-            import random
-            self.graph_widget.clear()
-            for i in range(20):
-                val = 0.5 + random.uniform(-0.05, 0.05)
-                self.graph_widget.add_data_point(val)
-                self.current_data.append(val)
-            self.ui.lblSensData.setText("Ток: 0.50 А (постоянный)")
-        elif index == 3:  # Температура
-            if self.temp_data:
-                for val in self.temp_data[-20:]:
-                    self.graph_widget.add_data_point(val)
-            self._update_sensor_info_temp()
-        elif index == 4:  # Все датчики
-            self.ui.lblSensData.setText("")
-            # В режиме "все" показываем только момент
-            if self.torque_data:
-                for val in self.torque_data[-20:]:
-                    self.graph_widget.add_data_point(val)
-    
-    def _update_sensor_info_torque(self):
-        """Обновление информации о моменте"""
-        if self.torque_count > 0:
-            info = (
-                f"Макс: {self.torque_max:.3f} Н·м | "
-                f"Мин: {self.torque_min:.3f} Н·м | "
-                f"Сред: {self.torque_avg:.3f} Н·м | "
-                f"Текущий: {self.torque_data[-1] if self.torque_data else 0:.3f} Н·м"
+            # Обновляем заливку
+            from pyqtgraph import PlotDataItem
+            self.plot_fill.setData(
+                PlotDataItem(x_data, y_data),
+                PlotDataItem(x_data, [0] * len(y_data))
             )
-        else:
-            info = "Нет данных по моменту"
-        self.ui.lblSensData.setText(info)
+            
+            # Обновление текста с текущим значением
+            last_x = x_data[-1] if x_data else 0
+            last_y = y_data[-1] if y_data else 0
+            self.value_text.setText(f"{last_y:.2f}")
+            self.value_text.setPos(last_x, last_y)
+            
+            # Автоматическое масштабирование по Y
+            if len(y_data) > 1:
+                y_min = min(y_data)
+                y_max = max(y_data)
+                padding = (y_max - y_min) * 0.1 if y_max > y_min else 1
+                self.plot_widget.setYRange(y_min - padding, y_max + padding)
     
-    def _update_sensor_info_force(self):
-        """Обновление информации об усилии"""
-        if self.force_count > 0:
-            info = (
-                f"Макс: {self.force_max:.1f} Н | "
-                f"Мин: {self.force_min:.1f} Н | "
-                f"Сред: {self.force_avg:.1f} Н | "
-                f"Текущий: {self.force_data[-1] if self.force_data else 0:.1f} Н"
-            )
-        else:
-            info = "Нет данных по усилию"
-        self.ui.lblSensData.setText(info)
-    
-    def _update_sensor_info_temp(self, temp=None):
-        """Обновление информации о температуре"""
-        if temp is None and self.temp_data:
-            temp = self.temp_data[-1]
-        if temp is not None:
-            info = f"Температура: {temp:.1f}°C"
-        else:
-            info = "Нет данных по температуре"
-        self.ui.lblSensData.setText(info)
-    
-    def _update_graphs(self):
-        """Обновление графиков в реальном времени"""
-        # Если выбран режим "все датчики", рисуем несколько графиков
-        if self.current_graph_mode == 4:
-            # Для режима "все" обновляем основной график с моментом
-            if self.torque_data:
-                # Показываем только момент в основном графике
-                pass
+    def clear(self):
+        """Очистка графика"""
+        self.data.clear()
+        self.timestamps.clear()
+        self.time_counter = 0
+        self.plot_line.setData([], [])
         
-    def closeEvent(self, event) -> None:
-        self._is_closing = True
-        
-        dialog = PasswordDialog(self)
-        if dialog.exec() == PasswordDialog.Accepted:
-            self.graph_timer.stop()
-            self.fan.cleanup()
-            self.force_sensor.stop()
-            self.torque_worker.stop()
-            self._close_homing_dialog()
-            self.arduino.send_command("EMERGENCY_STOP")
-            self.arduino.disconnect()
-            event.accept()
-        else:
-            self._is_closing = False
-            event.ignore()
+        from pyqtgraph import PlotDataItem
+        self.plot_fill.setData(
+            PlotDataItem([], []),
+            PlotDataItem([], [])
+        )
+        self.value_text.setText("0.0")
+        self.value_text.setPos(0, 0)
