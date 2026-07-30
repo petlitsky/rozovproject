@@ -370,7 +370,7 @@ QPushButton:checked {
           <string notr="true">background: #dde0e7;</string>
          </property>
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="pageAutoMode">
           <layout class="QVBoxLayout" name="verticalLayout_30">
@@ -4124,7 +4124,7 @@ QToolButton:pressed {
 }</string>
                       </property>
                       <property name="text">
-                       <string>Зажать</string>
+                       <string>Зажимать</string>
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
@@ -4174,7 +4174,7 @@ QToolButton:pressed {
 }</string>
                       </property>
                       <property name="text">
-                       <string>Разжать</string>
+                       <string>Разжимать</string>
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
@@ -4437,7 +4437,7 @@ QFrame#frameXPos_3 {
                        <enum>Qt::FocusPolicy::ClickFocus</enum>
                       </property>
                       <property name="text">
-                       <string>Точное перемещение</string>
+                       <string>Точная фиксация</string>
                       </property>
                      </widget>
                     </item>
@@ -4649,21 +4649,56 @@ QFrame#framePosAndHome_3
                  <enum>QFrame::Shadow::Raised</enum>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_26">
-                 <property name="spacing">
-                  <number>5</number>
-                 </property>
-                 <property name="leftMargin">
-                  <number>10</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>10</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>10</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>10</number>
-                 </property>
+                 <item>
+                  <widget class="QLabel" name="label_5">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>35</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Текущее значение силы тока зажатия: --- A</string>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_12">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Ввести новое значение:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                  </widget>
+                 </item>
                  <item>
                   <widget class="QPushButton" name="pushButton_26">
                    <property name="minimumSize">
@@ -4685,7 +4720,57 @@ QPushButton:pressed {
 }</string>
                    </property>
                    <property name="text">
-                    <string>Сохранить силу тока</string>
+                    <string>Сохранить силу тока
+зажатия</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_10">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>35</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Текущее значение силы тока разжатия: --- А</string>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_15">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Ввести новое значение:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>10</pointsize>
+                    </font>
                    </property>
                   </widget>
                  </item>
@@ -4710,33 +4795,70 @@ QPushButton:pressed {
 }</string>
                    </property>
                    <property name="text">
-                    <string>Сохранить позицию
+                    <string>Сохранить силу тока
 разжатия</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="pushButton_29">
+                  <widget class="Line" name="line_20">
+                   <property name="styleSheet">
+                    <string notr="true">Line {
+	border: 1px solid #ced3d7;
+}</string>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="btnFixHome_2">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>60</height>
+                     <height>120</height>
                     </size>
                    </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>12</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
                    <property name="styleSheet">
-                    <string notr="true">QPushButton {
+                    <string notr="true">QToolButton {
 	background: #bdcfdd;
 	border: 2px solid #a6b8c6;
 	border-radius: 5px;
 }
 
-QPushButton:pressed {
+QToolButton:pressed {
 	background: #cfddeb;
 
 }</string>
                    </property>
                    <property name="text">
-                    <string>Зажать до силы тока</string>
+                    <string>Полностью зажать</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="resources.qrc">
+                     <normaloff>:/icons/icons/fix.png</normaloff>:/icons/icons/fix.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>80</width>
+                     <height>80</height>
+                    </size>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
                    </property>
                   </widget>
                  </item>
@@ -5703,9 +5825,9 @@ QPushButton:pressed {
              <property name="focusPolicy">
               <enum>Qt::FocusPolicy::ClickFocus</enum>
              </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_21">
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
               <property name="spacing">
-               <number>10</number>
+               <number>5</number>
               </property>
               <property name="leftMargin">
                <number>0</number>
@@ -6358,7 +6480,8 @@ QPushButton:pressed {
 	background: #e9ecf1;
 }
 
-QFrame#framePosAndHome_4 {
+QFrame#framePosAndHome_3
+ {
 	
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
@@ -6370,49 +6493,59 @@ QFrame#framePosAndHome_4 {
                 <property name="frameShadow">
                  <enum>QFrame::Shadow::Raised</enum>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_41">
-                 <property name="spacing">
-                  <number>10</number>
-                 </property>
-                 <property name="leftMargin">
-                  <number>10</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>10</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>10</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>10</number>
-                 </property>
+                <layout class="QVBoxLayout" name="verticalLayout_33">
                  <item>
-                  <widget class="QPushButton" name="pushButton_37">
-                   <property name="minimumSize">
+                  <widget class="QLabel" name="label_17">
+                   <property name="maximumSize">
                     <size>
-                     <width>0</width>
-                     <height>60</height>
+                     <width>16777215</width>
+                     <height>35</height>
                     </size>
                    </property>
-                   <property name="styleSheet">
-                    <string notr="true">QPushButton {
-	background: #bdcfdd;
-	border: 2px solid #a6b8c6;
-	border-radius: 5px;
-}
-
-QPushButton:pressed {
-	background: #cfddeb;
-
-}</string>
+                   <property name="font">
+                    <font>
+                     <pointsize>9</pointsize>
+                     <bold>true</bold>
+                    </font>
                    </property>
                    <property name="text">
-                    <string>Сохранить момент</string>
+                    <string>Текущее значение момента зажатия: --- A</string>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="pushButton_38">
+                  <widget class="QLabel" name="label_19">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Ввести новое значение:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_28">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -6432,33 +6565,145 @@ QPushButton:pressed {
 }</string>
                    </property>
                    <property name="text">
-                    <string>Сохранить позицию
+                    <string>Сохранить момент
+зажатия</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_22">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>35</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Текущее значение момента разжатия: --- А</string>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_24">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Ввести новое значение:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>30</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_29">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>60</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton {
+	background: #bdcfdd;
+	border: 2px solid #a6b8c6;
+	border-radius: 5px;
+}
+
+QPushButton:pressed {
+	background: #cfddeb;
+
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>Сохранить момент
 разжатия</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="pushButton_39">
+                  <widget class="Line" name="line_21">
+                   <property name="styleSheet">
+                    <string notr="true">Line {
+	border: 1px solid #ced3d7;
+}</string>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="btnFixHome_3">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>60</height>
+                     <height>120</height>
                     </size>
                    </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>12</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
                    <property name="styleSheet">
-                    <string notr="true">QPushButton {
+                    <string notr="true">QToolButton {
 	background: #bdcfdd;
 	border: 2px solid #a6b8c6;
 	border-radius: 5px;
 }
 
-QPushButton:pressed {
+QToolButton:pressed {
 	background: #cfddeb;
 
 }</string>
                    </property>
                    <property name="text">
-                    <string>Зажать до момента</string>
+                    <string>Полностью зажать</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="resources.qrc">
+                     <normaloff>:/icons/icons/fix.png</normaloff>:/icons/icons/fix.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>80</width>
+                     <height>80</height>
+                    </size>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
                    </property>
                   </widget>
                  </item>

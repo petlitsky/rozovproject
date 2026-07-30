@@ -15,11 +15,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
-    QGroupBox, QHBoxLayout, QLabel, QMainWindow,
-    QPushButton, QRadioButton, QSizePolicy, QSlider,
-    QSpacerItem, QSpinBox, QStackedWidget, QToolButton,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QDoubleSpinBox, QFrame,
+    QGridLayout, QGroupBox, QHBoxLayout, QLabel,
+    QMainWindow, QPushButton, QRadioButton, QSizePolicy,
+    QSlider, QSpacerItem, QSpinBox, QStackedWidget,
+    QToolButton, QVBoxLayout, QWidget)
 import resources_rc
 
 class Ui_MainWindow(object):
@@ -2240,9 +2240,33 @@ class Ui_MainWindow(object):
         self.framePosAndHome_3.setFrameShape(QFrame.Shape.StyledPanel)
         self.framePosAndHome_3.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_26 = QVBoxLayout(self.framePosAndHome_3)
-        self.verticalLayout_26.setSpacing(5)
         self.verticalLayout_26.setObjectName(u"verticalLayout_26")
-        self.verticalLayout_26.setContentsMargins(10, 10, 10, 10)
+        self.label_5 = QLabel(self.framePosAndHome_3)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setMaximumSize(QSize(16777215, 35))
+        font14 = QFont()
+        font14.setPointSize(9)
+        font14.setBold(True)
+        self.label_5.setFont(font14)
+        self.label_5.setWordWrap(True)
+
+        self.verticalLayout_26.addWidget(self.label_5)
+
+        self.label_12 = QLabel(self.framePosAndHome_3)
+        self.label_12.setObjectName(u"label_12")
+        self.label_12.setMaximumSize(QSize(16777215, 25))
+
+        self.verticalLayout_26.addWidget(self.label_12)
+
+        self.doubleSpinBox = QDoubleSpinBox(self.framePosAndHome_3)
+        self.doubleSpinBox.setObjectName(u"doubleSpinBox")
+        self.doubleSpinBox.setMinimumSize(QSize(0, 30))
+        font15 = QFont()
+        font15.setPointSize(10)
+        self.doubleSpinBox.setFont(font15)
+
+        self.verticalLayout_26.addWidget(self.doubleSpinBox)
+
         self.pushButton_26 = QPushButton(self.framePosAndHome_3)
         self.pushButton_26.setObjectName(u"pushButton_26")
         self.pushButton_26.setMinimumSize(QSize(0, 60))
@@ -2258,6 +2282,27 @@ class Ui_MainWindow(object):
 "}")
 
         self.verticalLayout_26.addWidget(self.pushButton_26)
+
+        self.label_10 = QLabel(self.framePosAndHome_3)
+        self.label_10.setObjectName(u"label_10")
+        self.label_10.setMaximumSize(QSize(16777215, 35))
+        self.label_10.setFont(font9)
+        self.label_10.setWordWrap(True)
+
+        self.verticalLayout_26.addWidget(self.label_10)
+
+        self.label_15 = QLabel(self.framePosAndHome_3)
+        self.label_15.setObjectName(u"label_15")
+        self.label_15.setMaximumSize(QSize(16777215, 25))
+
+        self.verticalLayout_26.addWidget(self.label_15)
+
+        self.doubleSpinBox_2 = QDoubleSpinBox(self.framePosAndHome_3)
+        self.doubleSpinBox_2.setObjectName(u"doubleSpinBox_2")
+        self.doubleSpinBox_2.setMinimumSize(QSize(0, 30))
+        self.doubleSpinBox_2.setFont(font15)
+
+        self.verticalLayout_26.addWidget(self.doubleSpinBox_2)
 
         self.pushButton_27 = QPushButton(self.framePosAndHome_3)
         self.pushButton_27.setObjectName(u"pushButton_27")
@@ -2275,21 +2320,37 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_26.addWidget(self.pushButton_27)
 
-        self.pushButton_29 = QPushButton(self.framePosAndHome_3)
-        self.pushButton_29.setObjectName(u"pushButton_29")
-        self.pushButton_29.setMinimumSize(QSize(0, 60))
-        self.pushButton_29.setStyleSheet(u"QPushButton {\n"
+        self.line_20 = QFrame(self.framePosAndHome_3)
+        self.line_20.setObjectName(u"line_20")
+        self.line_20.setStyleSheet(u"Line {\n"
+"	border: 1px solid #ced3d7;\n"
+"}")
+        self.line_20.setFrameShape(QFrame.Shape.HLine)
+        self.line_20.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout_26.addWidget(self.line_20)
+
+        self.btnFixHome_2 = QToolButton(self.framePosAndHome_3)
+        self.btnFixHome_2.setObjectName(u"btnFixHome_2")
+        sizePolicy.setHeightForWidth(self.btnFixHome_2.sizePolicy().hasHeightForWidth())
+        self.btnFixHome_2.setSizePolicy(sizePolicy)
+        self.btnFixHome_2.setMinimumSize(QSize(0, 120))
+        self.btnFixHome_2.setFont(font6)
+        self.btnFixHome_2.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
 "}\n"
 "\n"
-"QPushButton:pressed {\n"
+"QToolButton:pressed {\n"
 "	background: #cfddeb;\n"
 "\n"
 "}")
+        self.btnFixHome_2.setIcon(icon4)
+        self.btnFixHome_2.setIconSize(QSize(80, 80))
+        self.btnFixHome_2.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
 
-        self.verticalLayout_26.addWidget(self.pushButton_29)
+        self.verticalLayout_26.addWidget(self.btnFixHome_2)
 
 
         self.horizontalLayout_12.addWidget(self.framePosAndHome_3)
@@ -2449,9 +2510,9 @@ class Ui_MainWindow(object):
         self.framePos_2.setObjectName(u"framePos_2")
         self.framePos_2.setMinimumSize(QSize(0, 155))
         self.framePos_2.setMaximumSize(QSize(16777215, 155))
-        font14 = QFont()
-        font14.setPointSize(6)
-        self.framePos_2.setFont(font14)
+        font16 = QFont()
+        font16.setPointSize(6)
+        self.framePos_2.setFont(font16)
         self.framePos_2.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
         self.framePos_2.setStyleSheet(u"* {\n"
 "	background: #e9ecf1;\n"
@@ -2749,10 +2810,10 @@ class Ui_MainWindow(object):
         self.widget_26.setObjectName(u"widget_26")
         self.widget_26.setMinimumSize(QSize(0, 200))
         self.widget_26.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
-        self.horizontalLayout_21 = QHBoxLayout(self.widget_26)
-        self.horizontalLayout_21.setSpacing(10)
-        self.horizontalLayout_21.setObjectName(u"horizontalLayout_21")
-        self.horizontalLayout_21.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_9 = QHBoxLayout(self.widget_26)
+        self.horizontalLayout_9.setSpacing(5)
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
         self.widget_27 = QWidget(self.widget_26)
         self.widget_27.setObjectName(u"widget_27")
         self.widget_27.setMaximumSize(QSize(250, 16777215))
@@ -2872,7 +2933,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_36.addWidget(self.frameLin_5)
 
 
-        self.horizontalLayout_21.addWidget(self.widget_27)
+        self.horizontalLayout_9.addWidget(self.widget_27)
 
         self.widget_28 = QWidget(self.widget_26)
         self.widget_28.setObjectName(u"widget_28")
@@ -3048,7 +3109,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_38.addWidget(self.frameXPos_4)
 
 
-        self.horizontalLayout_21.addWidget(self.widget_28)
+        self.horizontalLayout_9.addWidget(self.widget_28)
 
         self.framePosAndHome_4 = QFrame(self.widget_26)
         self.framePosAndHome_4.setObjectName(u"framePosAndHome_4")
@@ -3058,21 +3119,41 @@ class Ui_MainWindow(object):
 "	background: #e9ecf1;\n"
 "}\n"
 "\n"
-"QFrame#framePosAndHome_4 {\n"
+"QFrame#framePosAndHome_3\n"
+" {\n"
 "	\n"
 "	border-radius: 7px;\n"
 "	border: 1px solid #c1c6cc;\n"
 "}")
         self.framePosAndHome_4.setFrameShape(QFrame.Shape.StyledPanel)
         self.framePosAndHome_4.setFrameShadow(QFrame.Shadow.Raised)
-        self.verticalLayout_41 = QVBoxLayout(self.framePosAndHome_4)
-        self.verticalLayout_41.setSpacing(10)
-        self.verticalLayout_41.setObjectName(u"verticalLayout_41")
-        self.verticalLayout_41.setContentsMargins(10, 10, 10, 10)
-        self.pushButton_37 = QPushButton(self.framePosAndHome_4)
-        self.pushButton_37.setObjectName(u"pushButton_37")
-        self.pushButton_37.setMinimumSize(QSize(0, 60))
-        self.pushButton_37.setStyleSheet(u"QPushButton {\n"
+        self.verticalLayout_33 = QVBoxLayout(self.framePosAndHome_4)
+        self.verticalLayout_33.setObjectName(u"verticalLayout_33")
+        self.label_17 = QLabel(self.framePosAndHome_4)
+        self.label_17.setObjectName(u"label_17")
+        self.label_17.setMaximumSize(QSize(16777215, 35))
+        self.label_17.setFont(font14)
+        self.label_17.setWordWrap(True)
+
+        self.verticalLayout_33.addWidget(self.label_17)
+
+        self.label_19 = QLabel(self.framePosAndHome_4)
+        self.label_19.setObjectName(u"label_19")
+        self.label_19.setMaximumSize(QSize(16777215, 25))
+
+        self.verticalLayout_33.addWidget(self.label_19)
+
+        self.doubleSpinBox_3 = QDoubleSpinBox(self.framePosAndHome_4)
+        self.doubleSpinBox_3.setObjectName(u"doubleSpinBox_3")
+        self.doubleSpinBox_3.setMinimumSize(QSize(0, 30))
+        self.doubleSpinBox_3.setFont(font15)
+
+        self.verticalLayout_33.addWidget(self.doubleSpinBox_3)
+
+        self.pushButton_28 = QPushButton(self.framePosAndHome_4)
+        self.pushButton_28.setObjectName(u"pushButton_28")
+        self.pushButton_28.setMinimumSize(QSize(0, 60))
+        self.pushButton_28.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -3083,12 +3164,33 @@ class Ui_MainWindow(object):
 "\n"
 "}")
 
-        self.verticalLayout_41.addWidget(self.pushButton_37)
+        self.verticalLayout_33.addWidget(self.pushButton_28)
 
-        self.pushButton_38 = QPushButton(self.framePosAndHome_4)
-        self.pushButton_38.setObjectName(u"pushButton_38")
-        self.pushButton_38.setMinimumSize(QSize(0, 60))
-        self.pushButton_38.setStyleSheet(u"QPushButton {\n"
+        self.label_22 = QLabel(self.framePosAndHome_4)
+        self.label_22.setObjectName(u"label_22")
+        self.label_22.setMaximumSize(QSize(16777215, 35))
+        self.label_22.setFont(font9)
+        self.label_22.setWordWrap(True)
+
+        self.verticalLayout_33.addWidget(self.label_22)
+
+        self.label_24 = QLabel(self.framePosAndHome_4)
+        self.label_24.setObjectName(u"label_24")
+        self.label_24.setMaximumSize(QSize(16777215, 25))
+
+        self.verticalLayout_33.addWidget(self.label_24)
+
+        self.doubleSpinBox_4 = QDoubleSpinBox(self.framePosAndHome_4)
+        self.doubleSpinBox_4.setObjectName(u"doubleSpinBox_4")
+        self.doubleSpinBox_4.setMinimumSize(QSize(0, 30))
+        self.doubleSpinBox_4.setFont(font15)
+
+        self.verticalLayout_33.addWidget(self.doubleSpinBox_4)
+
+        self.pushButton_29 = QPushButton(self.framePosAndHome_4)
+        self.pushButton_29.setObjectName(u"pushButton_29")
+        self.pushButton_29.setMinimumSize(QSize(0, 60))
+        self.pushButton_29.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -3099,26 +3201,42 @@ class Ui_MainWindow(object):
 "\n"
 "}")
 
-        self.verticalLayout_41.addWidget(self.pushButton_38)
+        self.verticalLayout_33.addWidget(self.pushButton_29)
 
-        self.pushButton_39 = QPushButton(self.framePosAndHome_4)
-        self.pushButton_39.setObjectName(u"pushButton_39")
-        self.pushButton_39.setMinimumSize(QSize(0, 60))
-        self.pushButton_39.setStyleSheet(u"QPushButton {\n"
+        self.line_21 = QFrame(self.framePosAndHome_4)
+        self.line_21.setObjectName(u"line_21")
+        self.line_21.setStyleSheet(u"Line {\n"
+"	border: 1px solid #ced3d7;\n"
+"}")
+        self.line_21.setFrameShape(QFrame.Shape.HLine)
+        self.line_21.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout_33.addWidget(self.line_21)
+
+        self.btnFixHome_3 = QToolButton(self.framePosAndHome_4)
+        self.btnFixHome_3.setObjectName(u"btnFixHome_3")
+        sizePolicy.setHeightForWidth(self.btnFixHome_3.sizePolicy().hasHeightForWidth())
+        self.btnFixHome_3.setSizePolicy(sizePolicy)
+        self.btnFixHome_3.setMinimumSize(QSize(0, 120))
+        self.btnFixHome_3.setFont(font6)
+        self.btnFixHome_3.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
 "}\n"
 "\n"
-"QPushButton:pressed {\n"
+"QToolButton:pressed {\n"
 "	background: #cfddeb;\n"
 "\n"
 "}")
+        self.btnFixHome_3.setIcon(icon4)
+        self.btnFixHome_3.setIconSize(QSize(80, 80))
+        self.btnFixHome_3.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
 
-        self.verticalLayout_41.addWidget(self.pushButton_39)
+        self.verticalLayout_33.addWidget(self.btnFixHome_3)
 
 
-        self.horizontalLayout_21.addWidget(self.framePosAndHome_4)
+        self.horizontalLayout_9.addWidget(self.framePosAndHome_4)
 
 
         self.verticalLayout_42.addWidget(self.widget_26)
@@ -3134,7 +3252,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(3)
+        self.stackedWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -3238,21 +3356,26 @@ class Ui_MainWindow(object):
         self.btnGoLinPos2.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0435\u043c\u0435\u0441\u0442\u0438\u0442\u044c\u0441\u044f \u043a \u043f\u043e\u0437\u0438\u0446\u0438\u0438\n"
 "\u043f\u043e\u0441\u0442\u043e\u0431\u0436\u0438\u043c\u0430", None))
         self.label_20.setText(QCoreApplication.translate("MainWindow", u"\u041c\u043e\u0434\u0443\u043b\u044c \u0444\u0438\u043a\u0441\u0430\u0446\u0438\u0438", None))
-        self.btnFixForward.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0430\u0442\u044c", None))
-        self.btnFixBack.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0430\u0442\u044c", None))
+        self.btnFixForward.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0438\u043c\u0430\u0442\u044c", None))
+        self.btnFixBack.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0438\u043c\u0430\u0442\u044c", None))
         self.btnFixHome.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043b\u043d\u043e\u0441\u0442\u044c\u044e \u0440\u0430\u0437\u0436\u0430\u0442\u044c", None))
         self.label_21.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0415\u041a\u0423\u0429\u0410\u042f \u0421\u0418\u041b\u0410 \u0422\u041e\u041a\u0410", None))
         self.lblFixCur.setText(QCoreApplication.translate("MainWindow", u"--- \u0410", None))
-        self.label_23.setText(QCoreApplication.translate("MainWindow", u"\u0422\u043e\u0447\u043d\u043e\u0435 \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u0435", None))
+        self.label_23.setText(QCoreApplication.translate("MainWindow", u"\u0422\u043e\u0447\u043d\u0430\u044f \u0444\u0438\u043a\u0441\u0430\u0446\u0438\u044f", None))
         self.btnBackFix5grad.setText(QCoreApplication.translate("MainWindow", u"-5\u00b0", None))
         self.btnBackFix1grad.setText(QCoreApplication.translate("MainWindow", u"-1\u00b0", None))
         self.btnForwardFix1grad.setText(QCoreApplication.translate("MainWindow", u"+1\u00b0", None))
         self.btnForwardFix5grad.setText(QCoreApplication.translate("MainWindow", u"+5\u00b0", None))
         self.lblFixSpeed.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c \u0444\u0438\u043a\u0441\u0430\u0446\u0438\u0438: --%", None))
-        self.pushButton_26.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0441\u0438\u043b\u0443 \u0442\u043e\u043a\u0430", None))
-        self.pushButton_27.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0438\u044e\n"
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043a\u0443\u0449\u0435\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435 \u0441\u0438\u043b\u044b \u0442\u043e\u043a\u0430 \u0437\u0430\u0436\u0430\u0442\u0438\u044f: --- A", None))
+        self.label_12.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0441\u0442\u0438 \u043d\u043e\u0432\u043e\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435:", None))
+        self.pushButton_26.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0441\u0438\u043b\u0443 \u0442\u043e\u043a\u0430\n"
+"\u0437\u0430\u0436\u0430\u0442\u0438\u044f", None))
+        self.label_10.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043a\u0443\u0449\u0435\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435 \u0441\u0438\u043b\u044b \u0442\u043e\u043a\u0430 \u0440\u0430\u0437\u0436\u0430\u0442\u0438\u044f: --- \u0410", None))
+        self.label_15.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0441\u0442\u0438 \u043d\u043e\u0432\u043e\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435:", None))
+        self.pushButton_27.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u0441\u0438\u043b\u0443 \u0442\u043e\u043a\u0430\n"
 "\u0440\u0430\u0437\u0436\u0430\u0442\u0438\u044f", None))
-        self.pushButton_29.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0430\u0442\u044c \u0434\u043e \u0441\u0438\u043b\u044b \u0442\u043e\u043a\u0430", None))
+        self.btnFixHome_2.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043b\u043d\u043e\u0441\u0442\u044c\u044e \u0437\u0430\u0436\u0430\u0442\u044c", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"\u041c\u043e\u0434\u0443\u043b\u044c \u043f\u0440\u0435\u0434\u043e\u0431\u0436\u0438\u043c\u0430", None))
         self.btnPreUp.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0440\u0445", None))
         self.btnDownBack.setText(QCoreApplication.translate("MainWindow", u"\u0412\u043d\u0438\u0437", None))
@@ -3283,9 +3406,14 @@ class Ui_MainWindow(object):
         self.btnForwardPost1grad.setText(QCoreApplication.translate("MainWindow", u"+1\u00b0", None))
         self.btnForwardPost5grad.setText(QCoreApplication.translate("MainWindow", u"+5\u00b0", None))
         self.lblPostSpeed.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c \u043e\u0431\u0436\u0438\u043c\u0430: --%", None))
-        self.pushButton_37.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043c\u043e\u043c\u0435\u043d\u0442", None))
-        self.pushButton_38.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0438\u044e\n"
+        self.label_17.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043a\u0443\u0449\u0435\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435 \u043c\u043e\u043c\u0435\u043d\u0442\u0430 \u0437\u0430\u0436\u0430\u0442\u0438\u044f: --- A", None))
+        self.label_19.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0441\u0442\u0438 \u043d\u043e\u0432\u043e\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435:", None))
+        self.pushButton_28.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043c\u043e\u043c\u0435\u043d\u0442\n"
+"\u0437\u0430\u0436\u0430\u0442\u0438\u044f", None))
+        self.label_22.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043a\u0443\u0449\u0435\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435 \u043c\u043e\u043c\u0435\u043d\u0442\u0430 \u0440\u0430\u0437\u0436\u0430\u0442\u0438\u044f: --- \u0410", None))
+        self.label_24.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0441\u0442\u0438 \u043d\u043e\u0432\u043e\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435:", None))
+        self.pushButton_29.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043c\u043e\u043c\u0435\u043d\u0442\n"
 "\u0440\u0430\u0437\u0436\u0430\u0442\u0438\u044f", None))
-        self.pushButton_39.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0430\u0442\u044c \u0434\u043e \u043c\u043e\u043c\u0435\u043d\u0442\u0430", None))
+        self.btnFixHome_3.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043b\u043d\u043e\u0441\u0442\u044c\u044e \u0437\u0430\u0436\u0430\u0442\u044c", None))
     # retranslateUi
 
