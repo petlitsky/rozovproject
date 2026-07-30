@@ -8,7 +8,6 @@ from PySide6.QtCore import Qt, QTimer, QPropertyAnimation, QEasingCurve, QSize
 from main_ui import Ui_MainWindow
 from ui.dialogs import PasswordDialog, HomingDialog, ErrorDialog, show_error
 from ui.graph_widget import GraphWidget
-from ui.multi_graph_widget import MultiGraphWidget
 from controllers.arduino_controller import ArduinoController
 from controllers.manual_controls import ManualControls
 from models.config import Config
@@ -87,32 +86,31 @@ class MainWindow(QMainWindow):
     
     def _setup_graphs(self):
         """Инициализация графиков"""
-        # Создаем контейнер для графика
         layout = self.ui.frameGraph.layout()
         if layout is None:
             layout = QVBoxLayout(self.ui.frameGraph)
             layout.setContentsMargins(0, 0, 0, 0)
         
-        # Обычный график (для одиночных датчиков)
-        self.graph_widget = GraphWidget(self, max_points=200)
-        self.graph_widget.plot_widget.setMouseEnabled(x=False, y=False)
-        self.graph_widget.plot_widget.setMenuEnabled(False)
+        # Создаем виджет графика с поддержкой нескольких линий
+        self.graph_widget = GraphWidget(self, max_points=300)
         
-        # Мультиграфик (для режима "все")
-        self.multi_graph_widget = MultiGraphWidget(self, max_points=200)
+        # Добавляем линии для всех датчиков
+        self.graph_widget.add_line("Момент", '#00ff88')    # Зеленый
+        self.graph_widget.add_line("Усилие", '#ff8800')    # Оранжевый
+        self.graph_widget.add_line("Ток", '#0088ff')       # Синий
+        self.graph_widget.add_line("Температура", '#ff0088') # Розовый
         
-        # По умолчанию показываем обычный график
         layout.addWidget(self.graph_widget)
-        self.multi_graph_widget.setVisible(False)
-        layout.addWidget(self.multi_graph_widget)
         
-        self.graph_widget.show()
-        self.multi_graph_widget.hide()
+        # Таймер для обновления графиков (быстро - 10 Гц)
+        self.graph_update_timer = QTimer()
+        self.graph_update_timer.timeout.connect(self._update_graphs_fast)
+        self.graph_update_timer.start(100)  # 10 Гц
         
-        # Таймер для обновления графиков
-        self.graph_timer = QTimer()
-        self.graph_timer.timeout.connect(self._update_graphs)
-        self.graph_timer.start(100)  # 10 Гц
+        # Таймер для обновления текста (медленно - 1 Гц)
+        self.text_update_timer = QTimer()
+        self.text_update_timer.timeout.connect(self._update_text_slow)
+        self.text_update_timer.start(1000)  # 1 Гц
         
         # Данные для графиков
         self.torque_data = []
@@ -138,6 +136,9 @@ class MainWindow(QMainWindow):
         
         # Подключение comboBox
         self.ui.comboBoxSensor.currentIndexChanged.connect(self._on_sensor_changed)
+        
+        # Флаг для первого обновления текста
+        self.first_text_update = True
     
     def _setup_connections(self) -> None:
         self.ui.btnExit.clicked.connect(self.close)
@@ -196,7 +197,7 @@ class MainWindow(QMainWindow):
         
         # Сохраняем данные для графика
         self.force_data.append(value)
-        if len(self.force_data) > 200:
+        if len(self.force_data) > 300:
             self.force_data.pop(0)
         
         # Обновляем статистику
@@ -209,13 +210,8 @@ class MainWindow(QMainWindow):
             self.config.set("force_min", value)
         self.force_avg = ((self.force_avg * (self.force_count - 1)) + value) / self.force_count
         
-        # Обновляем lblSensData если выбран график усилия
-        if self.current_graph_mode == 1:
-            self._update_sensor_info_force()
-        
-        # Обновляем график если выбран режим усилия
-        if self.current_graph_mode == 1:
-            self.graph_widget.add_data_point(value)
+        # Добавляем данные в график (всегда, независимо от режима)
+        self.graph_widget.add_data_point("Усилие", value)
     
     def _update_torque_labels(self, value: float):
         self.ui.lblPostTorqMan.setText(f"{value:.3f} Н·м")
@@ -223,7 +219,7 @@ class MainWindow(QMainWindow):
         
         # Сохраняем данные для графика
         self.torque_data.append(value)
-        if len(self.torque_data) > 200:
+        if len(self.torque_data) > 300:
             self.torque_data.pop(0)
         
         # Обновляем статистику
@@ -236,26 +232,19 @@ class MainWindow(QMainWindow):
             self.config.set("torque_min", value)
         self.torque_avg = ((self.torque_avg * (self.torque_count - 1)) + value) / self.torque_count
         
-        # Обновляем lblSensData если выбран график момента
-        if self.current_graph_mode == 0:
-            self._update_sensor_info_torque()
-        
-        # Обновляем график если выбран режим момента
-        if self.current_graph_mode == 0:
-            self.graph_widget.add_data_point(value)
+        # Добавляем данные в график (всегда, независимо от режима)
+        self.graph_widget.add_data_point("Момент", value)
     
     def _update_temperature(self, temp: float) -> None:
         self.ui.lblTemp.setText(f"Температура: {temp:.1f}°C")
         
         # Сохраняем данные для графика
         self.temp_data.append(temp)
-        if len(self.temp_data) > 200:
+        if len(self.temp_data) > 300:
             self.temp_data.pop(0)
         
-        # Обновляем график если выбран режим температуры
-        if self.current_graph_mode == 3:
-            self.graph_widget.add_data_point(temp)
-            self._update_sensor_info_temp(temp)
+        # Добавляем данные в график (всегда, независимо от режима)
+        self.graph_widget.add_data_point("Температура", temp)
     
     def _update_fan_speed(self, speed: int) -> None:
         self.ui.lblFanSpeed.setText(f"{speed}%")
@@ -709,66 +698,80 @@ class MainWindow(QMainWindow):
         """Обработка изменения выбора датчика в comboBox"""
         self.current_graph_mode = index
         
-        # Очищаем lblSensData
+        # Очищаем lblSensData при переключении
         self.ui.lblSensData.setText("")
         
-        # Показываем/скрываем нужный виджет
+        # Показываем/скрываем линии в зависимости от выбранного режима
         if index == 4:  # Все датчики
-            self.graph_widget.hide()
-            self.multi_graph_widget.show()
-            self.multi_graph_widget.clear()
+            # Показываем все линии
+            for name in self.graph_widget.lines_data.keys():
+                self.graph_widget.lines_data[name]['line'].setVisible(True)
+            # Обновляем легенду
+            self.graph_widget.plot_widget.addLegend()
         else:
-            self.multi_graph_widget.hide()
-            self.graph_widget.show()
-            self.graph_widget.clear()
+            # Показываем только выбранную линию
+            names = list(self.graph_widget.lines_data.keys())
+            for i, name in enumerate(names):
+                if i == index:  # 0-Момент, 1-Усилие, 2-Ток, 3-Температура
+                    self.graph_widget.lines_data[name]['line'].setVisible(True)
+                else:
+                    self.graph_widget.lines_data[name]['line'].setVisible(False)
+            # Убираем легенду при одиночном режиме
+            self.graph_widget.plot_widget.removeItem(self.graph_widget.plot_widget.legend)
         
-        # В зависимости от выбранного датчика
-        if index == 0:  # Момент
+        # Обновляем статистику и текст
+        self._update_text_slow()
+    
+    def _update_graphs_fast(self):
+        """Быстрое обновление графиков (10 Гц)"""
+        # Добавляем данные тока (имитация)
+        current_val = 0.5 + random.uniform(-0.02, 0.02)
+        self.graph_widget.add_data_point("Ток", current_val)
+        
+        # Автоматическое смещение окна по X (показываем последние 10 секунд)
+        if self.graph_widget.lines_data:
+            # Берем первую линию для определения времени
+            first_line = next(iter(self.graph_widget.lines_data.values()))
+            if first_line['x']:
+                max_time = first_line['x'][-1]
+                min_time = max(0, max_time - 10)
+                self.graph_widget.plot_widget.setXRange(min_time, max_time)
+    
+    def _update_text_slow(self):
+        """Медленное обновление текста (1 Гц)"""
+        mode = self.current_graph_mode
+        
+        if mode == 0:  # Момент
             self._update_sensor_info_torque()
-            if self.torque_data:
-                start_idx = max(0, len(self.torque_data) - 50)
-                for val in self.torque_data[start_idx:]:
-                    self.graph_widget.add_data_point(val)
-                    
-        elif index == 1:  # Усилие
+        elif mode == 1:  # Усилие
             self._update_sensor_info_force()
-            if self.force_data:
-                start_idx = max(0, len(self.force_data) - 50)
-                for val in self.force_data[start_idx:]:
-                    self.graph_widget.add_data_point(val)
-                    
-        elif index == 2:  # Ток
-            self.ui.lblSensData.setText("")  # Очищаем текст
-            self.graph_widget.clear()
-            # Генерируем данные тока с небольшим шумом
-            for i in range(20):
-                val = 0.5 + random.uniform(-0.02, 0.02)
-                self.graph_widget.add_data_point(val)
-                
-        elif index == 3:  # Температура
-            if self.temp_data:
-                start_idx = max(0, len(self.temp_data) - 50)
-                for val in self.temp_data[start_idx:]:
-                    self.graph_widget.add_data_point(val)
-                if self.temp_data:
-                    self._update_sensor_info_temp(self.temp_data[-1])
-                    
-        elif index == 4:  # Все датчики
+        elif mode == 2:  # Ток
             self.ui.lblSensData.setText("")
-            # Показываем все 4 графика с последними данными
-            # Загружаем последние данные для каждого датчика
-            torque_vals = list(self.torque_data[-50:]) if self.torque_data else [0] * 50
-            force_vals = list(self.force_data[-50:]) if self.force_data else [0] * 50
-            current_vals = [0.5 + random.uniform(-0.02, 0.02) for _ in range(50)]
-            temp_vals = list(self.temp_data[-50:]) if self.temp_data else [25] * 50
-            
-            # Добавляем точки в мультиграфик
-            for i in range(len(torque_vals)):
-                t = torque_vals[i] if i < len(torque_vals) else 0
-                f = force_vals[i] if i < len(force_vals) else 0
-                c = current_vals[i] if i < len(current_vals) else 0.5
-                temp = temp_vals[i] if i < len(temp_vals) else 25
-                self.multi_graph_widget.add_data_point(t, f, c, temp)
+        elif mode == 3:  # Температура
+            self._update_sensor_info_temp()
+        elif mode == 4:  # Все датчики
+            self.ui.lblSensData.setText("")
+        
+        # Обновляем текст на графике
+        if mode == 0 and self.torque_data:
+            self.graph_widget.update_text(f"Момент: {self.torque_data[-1]:.3f} Н·м")
+        elif mode == 1 and self.force_data:
+            self.graph_widget.update_text(f"Усилие: {self.force_data[-1]:.1f} Н")
+        elif mode == 2:
+            self.graph_widget.update_text("Ток: 0.50 А")
+        elif mode == 3 and self.temp_data:
+            self.graph_widget.update_text(f"Температура: {self.temp_data[-1]:.1f}°C")
+        elif mode == 4:
+            # Для режима "все" показываем все значения
+            text = ""
+            if self.torque_data:
+                text += f"М:{self.torque_data[-1]:.2f} "
+            if self.force_data:
+                text += f"F:{self.force_data[-1]:.1f} "
+            text += f"I:0.50 "
+            if self.temp_data:
+                text += f"T:{self.temp_data[-1]:.1f}°C"
+            self.graph_widget.update_text(text)
     
     def _update_sensor_info_torque(self):
         """Обновление информации о моменте"""
@@ -796,40 +799,21 @@ class MainWindow(QMainWindow):
             info = "Нет данных по усилию"
         self.ui.lblSensData.setText(info)
     
-    def _update_sensor_info_temp(self, temp=None):
+    def _update_sensor_info_temp(self):
         """Обновление информации о температуре"""
-        if temp is None and self.temp_data:
-            temp = self.temp_data[-1]
-        if temp is not None:
-            info = f"Температура: {temp:.1f}°C"
+        if self.temp_data:
+            info = f"Температура: {self.temp_data[-1]:.1f}°C"
         else:
             info = "Нет данных по температуре"
         self.ui.lblSensData.setText(info)
-    
-    def _update_graphs(self):
-        """Обновление графиков в реальном времени"""
-        if self.current_graph_mode == 4:  # Все датчики
-            # Добавляем новые точки в мультиграфик
-            torque = self.torque_data[-1] if self.torque_data else 0
-            force = self.force_data[-1] if self.force_data else 0
-            # Ток с небольшим шумом
-            current = 0.5 + random.uniform(-0.02, 0.02)
-            temp = self.temp_data[-1] if self.temp_data else 25
-            
-            self.multi_graph_widget.add_data_point(torque, force, current, temp)
-        
-        # Смещаем окно времени для обычного графика
-        if self.current_graph_mode != 4 and len(self.graph_widget.x_data) > 0:
-            max_time = self.graph_widget.x_data[-1]
-            min_time = max(0, max_time - 10)
-            self.graph_widget.plot_widget.setXRange(min_time, max_time)
         
     def closeEvent(self, event) -> None:
         self._is_closing = True
         
         dialog = PasswordDialog(self)
         if dialog.exec() == PasswordDialog.Accepted:
-            self.graph_timer.stop()
+            self.graph_update_timer.stop()
+            self.text_update_timer.stop()
             self.fan.cleanup()
             self.force_sensor.stop()
             self.torque_worker.stop()
