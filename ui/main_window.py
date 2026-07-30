@@ -331,11 +331,7 @@ class MainWindow(QMainWindow):
             self.current_min = value
             self.config.set("current_min", value)
         self.current_avg = ((self.current_avg * (self.current_count - 1)) + value) / self.current_count
-        
-        # Если выбран режим тока - обновляем текст
-        if self.current_graph_mode == 2:
-            self.ui.lblSensData.setText(f"Ток: {value:.2f} А")
-    
+            
     def _update_force_labels(self, value: float):
         if self.is_moving_to_force:
             target = float(self.config.get("target_pre_force", 0.0))
@@ -932,16 +928,15 @@ class MainWindow(QMainWindow):
     
     def _update_sensor_info_current(self):
         """Обновление информации о токе"""
-        if self.current_count > 0 and self.current_data:
+        if self.current_count > 0:
             info = (
                 f"Макс: {self.current_max:.2f} А | "
                 f"Мин: {self.current_min:.2f} А | "
                 f"Сред: {self.current_avg:.2f} А | "
-                f"Текущий: {self.current_data[-1]:.2f} А"
+                f"Текущий: {self.current_data[-1] if self.current_data else 0:.2f} А"
             )
         else:
-            # Если данных еще нет, показываем нули
-            info = "Макс: 0.00 А | Мин: 0.00 А | Сред: 0.00 А | Текущий: 0.00 А"
+            info = "Нет данных по току"
         self.ui.lblSensData.setText(info)
     
     def _update_sensor_info_temp(self):
