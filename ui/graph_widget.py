@@ -8,13 +8,14 @@ from collections import deque
 class GraphWidget(QWidget):
     """Виджет для отображения графиков в реальном времени"""
     
-    def __init__(self, parent=None, max_points=200):
+    def __init__(self, parent=None, max_points=300):
         super().__init__(parent)
         self.max_points = max_points
         
         # Данные для каждой линии
         self.lines_data = {}  # {name: {'x': [], 'y': [], 'line': None, 'color': None}}
         self.time_counter = 0
+        self.is_auto_scroll = True  # Флаг автоматического скролла
         
         self._setup_ui()
         
@@ -38,20 +39,20 @@ class GraphWidget(QWidget):
         self.plot_widget.setMouseEnabled(x=True, y=False)
         self.plot_widget.setMenuEnabled(False)
         
+        # Отключаем автосмещение при перемещении мышью
+        self.plot_widget.sigRangeChanged.connect(self._on_range_changed)
+        
         layout.addWidget(self.plot_widget)
         
         # Легенда
         self.plot_widget.addLegend()
         
-        # Текст для отображения текущего значения (будет обновляться реже)
-        from pyqtgraph import TextItem
-        self.value_text = TextItem(
-            text="",
-            color='w',
-            anchor=(1, 0)
-        )
-        self.plot_widget.addItem(self.value_text)
-        
+    def _on_range_changed(self, plot, ranges):
+        """Обработка изменения диапазона (пользователь переместил график)"""
+        # Если пользователь переместил вручную - отключаем автоскролл
+        if self.plot_widget.getViewBox().mouseEnabled()[0]:
+            self.is_auto_scroll = False
+    
     def add_line(self, name, color):
         """Добавление новой линии на график"""
         if name not in self.lines_data:
@@ -104,18 +105,21 @@ class GraphWidget(QWidget):
             if len(data['x']) > 1:
                 data['line'].setData(data['x'], data['y'])
     
-    def update_text(self, text):
-        """Обновление текста с текущими значениями"""
-        self.value_text.setText(text)
-        if self.lines_data:
-            # Находим последнюю точку по времени
-            max_x = 0
-            max_y = 0
-            for data in self.lines_data.values():
-                if data['x'] and data['x'][-1] > max_x:
-                    max_x = data['x'][-1]
-                    max_y = data['y'][-1]
-            self.value_text.setPos(max_x, max_y)
+    def update_view(self):
+        """Обновление вида графика (автоскролл)"""
+        if self.is_auto_scroll and self.lines_data:
+            # Берем первую линию для определения времени
+            first_line = next(iter(self.lines_data.values()))
+            if first_line['x']:
+                max_time = first_line['x'][-1]
+                min_time = max(0, max_time - 10)
+                self.plot_widget.setXRange(min_time, max_time, padding=0)
+    
+    def set_auto_scroll(self, enabled):
+        """Включить/выключить автоскролл"""
+        self.is_auto_scroll = enabled
+        if enabled:
+            self.update_view()
     
     def clear(self):
         """Очистка графика"""
@@ -124,8 +128,7 @@ class GraphWidget(QWidget):
             data['x'].clear()
             data['y'].clear()
             data['line'].setData([], [])
-        self.value_text.setText("")
-        self.value_text.setPos(0, 0)
+        self.is_auto_scroll = True
     
     def clear_line(self, name):
         """Очистка конкретной линии"""
@@ -134,3 +137,21 @@ class GraphWidget(QWidget):
             data['x'].clear()
             data['y'].clear()
             data['line'].setData([], [])
+    
+    def show_all_lines(self):
+        """Показать все линии"""
+        for name in self.lines_data.keys():
+            self.lines_data[name]['line'].setVisible(True)
+        self.plot_widget.addLegend()
+    
+    def show_line_only(self, index):
+        """Показать только одну линию"""
+        names = list(self.lines_data.keys())
+        for i, name in enumerate(names):
+            if i == index:
+                self.lines_data[name]['line'].setVisible(True)
+            else:
+                self.lines_data[name]['line'].setVisible(False)
+        # Убираем легенду
+        if self.plot_widget.legend:
+            self.plot_widget.removeItem(self.plot_widget.legend)

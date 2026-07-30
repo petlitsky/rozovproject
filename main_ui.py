@@ -1084,7 +1084,6 @@ class Ui_MainWindow(object):
         self.comboBoxSensor.addItem("")
         self.comboBoxSensor.addItem("")
         self.comboBoxSensor.addItem("")
-        self.comboBoxSensor.addItem("")
         self.comboBoxSensor.setObjectName(u"comboBoxSensor")
         self.comboBoxSensor.setMinimumSize(QSize(0, 35))
         self.comboBoxSensor.setFont(font5)
@@ -3158,7 +3157,6 @@ class Ui_MainWindow(object):
         self.comboBoxSensor.setItemText(1, QCoreApplication.translate("MainWindow", u"\u0414\u0430\u0442\u0447\u0438\u043a \u0443\u0441\u0438\u043b\u0438\u044f TCF-715A", None))
         self.comboBoxSensor.setItemText(2, QCoreApplication.translate("MainWindow", u"\u0414\u0430\u0442\u0447\u0438\u043a \u0442\u043e\u043a\u0430 ACS712", None))
         self.comboBoxSensor.setItemText(3, QCoreApplication.translate("MainWindow", u"\u0414\u0430\u0442\u0447\u0438\u043a \u0442\u0435\u043c\u043f\u0435\u0440\u0430\u0442\u0443\u0440\u044b BME280", None))
-        self.comboBoxSensor.setItemText(4, QCoreApplication.translate("MainWindow", u"All", None))
 
         self.lblSensData.setText(QCoreApplication.translate("MainWindow", u"sensors data", None))
         self.label_4.setText("")

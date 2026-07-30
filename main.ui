@@ -2299,11 +2299,6 @@ QToolButton:pressed {
                   <string>Датчик температуры BME280</string>
                  </property>
                 </item>
-                <item>
-                 <property name="text">
-                  <string>All</string>
-                 </property>
-                </item>
                </widget>
               </item>
              </layout>
