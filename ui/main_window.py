@@ -205,8 +205,12 @@ class MainWindow(QMainWindow):
             label.setText(template.format(value))
 
         for key, label, labelMan, template in positions:
-            value = self.config.get(key, 30)
+            value = self.config.get(key, 0)
             labelMan.setText(template.format(value))
+            label.setText(template.format(value))
+
+        for key, label, template in savepos:
+            value = self.config.get(key, 0)
             label.setText(template.format(value))
         
         fan_value = self.config.get('fan_speed', 50)
