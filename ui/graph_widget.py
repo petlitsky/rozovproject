@@ -1,8 +1,7 @@
 # ui/graph_widget.py
 from PySide6.QtWidgets import QWidget, QVBoxLayout
-from PySide6.QtCore import Qt, QTimer
+from PySide6.QtCore import Qt
 import pyqtgraph as pg
-import numpy as np
 from collections import deque
 
 
@@ -17,12 +16,12 @@ class GraphWidget(QWidget):
         self.time_counter = 0
         
         self._setup_ui()
-        self._setup_graph()
         
     def _setup_ui(self):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         
+        # Создаем виджет для графика
         self.plot_widget = pg.PlotWidget()
         self.plot_widget.setBackground('#1e1e1e')
         self.plot_widget.showGrid(x=True, y=True, alpha=0.3)
@@ -42,15 +41,17 @@ class GraphWidget(QWidget):
         )
         
         # Заливка под графиком
-        self.plot_fill = pg.FillBetweenItem(
+        from pyqtgraph import PlotDataItem, FillBetweenItem, mkBrush
+        self.plot_fill = FillBetweenItem(
             self.plot_line,
-            pg.PlotDataItem([], pen=pg.mkPen(color='#00ff88', width=0)),
-            brush=pg.mkBrush(color=(0, 255, 136, 50))
+            PlotDataItem([], pen=pg.mkPen(color='#00ff88', width=0)),
+            brush=mkBrush(color=(0, 255, 136, 50))
         )
         self.plot_widget.addItem(self.plot_fill)
         
         # Текст для отображения текущего значения
-        self.value_text = pg.TextItem(
+        from pyqtgraph import TextItem
+        self.value_text = TextItem(
             text="0.0",
             color='w',
             anchor=(1, 0)
@@ -69,9 +70,12 @@ class GraphWidget(QWidget):
             y_data = list(self.data)
             
             self.plot_line.setData(x_data, y_data)
+            
+            # Обновляем заливку
+            from pyqtgraph import PlotDataItem
             self.plot_fill.setData(
-                pg.PlotDataItem(x_data, y_data),
-                pg.PlotDataItem(x_data, [0] * len(y_data))
+                PlotDataItem(x_data, y_data),
+                PlotDataItem(x_data, [0] * len(y_data))
             )
             
             # Обновление текста с текущим значением
@@ -93,9 +97,11 @@ class GraphWidget(QWidget):
         self.timestamps.clear()
         self.time_counter = 0
         self.plot_line.setData([], [])
+        
+        from pyqtgraph import PlotDataItem
         self.plot_fill.setData(
-            pg.PlotDataItem([], []),
-            pg.PlotDataItem([], [])
+            PlotDataItem([], []),
+            PlotDataItem([], [])
         )
         self.value_text.setText("0.0")
         self.value_text.setPos(0, 0)
