@@ -1,8 +1,8 @@
 # ui/graph_widget.py
 from PySide6.QtWidgets import QWidget, QVBoxLayout
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QTimer
 import pyqtgraph as pg
-from collections import deque
+import time
 
 
 class GraphWidget(QWidget):
@@ -14,8 +14,8 @@ class GraphWidget(QWidget):
         
         # Данные для каждой линии
         self.lines_data = {}  # {name: {'x': [], 'y': [], 'line': None, 'color': None}}
-        self.time_counter = 0
         self.is_auto_scroll = True  # Флаг автоматического скролла
+        self.start_time = None  # Время старта в секундах с начала эпохи
         
         self._setup_ui()
         
@@ -43,10 +43,13 @@ class GraphWidget(QWidget):
         self.plot_widget.sigRangeChanged.connect(self._on_range_changed)
         
         layout.addWidget(self.plot_widget)
-        
+    
+    def _get_current_time(self):
+        """Получение текущего времени в секундах с начала эпохи"""
+        return time.time()
+    
     def _on_range_changed(self, plot, ranges):
         """Обработка изменения диапазона (пользователь переместил график)"""
-        # Если пользователь переместил вручную - отключаем автоскролл
         if self.plot_widget.getViewBox().mouseEnabled()[0]:
             self.is_auto_scroll = False
     
@@ -63,13 +66,22 @@ class GraphWidget(QWidget):
             }
     
     def add_data_point(self, name, value):
-        """Добавление новой точки для конкретной линии"""
+        """Добавление новой точки для конкретной линии с реальным временем"""
         if name not in self.lines_data:
             return
         
-        self.time_counter += 0.1
+        # Используем реальное время с начала эпохи
+        current_time = self._get_current_time()
+        
+        # Если это первая точка - запоминаем время старта
+        if self.start_time is None:
+            self.start_time = current_time
+        
+        # Относительное время в секундах от старта программы (реальное!)
+        relative_time = current_time - self.start_time
+        
         data = self.lines_data[name]
-        data['x'].append(self.time_counter)
+        data['x'].append(relative_time)
         data['y'].append(value)
         
         # Ограничиваем количество точек
@@ -83,14 +95,19 @@ class GraphWidget(QWidget):
     
     def add_data_points(self, data_dict):
         """Добавление точек для нескольких линий одновременно"""
-        self.time_counter += 0.1
+        current_time = self._get_current_time()
+        
+        if self.start_time is None:
+            self.start_time = current_time
+        
+        relative_time = current_time - self.start_time
         
         for name, value in data_dict.items():
             if name not in self.lines_data:
                 continue
             
             data = self.lines_data[name]
-            data['x'].append(self.time_counter)
+            data['x'].append(relative_time)
             data['y'].append(value)
             
             # Ограничиваем количество точек
@@ -120,26 +137,9 @@ class GraphWidget(QWidget):
     
     def clear(self):
         """Очистка графика"""
-        self.time_counter = 0
         for data in self.lines_data.values():
             data['x'].clear()
             data['y'].clear()
             data['line'].setData([], [])
-        self.is_auto_scroll = True
-    
-    def clear_line(self, name):
-        """Очистка конкретной линии"""
-        if name in self.lines_data:
-            data = self.lines_data[name]
-            data['x'].clear()
-            data['y'].clear()
-            data['line'].setData([], [])
-    
-    def show_line_only(self, index):
-        """Показать только одну линию"""
-        names = list(self.lines_data.keys())
-        for i, name in enumerate(names):
-            if i == index:
-                self.lines_data[name]['line'].setVisible(True)
-            else:
-                self.lines_data[name]['line'].setVisible(False)
+        # Сбрасываем время старта при очистке
+        self.start_time = None

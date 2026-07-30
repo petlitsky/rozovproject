@@ -172,7 +172,7 @@ class MainWindow(QMainWindow):
         self.arduino.home_found.connect(self._on_home_found)
         self.arduino.limit_reached.connect(self._on_limit_reached)
         self.arduino.disconnected.connect(self._handle_disconnect)
-        self.arduino.current_updated.connect(self._update_current)  # Подключаем сигнал тока
+        self.arduino.current_updated.connect(self._update_current)
         
         self.bme280.temperature_updated.connect(self._update_temperature)
         
@@ -758,11 +758,9 @@ class MainWindow(QMainWindow):
     
     def _update_graphs(self):
         """Обновление данных на графике (5 Гц)"""
-        # Ток теперь приходит с Arduino через сигнал current_updated
+        # Ток приходит с Arduino через сигнал current_updated
+        # Остальные датчики обновляются через свои сигналы
         # Ничего не делаем здесь, только обновляем вид
-        
-        # Для обновления вида графика - вызываем update_view отдельно
-        # Это делается в _update_view по таймеру
         pass
     
     def _update_view(self):
@@ -821,7 +819,8 @@ class MainWindow(QMainWindow):
         self.ui.lblSensData.setText(info)
         
     def closeEvent(self, event) -> None:
-        self._is_closing = True        
+        self._is_closing = True
+        
         dialog = PasswordDialog(self)
         if dialog.exec() == PasswordDialog.Accepted:
             self.graph_update_timer.stop()
