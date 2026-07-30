@@ -4,7 +4,9 @@ from ui.main_window import MainWindow
 
 
 def main() -> None:
+    os.environ["QT_IM_MODULE"] = "qtvirtualkeyboard"
     app = QApplication(sys.argv)
+    app.setAttribute(Qt.ApplicationAttribute.AA_EnableHighDpiScaling, True)
     window = MainWindow()
     window.show()
     sys.exit(app.exec())
