@@ -111,7 +111,7 @@ class PasswordDialog(BaseDialog):
             self.password_input.original_mouse_press(event)
     
     def _check_password(self):
-        if self.password_input.text() == "1111":
+        if self.password_input.text() == "":
             self.accept()
         else:
             self.error_label.show()
