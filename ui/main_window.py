@@ -91,6 +91,19 @@ class MainWindow(QMainWindow):
         self.ui.getManualFan.setChecked(False)
         self.ui.fanOff.setChecked(False)
         self.ui.fanSpeed.setEnabled(False)
+
+        temp_min = self.config.get("temp_min", 40.0)
+        temp_max = self.config.get("temp_max", 70.0)
+        start_speed = self.config.get("start_speed", 30)
+    
+        self.ui.tempMin.setValue(temp_min)
+        self.ui.tempMax.setValue(temp_max)
+        self.ui.startSpeed.setValue(start_speed)
+    
+        # Подключение сохранения при изменении
+        self.ui.tempMin.valueChanged.connect(self._save_temp_settings)
+        self.ui.tempMax.valueChanged.connect(self._save_temp_settings)
+        self.ui.startSpeed.valueChanged.connect(self._save_temp_settings)
         
         # Кнопка сброса статистики
         self.ui.btnResetStats.clicked.connect(self._reset_stats)
@@ -206,6 +219,12 @@ class MainWindow(QMainWindow):
         now = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
         self.ui.lblDate.setText(now)
     
+    def _save_temp_settings(self):
+        """Сохранение настроек температуры"""
+        self.config.set("temp_min", self.ui.tempMin.value())
+        self.config.set("temp_max", self.ui.tempMax.value())
+        self.config.set("start_speed", self.ui.startSpeed.value())
+
     def _update_time(self) -> None:
         """Обновление времени работы программы в lblTimeStart (только секунды)"""
         elapsed = datetime.now() - self.start_time

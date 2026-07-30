@@ -22,6 +22,9 @@ DEFAULT_CONFIG = {
     "force_min": 0.0,
     "current_max": 0.0,
     "current_min": 0.0,
+    "temp_min": 40.0,
+    "temp_max": 70.0,
+    "start_speed": 30,
 }
 
 
