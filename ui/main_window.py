@@ -36,6 +36,9 @@ class MainWindow(QMainWindow):
         self.animation: Optional[QPropertyAnimation] = None
         self.disconnect_shown = False
         self._is_closing = False
+        
+        # Время старта программы
+        self.start_time = datetime.now()
                 
         self._setup_ui()
         self._setup_connections()
@@ -94,7 +97,7 @@ class MainWindow(QMainWindow):
         # Создаем виджет графика с поддержкой нескольких линий
         self.graph_widget = GraphWidget(self, max_points=300)
         
-        # Добавляем линии для всех датчиков
+        # Добавляем линии для всех датчиков (без легенды)
         self.graph_widget.add_line("Момент", '#00ff88')    # Зеленый
         self.graph_widget.add_line("Усилие", '#ff8800')    # Оранжевый
         self.graph_widget.add_line("Ток", '#0088ff')       # Синий
@@ -102,7 +105,7 @@ class MainWindow(QMainWindow):
         
         layout.addWidget(self.graph_widget)
         
-        # Таймер для обновления данных на графике (5 Гц - реже)
+        # Таймер для обновления данных на графике (5 Гц)
         self.graph_update_timer = QTimer()
         self.graph_update_timer.timeout.connect(self._update_graphs)
         self.graph_update_timer.start(200)  # 5 Гц (каждые 200мс)
@@ -116,6 +119,11 @@ class MainWindow(QMainWindow):
         self.text_update_timer = QTimer()
         self.text_update_timer.timeout.connect(self._update_text_slow)
         self.text_update_timer.start(1000)  # 1 Гц
+        
+        # Таймер для обновления времени работы
+        self.time_timer = QTimer()
+        self.time_timer.timeout.connect(self._update_time)
+        self.time_timer.start(1000)  # 1 Гц
         
         # Данные для графиков
         self.torque_data = []
@@ -176,6 +184,21 @@ class MainWindow(QMainWindow):
     def _update_datetime(self) -> None:
         now = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
         self.ui.lblDate.setText(now)
+    
+    def _update_time(self) -> None:
+        """Обновление времени работы программы в lblTimeStart (только секунды)"""
+        elapsed = datetime.now() - self.start_time
+        total_seconds = int(elapsed.total_seconds())
+        
+        # Склонение слова "секунда"
+        if total_seconds % 10 == 1 and total_seconds % 100 != 11:
+            word = "секунда"
+        elif 2 <= total_seconds % 10 <= 4 and not (12 <= total_seconds % 100 <= 14):
+            word = "секунды"
+        else:
+            word = "секунд"
+        
+        self.ui.lblTimeStart.setText(f"{total_seconds} {word}")
     
     def _update_force_labels(self, value: float):
         if self.is_moving_to_force:
@@ -712,10 +735,6 @@ class MainWindow(QMainWindow):
             else:
                 self.graph_widget.lines_data[name]['line'].setVisible(False)
         
-        # Убираем легенду при одиночном режиме
-        if self.graph_widget.plot_widget.legend:
-            self.graph_widget.plot_widget.removeItem(self.graph_widget.plot_widget.legend)
-        
         # Обновляем статистику и текст
         self._update_text_slow()
     
@@ -784,6 +803,7 @@ class MainWindow(QMainWindow):
             self.graph_update_timer.stop()
             self.view_update_timer.stop()
             self.text_update_timer.stop()
+            self.time_timer.stop()
             self.fan.cleanup()
             self.force_sensor.stop()
             self.torque_worker.stop()
