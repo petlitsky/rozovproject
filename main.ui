@@ -370,7 +370,7 @@ QPushButton:checked {
           <string notr="true">background: #dde0e7;</string>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="pageAutoMode">
           <layout class="QVBoxLayout" name="verticalLayout_30">
@@ -2292,7 +2292,7 @@ QToolButton:pressed {
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>180</width>
+                     <width>190</width>
                      <height>30</height>
                     </size>
                    </property>

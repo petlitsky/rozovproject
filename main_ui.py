@@ -1098,7 +1098,7 @@ class Ui_MainWindow(object):
         self.btnResetStats = QPushButton(self.widget_14)
         self.btnResetStats.setObjectName(u"btnResetStats")
         self.btnResetStats.setMinimumSize(QSize(0, 30))
-        self.btnResetStats.setMaximumSize(QSize(180, 30))
+        self.btnResetStats.setMaximumSize(QSize(190, 30))
         self.btnResetStats.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
@@ -3252,7 +3252,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(3)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
