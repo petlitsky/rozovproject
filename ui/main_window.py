@@ -575,7 +575,7 @@ class MainWindow(QMainWindow):
         self.show_homing_dialog("Поиск дома постобжима...")
         self.arduino.send_command("POST_HOME_START")
 
-    def fix_move_degrees(self, degrees: float) -> None:
+    def post_move_degrees(self, degrees: float) -> None:
         STEPS_PER_DEGREE = 10.666
         steps = int(degrees * STEPS_PER_DEGREE)
         
