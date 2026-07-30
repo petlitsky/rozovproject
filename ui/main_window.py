@@ -499,18 +499,7 @@ class MainWindow(QMainWindow):
             self.arduino.send_command(f"FIX_MOVE:{steps}")
         else:
             return
-    
-    def fix_back_exact(self) -> None:
-        deg = self.ui.exFixPos.value()
-        if deg > 0:
-            self.fix_move_degrees(-deg)
-            
-    def fix_forward_exact(self) -> None:
-        deg = self.ui.exFixPos.value()
-        if deg > 0:
-            self.fix_move_degrees(deg)
-            self.ui.exFixPos.setValue(0)
-            
+                
     def fix_home(self) -> None:
         self.show_homing_dialog("Поиск дома фиксации...")
         self.arduino.send_command("FIX_HOME_START")
@@ -585,6 +574,15 @@ class MainWindow(QMainWindow):
     def post_home(self) -> None:
         self.show_homing_dialog("Поиск дома постобжима...")
         self.arduino.send_command("POST_HOME_START")
+
+    def fix_move_degrees(self, degrees: float) -> None:
+        STEPS_PER_DEGREE = 10.666
+        steps = int(degrees * STEPS_PER_DEGREE)
+        
+        if steps != 0:
+            self.arduino.send_command(f"POST_MOVE:{steps}")
+        else:
+            return
             
     def closeEvent(self, event) -> None:
         self._is_closing = True

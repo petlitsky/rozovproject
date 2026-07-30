@@ -111,6 +111,11 @@ class ManualControls(QObject):
             btn.pressed.connect(press)
             btn.released.connect(release)
         
+        self.ui.btnBackPost1grad.clicked.connect(lambda: self.main.post_move_degrees(-1))
+        self.ui.btnForwardPost1grad.clicked.connect(lambda: self.main.post_move_degrees(1))
+        self.ui.btnBackPost5grad.clicked.connect(lambda: self.main.post_move_degrees(-5))
+        self.ui.btnForwardPost5grad.clicked.connect(lambda: self.main.post_move_degrees(5))
+
         self.ui.btnPostHome.clicked.connect(self.main.post_home)
     
     def _connect_speed_sliders(self) -> None:

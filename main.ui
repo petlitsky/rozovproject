@@ -356,7 +356,7 @@ QPushButton:checked {
           <string notr="true">background: #dde0e7;</string>
          </property>
          <property name="currentIndex">
-          <number>4</number>
+          <number>8</number>
          </property>
          <widget class="QWidget" name="pageAutoMode">
           <layout class="QVBoxLayout" name="verticalLayout_30">
@@ -3482,37 +3482,6 @@ QPushButton:pressed {
                       </property>
                      </widget>
                     </item>
-                    <item>
-                     <widget class="QPushButton" name="pushButton_3">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton {
-	background: #bdcfdd;
-	border: 2px solid #a6b8c6;
-	border-radius: 5px;
-}
-
-QPushButton:pressed {
-	background: #cfddeb;
-
-}</string>
-                      </property>
-                      <property name="text">
-                       <string>Установить</string>
-                      </property>
-                     </widget>
-                    </item>
                    </layout>
                   </widget>
                  </item>
@@ -4327,37 +4296,6 @@ QPushButton:pressed {
                       </property>
                       <property name="orientation">
                        <enum>Qt::Orientation::Horizontal</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="pushButton_2">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton {
-	background: #bdcfdd;
-	border: 2px solid #a6b8c6;
-	border-radius: 5px;
-}
-
-QPushButton:pressed {
-	background: #cfddeb;
-
-}</string>
-                      </property>
-                      <property name="text">
-                       <string>Установить</string>
                       </property>
                      </widget>
                     </item>
@@ -5225,37 +5163,6 @@ QPushButton:pressed {
                       </property>
                      </widget>
                     </item>
-                    <item>
-                     <widget class="QPushButton" name="pushButton">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton {
-	background: #bdcfdd;
-	border: 2px solid #a6b8c6;
-	border-radius: 5px;
-}
-
-QPushButton:pressed {
-	background: #cfddeb;
-
-}</string>
-                      </property>
-                      <property name="text">
-                       <string>Установить</string>
-                      </property>
-                     </widget>
-                    </item>
                    </layout>
                   </widget>
                  </item>
@@ -5952,7 +5859,7 @@ QFrame#frameXPos {
                         <number>0</number>
                        </property>
                        <item>
-                        <widget class="QPushButton" name="btnPre5mm">
+                        <widget class="QPushButton" name="btnBackPost5grad">
                          <property name="minimumSize">
                           <size>
                            <width>0</width>
@@ -5977,7 +5884,7 @@ QPushButton:pressed {
                         </widget>
                        </item>
                        <item>
-                        <widget class="QPushButton" name="pushButton_34">
+                        <widget class="QPushButton" name="btnBackPost1grad">
                          <property name="minimumSize">
                           <size>
                            <width>0</width>
@@ -6002,7 +5909,7 @@ QPushButton:pressed {
                         </widget>
                        </item>
                        <item>
-                        <widget class="QPushButton" name="pushButton_35">
+                        <widget class="QPushButton" name="btnForwardPost1grad">
                          <property name="minimumSize">
                           <size>
                            <width>0</width>
@@ -6027,7 +5934,7 @@ QPushButton:pressed {
                         </widget>
                        </item>
                        <item>
-                        <widget class="QPushButton" name="pushButton_36">
+                        <widget class="QPushButton" name="btnForwardPost5grad">
                          <property name="minimumSize">
                           <size>
                            <width>0</width>
@@ -6083,37 +5990,6 @@ QPushButton:pressed {
                       </property>
                       <property name="orientation">
                        <enum>Qt::Orientation::Horizontal</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="pushButton_4">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton {
-	background: #bdcfdd;
-	border: 2px solid #a6b8c6;
-	border-radius: 5px;
-}
-
-QPushButton:pressed {
-	background: #cfddeb;
-
-}</string>
-                      </property>
-                      <property name="text">
-                       <string>Установить</string>
                       </property>
                      </widget>
                     </item>
