@@ -75,7 +75,7 @@ class MultiGraphWidget(QWidget):
                 'widget': plot_widget,
                 'line': line,
                 'text': value_text,
-                'data': deque(maxlen=max_points)
+                'data': deque(maxlen=self.max_points)
             })
         
         layout.addLayout(grid)
