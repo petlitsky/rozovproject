@@ -448,7 +448,7 @@ QPushButton:checked {
 	background: #e9ecf1;
 }
 
-QFrame#frameXPos {
+QFrame#frameXPos_7 {
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
 }</string>
@@ -895,7 +895,7 @@ QToolButton:pressed {
 	background: #e9ecf1;
 }
 
-QFrame#frameXPos {
+QFrame#frameXPos_6 {
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
 }</string>
@@ -1296,7 +1296,7 @@ QToolButton:pressed {
 	background: #e9ecf1;
 }
 
-QFrame#frameXPos {
+QFrame#frameXPos_8 {
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
 }</string>
@@ -1779,7 +1779,7 @@ QToolButton:pressed {
 	background: #e9ecf1;
 }
 
-QFrame#frameXPos {
+QFrame#frameXPos_5 {
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
 }</string>
@@ -2306,6 +2306,16 @@ QToolButton:pressed {
            </item>
            <item>
             <widget class="QFrame" name="frame">
+             <property name="styleSheet">
+              <string notr="true">* {
+	background: #e9ecf1;
+}
+
+QFrame {
+	border-radius: 7px;
+	border: 1px solid #c1c6cc;
+}</string>
+             </property>
              <property name="frameShape">
               <enum>QFrame::Shape::StyledPanel</enum>
              </property>
@@ -3995,7 +4005,7 @@ QPushButton:pressed {
 	background: #e9ecf1;
 }
 
-QFrame#frameLin {
+QFrame#frameLin_3 {
 	background: #e9ecf1;
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
@@ -4234,7 +4244,7 @@ QToolButton:pressed {
 	background: #e9ecf1;
 }
 
-QFrame#framePos {
+QFrame#framePos_3 {
 	
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
@@ -4318,7 +4328,7 @@ QFrame#framePos {
 	background: #e9ecf1;
 }
 
-QFrame#frameXPos {
+QFrame#frameXPos_3 {
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
 }</string>
@@ -4552,7 +4562,8 @@ QPushButton:pressed {
 	background: #e9ecf1;
 }
 
-QFrame#framePosAndHome {
+QFrame#framePosAndHome_3
+ {
 	
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
@@ -4778,7 +4789,7 @@ QPushButton:pressed {
 	background: #e9ecf1;
 }
 
-QFrame#frameLin {
+QFrame#frameLin_2 {
 	background: #e9ecf1;
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
@@ -5043,7 +5054,7 @@ QToolButton:pressed {
 	background: #e9ecf1;
 }
 
-QFrame#framePos {
+QFrame#framePos_2 {
 	
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
@@ -5167,7 +5178,7 @@ QPushButton:pressed {
 	background: #e9ecf1;
 }
 
-QFrame#frameXPos {
+QFrame#frameXPos_2 {
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
 }</string>
@@ -5416,7 +5427,7 @@ QPushButton:pressed {
 	background: #e9ecf1;
 }
 
-QFrame#framePosAndHome {
+QFrame#framePosAndHome_2 {
 	
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
@@ -5702,7 +5713,7 @@ QPushButton:pressed {
 	background: #e9ecf1;
 }
 
-QFrame#frameLin {
+QFrame#frameLin_5 {
 	background: #e9ecf1;
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
@@ -5956,7 +5967,7 @@ QToolButton:pressed {
 	background: #e9ecf1;
 }
 
-QFrame#framePos {
+QFrame#framePos_4 {
 	
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
@@ -6040,7 +6051,7 @@ QFrame#framePos {
 	background: #e9ecf1;
 }
 
-QFrame#frameXPos {
+QFrame#frameXPos_4 {
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
 }</string>
@@ -6274,7 +6285,7 @@ QPushButton:pressed {
 	background: #e9ecf1;
 }
 
-QFrame#framePosAndHome {
+QFrame#framePosAndHome_4 {
 	
 	border-radius: 7px;
 	border: 1px solid #c1c6cc;
