@@ -356,7 +356,7 @@ QPushButton:checked {
           <string notr="true">background: #dde0e7;</string>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>5</number>
          </property>
          <widget class="QWidget" name="pageAutoMode">
           <layout class="QVBoxLayout" name="verticalLayout_30">
@@ -878,6 +878,18 @@ QToolButton:pressed {
                  </item>
                  <item>
                   <widget class="QFrame" name="frameXPos_6">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>252</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>252</height>
+                    </size>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">* {
 	background: #e9ecf1;
@@ -936,7 +948,38 @@ QFrame#frameXPos {
                      </widget>
                     </item>
                     <item>
+                     <widget class="Line" name="line_6">
+                      <property name="styleSheet">
+                       <string notr="true">Line {
+	border: 1px solid #ced3d7;
+}</string>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Orientation::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="verticalSpacer_4">
+                      <property name="orientation">
+                       <enum>Qt::Orientation::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
                      <widget class="QWidget" name="widget_38" native="true">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>125</height>
+                       </size>
+                      </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_29">
                        <property name="spacing">
                         <number>5</number>
@@ -955,6 +998,12 @@ QFrame#frameXPos {
                        </property>
                        <item>
                         <widget class="QWidget" name="widget_49" native="true">
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>125</height>
+                          </size>
+                         </property>
                          <layout class="QVBoxLayout" name="verticalLayout_48">
                           <property name="spacing">
                            <number>5</number>
@@ -1076,6 +1125,12 @@ QToolButton:pressed {
                        </item>
                        <item>
                         <widget class="QWidget" name="widget_40" native="true">
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>125</height>
+                          </size>
+                         </property>
                          <layout class="QVBoxLayout" name="verticalLayout_55">
                           <property name="spacing">
                            <number>5</number>
@@ -1707,6 +1762,18 @@ QToolButton:pressed {
                  </item>
                  <item>
                   <widget class="QFrame" name="frameXPos_5">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>252</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>252</height>
+                    </size>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">* {
 	background: #e9ecf1;
@@ -1808,7 +1875,7 @@ QFrame#frameXPos {
                          <property name="maximumSize">
                           <size>
                            <width>16777215</width>
-                           <height>40</height>
+                           <height>35</height>
                           </size>
                          </property>
                          <property name="font">
@@ -1857,6 +1924,12 @@ QFrame#frameXPos {
                        </property>
                        <item>
                         <widget class="QWidget" name="widget_50" native="true">
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>125</height>
+                          </size>
+                         </property>
                          <layout class="QVBoxLayout" name="verticalLayout_50">
                           <property name="spacing">
                            <number>5</number>
@@ -3030,6 +3103,11 @@ QToolButton:pressed {
                       <property name="focusPolicy">
                        <enum>Qt::FocusPolicy::ClickFocus</enum>
                       </property>
+                      <property name="styleSheet">
+                       <string notr="true">Line {
+	border: 1px solid #ced3d7;
+}</string>
+                      </property>
                       <property name="orientation">
                        <enum>Qt::Orientation::Horizontal</enum>
                       </property>
@@ -3315,6 +3393,11 @@ QFrame#frameXPos {
                       <property name="focusPolicy">
                        <enum>Qt::FocusPolicy::ClickFocus</enum>
                       </property>
+                      <property name="styleSheet">
+                       <string notr="true">Line {
+	border: 1px solid #ced3d7;
+}</string>
+                      </property>
                       <property name="orientation">
                        <enum>Qt::Orientation::Horizontal</enum>
                       </property>
@@ -3533,6 +3616,28 @@ QFrame#framePosAndHome {
                   <number>10</number>
                  </property>
                  <item>
+                  <widget class="QLabel" name="lblPosLinPre">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>10</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Текущая позиция предобжима: --- мм</string>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <widget class="QPushButton" name="btnSaveLinPos1">
                    <property name="minimumSize">
                     <size>
@@ -3553,7 +3658,30 @@ QPushButton:pressed {
 }</string>
                    </property>
                    <property name="text">
-                    <string>Сохранить позицию 1</string>
+                    <string>Сохранить позицию
+предобжима</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="lblPosLinPost">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>10</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>Текущая позиция постобжима: ---мм</string>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
@@ -3578,7 +3706,15 @@ QPushButton:pressed {
 }</string>
                    </property>
                    <property name="text">
-                    <string>Сохранить позицию 2</string>
+                    <string>Сохранить позицию
+постобжима</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="Line" name="line_18">
+                   <property name="orientation">
+                    <enum>Qt::Orientation::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
@@ -3608,7 +3744,8 @@ QPushButton:pressed {
 }</string>
                    </property>
                    <property name="text">
-                    <string>Переместиться к позиции 1</string>
+                    <string>Переместиться к позиции
+предобжима</string>
                    </property>
                   </widget>
                  </item>
@@ -3638,7 +3775,8 @@ QPushButton:pressed {
 }</string>
                    </property>
                    <property name="text">
-                    <string>Переместиться к позиции 2</string>
+                    <string>Переместиться к позиции
+постобжима</string>
                    </property>
                   </widget>
                  </item>

@@ -149,8 +149,6 @@ class MainWindow(QMainWindow):
         self.ui.lblFanSpeed.setText(f"{speed}%")
 
     def _on_manual_fan_slider_changed(self, value: int) -> None:
-        """Изменение ползунка Ручной скорости"""
-        # Срабатывает только если включена радиокнопка Ручного режима
         if hasattr(self.ui, 'getManualFan') and self.ui.getManualFan.isChecked():
             self.set_fan_speed(value)
 
@@ -194,6 +192,11 @@ class MainWindow(QMainWindow):
         positions = [
             ('lin_position', self.ui.lblLinPos, self.ui.lblLinPosMan, "{} мм"),
             ('pre_position', self.ui.lblPrePos, self.ui.lblPrePosMan, "{} мм"),
+        ]
+
+        savepos = [
+            ('lin_pos1', self.ui.lblPosLinPre, "Текущая позиция предобжима: {} мм"),
+            ('lin_pos2', self.ui.lblPosLinPost, "Текущая позиция постобжима: {} мм"),
         ]
         
         for key, slider, label, template in speeds:
@@ -463,10 +466,12 @@ class MainWindow(QMainWindow):
     
     def save_lin_position_1(self) -> None:
         pos = self._get_current_lin_position()
+        self.ui.lblPosLinPre.setText(f"Текущая позиция предобжима: {pos} мм")
         self.config.set("lin_pos1", pos)
     
     def save_lin_position_2(self) -> None:
         pos = self._get_current_lin_position()
+        self.ui.lblPosLinPost.setText(f"Текущая позиция постобжима: {pos} мм")
         self.config.set("lin_pos2", pos)
 
     def go_to_lin_position(self, pos_num: int) -> None:

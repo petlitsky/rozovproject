@@ -462,6 +462,8 @@ class Ui_MainWindow(object):
 
         self.frameXPos_6 = QFrame(self.widget_34)
         self.frameXPos_6.setObjectName(u"frameXPos_6")
+        self.frameXPos_6.setMinimumSize(QSize(0, 252))
+        self.frameXPos_6.setMaximumSize(QSize(16777215, 252))
         self.frameXPos_6.setStyleSheet(u"* {\n"
 "	background: #e9ecf1;\n"
 "}\n"
@@ -484,14 +486,30 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_53.addWidget(self.label_39)
 
+        self.line_6 = QFrame(self.frameXPos_6)
+        self.line_6.setObjectName(u"line_6")
+        self.line_6.setStyleSheet(u"Line {\n"
+"	border: 1px solid #ced3d7;\n"
+"}")
+        self.line_6.setFrameShape(QFrame.Shape.HLine)
+        self.line_6.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout_53.addWidget(self.line_6)
+
+        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_53.addItem(self.verticalSpacer_4)
+
         self.widget_38 = QWidget(self.frameXPos_6)
         self.widget_38.setObjectName(u"widget_38")
+        self.widget_38.setMaximumSize(QSize(16777215, 125))
         self.horizontalLayout_29 = QHBoxLayout(self.widget_38)
         self.horizontalLayout_29.setSpacing(5)
         self.horizontalLayout_29.setObjectName(u"horizontalLayout_29")
         self.horizontalLayout_29.setContentsMargins(0, 0, 0, 0)
         self.widget_49 = QWidget(self.widget_38)
         self.widget_49.setObjectName(u"widget_49")
+        self.widget_49.setMaximumSize(QSize(16777215, 125))
         self.verticalLayout_48 = QVBoxLayout(self.widget_49)
         self.verticalLayout_48.setSpacing(5)
         self.verticalLayout_48.setObjectName(u"verticalLayout_48")
@@ -549,6 +567,7 @@ class Ui_MainWindow(object):
 
         self.widget_40 = QWidget(self.widget_38)
         self.widget_40.setObjectName(u"widget_40")
+        self.widget_40.setMaximumSize(QSize(16777215, 125))
         self.verticalLayout_55 = QVBoxLayout(self.widget_40)
         self.verticalLayout_55.setSpacing(5)
         self.verticalLayout_55.setObjectName(u"verticalLayout_55")
@@ -841,6 +860,8 @@ class Ui_MainWindow(object):
 
         self.frameXPos_5 = QFrame(self.widget_35)
         self.frameXPos_5.setObjectName(u"frameXPos_5")
+        self.frameXPos_5.setMinimumSize(QSize(0, 252))
+        self.frameXPos_5.setMaximumSize(QSize(16777215, 252))
         self.frameXPos_5.setStyleSheet(u"* {\n"
 "	background: #e9ecf1;\n"
 "}\n"
@@ -879,7 +900,7 @@ class Ui_MainWindow(object):
 
         self.lblPostTorqMan = QLabel(self.widget_36)
         self.lblPostTorqMan.setObjectName(u"lblPostTorqMan")
-        self.lblPostTorqMan.setMaximumSize(QSize(16777215, 40))
+        self.lblPostTorqMan.setMaximumSize(QSize(16777215, 35))
         font8 = QFont()
         font8.setPointSize(20)
         font8.setBold(True)
@@ -908,6 +929,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_28.setContentsMargins(0, 0, 0, 0)
         self.widget_50 = QWidget(self.widget_37)
         self.widget_50.setObjectName(u"widget_50")
+        self.widget_50.setMaximumSize(QSize(16777215, 125))
         self.verticalLayout_50 = QVBoxLayout(self.widget_50)
         self.verticalLayout_50.setSpacing(5)
         self.verticalLayout_50.setObjectName(u"verticalLayout_50")
@@ -1441,6 +1463,9 @@ class Ui_MainWindow(object):
         self.line_9 = QFrame(self.frameLin)
         self.line_9.setObjectName(u"line_9")
         self.line_9.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
+        self.line_9.setStyleSheet(u"Line {\n"
+"	border: 1px solid #ced3d7;\n"
+"}")
         self.line_9.setFrameShape(QFrame.Shape.HLine)
         self.line_9.setFrameShadow(QFrame.Shadow.Sunken)
 
@@ -1581,6 +1606,9 @@ class Ui_MainWindow(object):
         self.line = QFrame(self.frameXPos)
         self.line.setObjectName(u"line")
         self.line.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
+        self.line.setStyleSheet(u"Line {\n"
+"	border: 1px solid #ced3d7;\n"
+"}")
         self.line.setFrameShape(QFrame.Shape.HLine)
         self.line.setFrameShadow(QFrame.Shadow.Sunken)
 
@@ -1701,6 +1729,14 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.setSpacing(5)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.verticalLayout_6.setContentsMargins(10, 10, 10, 10)
+        self.lblPosLinPre = QLabel(self.framePosAndHome)
+        self.lblPosLinPre.setObjectName(u"lblPosLinPre")
+        self.lblPosLinPre.setMaximumSize(QSize(16777215, 50))
+        self.lblPosLinPre.setFont(font5)
+        self.lblPosLinPre.setWordWrap(True)
+
+        self.verticalLayout_6.addWidget(self.lblPosLinPre)
+
         self.btnSaveLinPos1 = QPushButton(self.framePosAndHome)
         self.btnSaveLinPos1.setObjectName(u"btnSaveLinPos1")
         self.btnSaveLinPos1.setMinimumSize(QSize(0, 60))
@@ -1717,6 +1753,14 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_6.addWidget(self.btnSaveLinPos1)
 
+        self.lblPosLinPost = QLabel(self.framePosAndHome)
+        self.lblPosLinPost.setObjectName(u"lblPosLinPost")
+        self.lblPosLinPost.setMaximumSize(QSize(16777215, 50))
+        self.lblPosLinPost.setFont(font5)
+        self.lblPosLinPost.setWordWrap(True)
+
+        self.verticalLayout_6.addWidget(self.lblPosLinPost)
+
         self.btnSaveLinPos2 = QPushButton(self.framePosAndHome)
         self.btnSaveLinPos2.setObjectName(u"btnSaveLinPos2")
         self.btnSaveLinPos2.setMinimumSize(QSize(0, 60))
@@ -1732,6 +1776,13 @@ class Ui_MainWindow(object):
 "}")
 
         self.verticalLayout_6.addWidget(self.btnSaveLinPos2)
+
+        self.line_18 = QFrame(self.framePosAndHome)
+        self.line_18.setObjectName(u"line_18")
+        self.line_18.setFrameShape(QFrame.Shape.HLine)
+        self.line_18.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout_6.addWidget(self.line_18)
 
         self.btnGoLinPos1 = QPushButton(self.framePosAndHome)
         self.btnGoLinPos1.setObjectName(u"btnGoLinPos1")
@@ -2985,7 +3036,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(5)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -3071,10 +3122,16 @@ class Ui_MainWindow(object):
         self.btnForwardLin1mm.setText(QCoreApplication.translate("MainWindow", u"+1 \u043c\u043c", None))
         self.btnForwardLin5mm.setText(QCoreApplication.translate("MainWindow", u"+5 \u043c\u043c", None))
         self.lblLinSpeed.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u044f: --%", None))
-        self.btnSaveLinPos1.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0438\u044e 1", None))
-        self.btnSaveLinPos2.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0438\u044e 2", None))
-        self.btnGoLinPos1.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0435\u043c\u0435\u0441\u0442\u0438\u0442\u044c\u0441\u044f \u043a \u043f\u043e\u0437\u0438\u0446\u0438\u0438 1", None))
-        self.btnGoLinPos2.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0435\u043c\u0435\u0441\u0442\u0438\u0442\u044c\u0441\u044f \u043a \u043f\u043e\u0437\u0438\u0446\u0438\u0438 2", None))
+        self.lblPosLinPre.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043a\u0443\u0449\u0430\u044f \u043f\u043e\u0437\u0438\u0446\u0438\u044f \u043f\u0440\u0435\u0434\u043e\u0431\u0436\u0438\u043c\u0430: --- \u043c\u043c", None))
+        self.btnSaveLinPos1.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0438\u044e\n"
+"\u043f\u0440\u0435\u0434\u043e\u0431\u0436\u0438\u043c\u0430", None))
+        self.lblPosLinPost.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043a\u0443\u0449\u0430\u044f \u043f\u043e\u0437\u0438\u0446\u0438\u044f \u043f\u043e\u0441\u0442\u043e\u0431\u0436\u0438\u043c\u0430: ---\u043c\u043c", None))
+        self.btnSaveLinPos2.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043f\u043e\u0437\u0438\u0446\u0438\u044e\n"
+"\u043f\u043e\u0441\u0442\u043e\u0431\u0436\u0438\u043c\u0430", None))
+        self.btnGoLinPos1.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0435\u043c\u0435\u0441\u0442\u0438\u0442\u044c\u0441\u044f \u043a \u043f\u043e\u0437\u0438\u0446\u0438\u0438\n"
+"\u043f\u0440\u0435\u0434\u043e\u0431\u0436\u0438\u043c\u0430", None))
+        self.btnGoLinPos2.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0435\u043c\u0435\u0441\u0442\u0438\u0442\u044c\u0441\u044f \u043a \u043f\u043e\u0437\u0438\u0446\u0438\u0438\n"
+"\u043f\u043e\u0441\u0442\u043e\u0431\u0436\u0438\u043c\u0430", None))
         self.label_20.setText(QCoreApplication.translate("MainWindow", u"\u041c\u043e\u0434\u0443\u043b\u044c \u0444\u0438\u043a\u0441\u0430\u0446\u0438\u0438", None))
         self.btnFixForward.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0430\u0442\u044c", None))
         self.btnFixBack.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0430\u0442\u044c", None))

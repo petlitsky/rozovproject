@@ -143,16 +143,16 @@ class PasswordDialog(BaseDialog):
 class HomingDialog(BaseDialog):
     """Диалог поиска дома"""
     
-    def __init__(self, parent=None, text="Идет поиск дома..."):
+    def __init__(self, parent=None, text="Идет поиск дома...", title="Хоуминг"):
         super().__init__(parent, width=300, height=120)
         
-        self.setWindowTitle("Хоуминг")
+        self.setWindowTitle(title)
         
         layout = QVBoxLayout(self)
         layout.setSpacing(10)
         layout.setContentsMargins(20, 20, 20, 20)
         
-        title = QLabel("Хоуминг")
+        title = QLabel(title)
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         title.setStyleSheet("font-weight: bold; font-size: 14px;")
         layout.addWidget(title)
