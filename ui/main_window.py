@@ -36,6 +36,9 @@ class MainWindow(QMainWindow):
         self.animation: Optional[QPropertyAnimation] = None
         self.disconnect_shown = False
         self._is_closing = False
+        
+        # Время старта программы
+        self.start_time = datetime.now()
                 
         self._setup_ui()
         self._setup_connections()
@@ -117,6 +120,11 @@ class MainWindow(QMainWindow):
         self.text_update_timer.timeout.connect(self._update_text_slow)
         self.text_update_timer.start(1000)  # 1 Гц
         
+        # Таймер для обновления времени работы
+        self.time_timer = QTimer()
+        self.time_timer.timeout.connect(self._update_time)
+        self.time_timer.start(1000)  # 1 Гц
+        
         # Данные для графиков
         self.torque_data = []
         self.force_data = []
@@ -176,6 +184,18 @@ class MainWindow(QMainWindow):
     def _update_datetime(self) -> None:
         now = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
         self.ui.lblDate.setText(now)
+    
+    def _update_time(self) -> None:
+        """Обновление времени работы программы в lblTimeStart"""
+        elapsed = datetime.now() - self.start_time
+        total_seconds = int(elapsed.total_seconds())
+        
+        hours = total_seconds // 3600
+        minutes = (total_seconds % 3600) // 60
+        seconds = total_seconds % 60
+        
+        time_str = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+        self.ui.lblTimeStart.setText(time_str)
     
     def _update_force_labels(self, value: float):
         if self.is_moving_to_force:
@@ -660,137 +680,3 @@ class MainWindow(QMainWindow):
     def pre_move_steps(self, mm: float) -> None:
         steps = int(mm * 200)
         self.arduino.send_command(f"PRE_MOVE:{steps}")
-    
-    def pre_down_exact(self) -> None:
-        mm = self.ui.exPrePos.value()
-        if mm > 0:
-            steps = int(mm * 200)
-            self.arduino.send_command(f"PRE_MOVE:{steps}")
-        
-    def pre_up_exact(self) -> None:
-        mm = self.ui.exPrePos.value()
-        if mm > 0:
-            steps = int(mm * 200)
-            self.arduino.send_command(f"PRE_MOVE:{-steps}")
-        
-    def post_forward_start(self) -> None:
-        self.arduino.send_command("POST_FORWARD_START")
-    
-    def post_back_start(self) -> None:
-        self.arduino.send_command("POST_BACK_START")
-    
-    def post_stop(self) -> None:
-        self.arduino.send_command("POST_STOP")
-    
-    def post_home(self) -> None:
-        self.show_homing_dialog("Поиск дома постобжима...")
-        self.arduino.send_command("POST_HOME_START")
-
-    def post_move_degrees(self, degrees: float) -> None:
-        STEPS_PER_DEGREE = 10.666
-        steps = int(degrees * STEPS_PER_DEGREE)
-        
-        if steps != 0:
-            self.arduino.send_command(f"POST_MOVE:{-steps}")
-        else:
-            return
-    
-    # ===== Методы для графиков =====
-    
-    def _on_sensor_changed(self, index: int):
-        """Обработка изменения выбора датчика в comboBox"""
-        self.current_graph_mode = index
-        
-        # Очищаем lblSensData при переключении
-        self.ui.lblSensData.setText("")
-        
-        # Показываем только выбранную линию (0-Момент, 1-Усилие, 2-Ток, 3-Температура)
-        names = list(self.graph_widget.lines_data.keys())
-        for i, name in enumerate(names):
-            if i == index:
-                self.graph_widget.lines_data[name]['line'].setVisible(True)
-            else:
-                self.graph_widget.lines_data[name]['line'].setVisible(False)
-        
-        # Убираем легенду при одиночном режиме
-        if self.graph_widget.plot_widget.legend:
-            self.graph_widget.plot_widget.removeItem(self.graph_widget.plot_widget.legend)
-        
-        # Обновляем статистику и текст
-        self._update_text_slow()
-    
-    def _update_graphs(self):
-        """Обновление данных на графике (5 Гц)"""
-        # Добавляем данные тока (имитация)
-        current_val = 0.5 + random.uniform(-0.02, 0.02)
-        self.graph_widget.add_data_point("Ток", current_val)
-    
-    def _update_view(self):
-        """Обновление вида графика (скролл) - отдельно, чтобы не мешать"""
-        self.graph_widget.update_view()
-    
-    def _update_text_slow(self):
-        """Медленное обновление текста (1 Гц)"""
-        mode = self.current_graph_mode
-        
-        if mode == 0:  # Момент
-            self._update_sensor_info_torque()
-        elif mode == 1:  # Усилие
-            self._update_sensor_info_force()
-        elif mode == 2:  # Ток
-            self.ui.lblSensData.setText("Ток: 0.50 А (постоянный)")
-        elif mode == 3:  # Температура
-            self._update_sensor_info_temp()
-    
-    def _update_sensor_info_torque(self):
-        """Обновление информации о моменте"""
-        if self.torque_count > 0:
-            info = (
-                f"Макс: {self.torque_max:.3f} Н·м | "
-                f"Мин: {self.torque_min:.3f} Н·м | "
-                f"Сред: {self.torque_avg:.3f} Н·м | "
-                f"Текущий: {self.torque_data[-1] if self.torque_data else 0:.3f} Н·м"
-            )
-        else:
-            info = "Нет данных по моменту"
-        self.ui.lblSensData.setText(info)
-    
-    def _update_sensor_info_force(self):
-        """Обновление информации об усилии"""
-        if self.force_count > 0:
-            info = (
-                f"Макс: {self.force_max:.1f} Н | "
-                f"Мин: {self.force_min:.1f} Н | "
-                f"Сред: {self.force_avg:.1f} Н | "
-                f"Текущий: {self.force_data[-1] if self.force_data else 0:.1f} Н"
-            )
-        else:
-            info = "Нет данных по усилию"
-        self.ui.lblSensData.setText(info)
-    
-    def _update_sensor_info_temp(self):
-        """Обновление информации о температуре"""
-        if self.temp_data:
-            info = f"Температура: {self.temp_data[-1]:.1f}°C"
-        else:
-            info = "Нет данных по температуре"
-        self.ui.lblSensData.setText(info)
-        
-    def closeEvent(self, event) -> None:
-        self._is_closing = True
-        
-        dialog = PasswordDialog(self)
-        if dialog.exec() == PasswordDialog.Accepted:
-            self.graph_update_timer.stop()
-            self.view_update_timer.stop()
-            self.text_update_timer.stop()
-            self.fan.cleanup()
-            self.force_sensor.stop()
-            self.torque_worker.stop()
-            self._close_homing_dialog()
-            self.arduino.send_command("EMERGENCY_STOP")
-            self.arduino.disconnect()
-            event.accept()
-        else:
-            self._is_closing = False
-            event.ignore()

@@ -44,9 +44,6 @@ class GraphWidget(QWidget):
         
         layout.addWidget(self.plot_widget)
         
-        # Легенда
-        self.legend = self.plot_widget.addLegend()
-        
     def _on_range_changed(self, plot, ranges):
         """Обработка изменения диапазона (пользователь переместил график)"""
         # Если пользователь переместил вручную - отключаем автоскролл
@@ -57,7 +54,7 @@ class GraphWidget(QWidget):
         """Добавление новой линии на график"""
         if name not in self.lines_data:
             pen = pg.mkPen(color=color, width=2)
-            line = self.plot_widget.plot([], [], pen=pen, name=name)
+            line = self.plot_widget.plot([], [], pen=pen)
             self.lines_data[name] = {
                 'x': [],
                 'y': [],
@@ -138,12 +135,6 @@ class GraphWidget(QWidget):
             data['y'].clear()
             data['line'].setData([], [])
     
-    def show_all_lines(self):
-        """Показать все линии"""
-        for name in self.lines_data.keys():
-            self.lines_data[name]['line'].setVisible(True)
-        self.legend = self.plot_widget.addLegend()
-    
     def show_line_only(self, index):
         """Показать только одну линию"""
         names = list(self.lines_data.keys())
@@ -152,7 +143,3 @@ class GraphWidget(QWidget):
                 self.lines_data[name]['line'].setVisible(True)
             else:
                 self.lines_data[name]['line'].setVisible(False)
-        # Убираем легенду
-        if self.legend:
-            self.plot_widget.removeItem(self.legend)
-            self.legend = None
