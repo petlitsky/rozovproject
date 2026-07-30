@@ -16,6 +16,10 @@ DEFAULT_CONFIG = {
     "lin_pos1": 0,
     "lin_pos2": 0,
     "target_pre_force": 0.0,
+    "torque_max": 0.0,
+    "torque_min": 0.0,
+    "force_max": 0.0,
+    "force_min": 0.0,
 }
 
 

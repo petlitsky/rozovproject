@@ -11,6 +11,7 @@ class ArduinoController(QObject):
     limit_reached = Signal(str, str)
     disconnected = Signal()
     speed_updated = Signal(str, int)
+    current_updated = Signal(float)  # Сигнал для тока
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -98,6 +99,7 @@ class ArduinoController(QObject):
             self.disconnect()
  
     def _process_data(self, data: str) -> None:
+        # 1. Обработка команд без параметров
         if data in self._handlers:
             self._handlers[data]()
             return
@@ -107,6 +109,7 @@ class ArduinoController(QObject):
             parts = data.split(":", 1)
             key, val = parts[0], parts[1]
 
+            # Позиции
             if key in ("LIN_POS", "PRE_POS"):
                 axis = key.split("_")[0]
                 try:
@@ -115,10 +118,17 @@ class ArduinoController(QObject):
                     pass
                 return
 
-            # Че за хуйня
-            # Обработка скоростей (примеры: LIN_SPEED_CURRENT:50 или FIX_SPEED_SET:30)
+            # Ток
+            if key == "CURRENT":
+                try:
+                    self.current_updated.emit(float(val))
+                except ValueError:
+                    pass
+                return
+
+            # Скорости
             if "_SPEED_CURRENT" in key or "_SPEED_SET" in key:
-                axis = key.split("_")[0]  # Извлекаем имя оси: LIN, FIX, PRE или POST
+                axis = key.split("_")[0]
                 try:
                     self.speed_updated.emit(axis, int(val))
                 except ValueError:

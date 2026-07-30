@@ -142,6 +142,8 @@ class MainWindow(QMainWindow):
         self.force_avg = 0.0
         self.force_count = 0
         
+        self.current_value = 0.0  # Текущее значение тока
+        
         # Текущий режим отображения
         self.current_graph_mode = self.ui.comboBoxSensor.currentIndex()
         
@@ -170,6 +172,7 @@ class MainWindow(QMainWindow):
         self.arduino.home_found.connect(self._on_home_found)
         self.arduino.limit_reached.connect(self._on_limit_reached)
         self.arduino.disconnected.connect(self._handle_disconnect)
+        self.arduino.current_updated.connect(self._update_current)  # Подключаем сигнал тока
         
         self.bme280.temperature_updated.connect(self._update_temperature)
         
@@ -199,6 +202,21 @@ class MainWindow(QMainWindow):
             word = "секунд"
         
         self.ui.lblTimeStart.setText(f"{total_seconds} {word}")
+    
+    def _update_current(self, value: float):
+        """Обновление тока с ACS712"""
+        self.current_value = value
+        # Сохраняем данные для графика
+        self.current_data.append(value)
+        if len(self.current_data) > 300:
+            self.current_data.pop(0)
+        
+        # Добавляем данные в график (всегда)
+        self.graph_widget.add_data_point("Ток", value)
+        
+        # Если выбран режим тока - обновляем текст
+        if self.current_graph_mode == 2:
+            self.ui.lblSensData.setText(f"Ток: {value:.2f} А")
     
     def _update_force_labels(self, value: float):
         if self.is_moving_to_force:
@@ -740,9 +758,12 @@ class MainWindow(QMainWindow):
     
     def _update_graphs(self):
         """Обновление данных на графике (5 Гц)"""
-        # Добавляем данные тока (имитация)
-        current_val = 0.5 + random.uniform(-0.02, 0.02)
-        self.graph_widget.add_data_point("Ток", current_val)
+        # Ток теперь приходит с Arduino через сигнал current_updated
+        # Ничего не делаем здесь, только обновляем вид
+        
+        # Для обновления вида графика - вызываем update_view отдельно
+        # Это делается в _update_view по таймеру
+        pass
     
     def _update_view(self):
         """Обновление вида графика (скролл) - отдельно, чтобы не мешать"""
@@ -757,7 +778,11 @@ class MainWindow(QMainWindow):
         elif mode == 1:  # Усилие
             self._update_sensor_info_force()
         elif mode == 2:  # Ток
-            self.ui.lblSensData.setText("Ток: 0.50 А (постоянный)")
+            if self.current_data:
+                current_val = self.current_data[-1]
+                self.ui.lblSensData.setText(f"Ток: {current_val:.2f} А")
+            else:
+                self.ui.lblSensData.setText("Ток: 0.00 А")
         elif mode == 3:  # Температура
             self._update_sensor_info_temp()
     
@@ -796,8 +821,7 @@ class MainWindow(QMainWindow):
         self.ui.lblSensData.setText(info)
         
     def closeEvent(self, event) -> None:
-        self._is_closing = True
-        
+        self._is_closing = True        
         dialog = PasswordDialog(self)
         if dialog.exec() == PasswordDialog.Accepted:
             self.graph_update_timer.stop()
