@@ -5352,7 +5352,7 @@ QFrame#framePosAndHome {
                   <number>10</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="label_5">
+                  <widget class="QLabel" name="lblSaveForcePre">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
