@@ -11,7 +11,7 @@ class GraphWidget(QWidget):
     def __init__(self, parent=None, max_points=200):
         super().__init__(parent)
         self.max_points = max_points
-        self.x_data = []  # Сделали обычными списками для доступа
+        self.x_data = []
         self.y_data = []
         self.time_counter = 0
         
@@ -60,7 +60,7 @@ class GraphWidget(QWidget):
         
     def add_data_point(self, value):
         """Добавление новой точки данных"""
-        self.time_counter += 0.1  # Шаг 0.1 секунды
+        self.time_counter += 0.1
         self.x_data.append(self.time_counter)
         self.y_data.append(value)
         

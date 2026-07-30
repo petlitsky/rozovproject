@@ -3,11 +3,12 @@ from datetime import datetime
 from typing import Optional
 import subprocess
 import random
-from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout
 from PySide6.QtCore import Qt, QTimer, QPropertyAnimation, QEasingCurve, QSize
 from main_ui import Ui_MainWindow
 from ui.dialogs import PasswordDialog, HomingDialog, ErrorDialog, show_error
 from ui.graph_widget import GraphWidget
+from ui.multi_graph_widget import MultiGraphWidget
 from controllers.arduino_controller import ArduinoController
 from controllers.manual_controls import ManualControls
 from models.config import Config
@@ -86,18 +87,27 @@ class MainWindow(QMainWindow):
     
     def _setup_graphs(self):
         """Инициализация графиков"""
-        # Создаем виджет графика и вставляем в frameGraph
-        self.graph_widget = GraphWidget(self, max_points=200)
+        # Создаем контейнер для графика
         layout = self.ui.frameGraph.layout()
         if layout is None:
-            from PySide6.QtWidgets import QVBoxLayout
             layout = QVBoxLayout(self.ui.frameGraph)
             layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(self.graph_widget)
         
-        # Отключаем возможность перемещения по графику
+        # Обычный график (для одиночных датчиков)
+        self.graph_widget = GraphWidget(self, max_points=200)
         self.graph_widget.plot_widget.setMouseEnabled(x=False, y=False)
         self.graph_widget.plot_widget.setMenuEnabled(False)
+        
+        # Мультиграфик (для режима "все")
+        self.multi_graph_widget = MultiGraphWidget(self, max_points=200)
+        
+        # По умолчанию показываем обычный график
+        layout.addWidget(self.graph_widget)
+        self.multi_graph_widget.setVisible(False)
+        layout.addWidget(self.multi_graph_widget)
+        
+        self.graph_widget.show()
+        self.multi_graph_widget.hide()
         
         # Таймер для обновления графиков
         self.graph_timer = QTimer()
@@ -109,7 +119,6 @@ class MainWindow(QMainWindow):
         self.force_data = []
         self.current_data = []
         self.temp_data = []
-        self.time_data = []
         
         # Флаги для сбора статистики
         self.torque_max = self.config.get("torque_max", 0.0)
@@ -256,7 +265,6 @@ class MainWindow(QMainWindow):
             self.set_fan_speed(value)
 
     def _process_auto_fan(self) -> None:
-        """Вычисление скорости вентилятора по ТВОЕМУ датчику BME280"""
         if not (hasattr(self.ui, 'getAutoFan') and self.ui.getAutoFan.isChecked()):
             return
 
@@ -701,18 +709,23 @@ class MainWindow(QMainWindow):
         """Обработка изменения выбора датчика в comboBox"""
         self.current_graph_mode = index
         
-        # Очищаем график
-        self.graph_widget.clear()
-        
         # Очищаем lblSensData
         self.ui.lblSensData.setText("")
+        
+        # Показываем/скрываем нужный виджет
+        if index == 4:  # Все датчики
+            self.graph_widget.hide()
+            self.multi_graph_widget.show()
+            self.multi_graph_widget.clear()
+        else:
+            self.multi_graph_widget.hide()
+            self.graph_widget.show()
+            self.graph_widget.clear()
         
         # В зависимости от выбранного датчика
         if index == 0:  # Момент
             self._update_sensor_info_torque()
-            # Загружаем последние данные момента
             if self.torque_data:
-                # Показываем последние 50 точек для быстрого старта
                 start_idx = max(0, len(self.torque_data) - 50)
                 for val in self.torque_data[start_idx:]:
                     self.graph_widget.add_data_point(val)
@@ -724,31 +737,38 @@ class MainWindow(QMainWindow):
                 for val in self.force_data[start_idx:]:
                     self.graph_widget.add_data_point(val)
                     
-        elif index == 2:  # Ток - прямая линия
+        elif index == 2:  # Ток
             self.ui.lblSensData.setText("")  # Очищаем текст
             self.graph_widget.clear()
             # Генерируем данные тока с небольшим шумом
             for i in range(20):
                 val = 0.5 + random.uniform(-0.02, 0.02)
                 self.graph_widget.add_data_point(val)
-                self.current_data.append(val)
                 
         elif index == 3:  # Температура
             if self.temp_data:
                 start_idx = max(0, len(self.temp_data) - 50)
                 for val in self.temp_data[start_idx:]:
                     self.graph_widget.add_data_point(val)
-                # Обновляем информацию о температуре
                 if self.temp_data:
                     self._update_sensor_info_temp(self.temp_data[-1])
                     
         elif index == 4:  # Все датчики
-            self.ui.lblSensData.setText("")  # Очищаем текст
-            # Показываем момент (основной график)
-            if self.torque_data:
-                start_idx = max(0, len(self.torque_data) - 50)
-                for val in self.torque_data[start_idx:]:
-                    self.graph_widget.add_data_point(val)
+            self.ui.lblSensData.setText("")
+            # Показываем все 4 графика с последними данными
+            # Загружаем последние данные для каждого датчика
+            torque_vals = list(self.torque_data[-50:]) if self.torque_data else [0] * 50
+            force_vals = list(self.force_data[-50:]) if self.force_data else [0] * 50
+            current_vals = [0.5 + random.uniform(-0.02, 0.02) for _ in range(50)]
+            temp_vals = list(self.temp_data[-50:]) if self.temp_data else [25] * 50
+            
+            # Добавляем точки в мультиграфик
+            for i in range(len(torque_vals)):
+                t = torque_vals[i] if i < len(torque_vals) else 0
+                f = force_vals[i] if i < len(force_vals) else 0
+                c = current_vals[i] if i < len(current_vals) else 0.5
+                temp = temp_vals[i] if i < len(temp_vals) else 25
+                self.multi_graph_widget.add_data_point(t, f, c, temp)
     
     def _update_sensor_info_torque(self):
         """Обновление информации о моменте"""
@@ -788,19 +808,18 @@ class MainWindow(QMainWindow):
     
     def _update_graphs(self):
         """Обновление графиков в реальном времени"""
-        # Для режима "все" - показываем момент
-        if self.current_graph_mode == 4:
-            # Только если есть данные и они не отображаются
-            if self.torque_data and len(self.torque_data) > 0:
-                # Проверяем, не добавили ли мы уже последнюю точку
-                if len(self.torque_data) > 1:
-                    # Добавляем только новые точки
-                    last_added = self.graph_widget.data[-1] if self.graph_widget.data else None
-                    if last_added is None or self.torque_data[-1] != last_added:
-                        self.graph_widget.add_data_point(self.torque_data[-1])
+        if self.current_graph_mode == 4:  # Все датчики
+            # Добавляем новые точки в мультиграфик
+            torque = self.torque_data[-1] if self.torque_data else 0
+            force = self.force_data[-1] if self.force_data else 0
+            # Ток с небольшим шумом
+            current = 0.5 + random.uniform(-0.02, 0.02)
+            temp = self.temp_data[-1] if self.temp_data else 25
+            
+            self.multi_graph_widget.add_data_point(torque, force, current, temp)
         
-        # Смещаем окно времени (показываем последние 10 секунд)
-        if len(self.graph_widget.x_data) > 0:
+        # Смещаем окно времени для обычного графика
+        if self.current_graph_mode != 4 and len(self.graph_widget.x_data) > 0:
             max_time = self.graph_widget.x_data[-1]
             min_time = max(0, max_time - 10)
             self.graph_widget.plot_widget.setXRange(min_time, max_time)
