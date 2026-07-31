@@ -1350,6 +1350,7 @@ class Ui_MainWindow(object):
         self.spinCurrentThreshold = QDoubleSpinBox(self.groupBox_5)
         self.spinCurrentThreshold.setObjectName(u"spinCurrentThreshold")
         self.spinCurrentThreshold.setMinimumSize(QSize(110, 40))
+        self.spinCurrentThreshold.setFont(font9)
         self.spinCurrentThreshold.setMaximum(5.000000000000000)
         self.spinCurrentThreshold.setValue(0.100000000000000)
 
@@ -1357,6 +1358,10 @@ class Ui_MainWindow(object):
 
 
         self.verticalLayout_41.addWidget(self.groupBox_5)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_41.addItem(self.verticalSpacer_2)
 
 
         self.horizontalLayout_25.addWidget(self.widget_53)
