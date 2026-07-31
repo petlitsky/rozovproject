@@ -1,6 +1,7 @@
 import time
 from PySide6.QtCore import QThread, Signal
 import gpiod
+import numpy as np
 
 class TorqueSensorWorker(QThread):
     torque_updated = Signal(float)
