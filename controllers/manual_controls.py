@@ -120,7 +120,7 @@ class ManualControls(QObject):
         self.ui.btnPostForw.clicked.connect(self.main.post_forward_moment_start)
         self.ui.btnPostForwMan.clicked.connect(self.main.post_forward_moment_start)
         self.ui.btnPostHome.clicked.connect(self.main.post_back_moment_start)
-        self.ui.btnPostHome.clicked.connect(self.main.post_back_moment_start)
+        self.ui.btnPostHomeMan.clicked.connect(self.main.post_back_moment_start)
     
     def _connect_speed_sliders(self) -> None:
         self.ui.linSpeed.valueChanged.connect(self._on_lin_speed_changed)
