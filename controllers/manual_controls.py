@@ -94,7 +94,7 @@ class ManualControls(QObject):
     
     def _connect_post_crimp_buttons(self) -> None:
         # ЗАЖАТИЕ до сохраненного момента (btnPostForw, btnPostForwMan)
-        self.ui.btnPostForward.clicked.connect(self.main.post_forward_start)
+        self.ui.btnPostForward.clicked.connect(self.main.post_forward_start) 
         self.ui.btnPostForwardMan.clicked.connect(self.main.post_forward_start)
         self.ui.btnPostForw.clicked.connect(self.main.post_forward_moment_start)
         self.ui.btnPostForwMan.clicked.connect(self.main.post_forward_moment_start)
