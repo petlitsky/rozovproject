@@ -6589,6 +6589,12 @@ QFrame#framePosAndHome_3
                      <pointsize>10</pointsize>
                     </font>
                    </property>
+                   <property name="minimum">
+                    <double>-100.000000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>100.000000000000000</double>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -6663,6 +6669,12 @@ QPushButton:pressed {
                     <font>
                      <pointsize>10</pointsize>
                     </font>
+                   </property>
+                   <property name="minimum">
+                    <double>-100.000000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>100.000000000000000</double>
                    </property>
                   </widget>
                  </item>
