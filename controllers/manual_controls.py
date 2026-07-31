@@ -96,16 +96,18 @@ class ManualControls(QObject):
         # ЗАЖАТИЕ до сохраненного момента (btnPostForw, btnPostForwMan)
         self.ui.btnPostForward.clicked.connect(self.main.post_forward_start)
         self.ui.btnPostForwardMan.clicked.connect(self.main.post_forward_start)
+        self.ui.btnPostForw.clicked.connect(self.main.post_forward_moment_start)
+        self.ui.btnPostForwMan.clicked.connect(self.main.post_forward_moment_start)
         
-        # РАЗЖАТИЕ до сохраненного момента (btnPostBack, btnPostBackMan) - это и есть HOME!
+        # РАЗЖАТИЕ до сохраненного момента (btnPostBack, btnPostBackMan)
         self.ui.btnPostBack.clicked.connect(self.main.post_back_start)
         self.ui.btnPostBackMan.clicked.connect(self.main.post_back_start)
         
-        # Кнопки хоуминга (поиск физического дома) - если нужны отдельно
-        self.ui.btnPostHome.clicked.connect(self.main.post_home)
-        self.ui.btnPostHomeMan.clicked.connect(self.main.post_home)
+        # Хоуминг (поиск физического дома)
+        self.ui.btnPostHome.clicked.connect(self.main.post_back_moment_start)
+        self.ui.btnPostHomeMan.clicked.connect(self.main.post_back_moment_start)
                 
-        # Кнопки перемещения на градусы
+        # Перемещение на градусы
         self.ui.btnBackPost1grad.clicked.connect(lambda: self.main.post_move_degrees(-1))
         self.ui.btnForwardPost1grad.clicked.connect(lambda: self.main.post_move_degrees(1))
         self.ui.btnBackPost5grad.clicked.connect(lambda: self.main.post_move_degrees(-5))

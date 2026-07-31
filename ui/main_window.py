@@ -38,12 +38,6 @@ class MainWindow(QMainWindow):
         
         # Время старта программы
         self.start_time = datetime.now()
-        
-        # Для контроля момента постобжима
-        self._post_moving_forward = False
-        self._post_moving_back = False
-        self._post_target_moment = 0.0
-        self._post_moment_timer: Optional[QTimer] = None
                 
         self._setup_ui()
         self._setup_connections()
@@ -98,7 +92,6 @@ class MainWindow(QMainWindow):
         self.ui.fanOff.setChecked(False)
         self.ui.fanSpeed.setEnabled(False)
 
-        # Загрузка настроек температуры
         temp_min = self.config.get("temp_min", 40.0)
         temp_max = self.config.get("temp_max", 70.0)
         start_speed = self.config.get("start_speed", 30)
@@ -114,8 +107,7 @@ class MainWindow(QMainWindow):
         
         # Кнопка сброса статистики
         self.ui.btnResetStats.clicked.connect(self._reset_stats)
-        
-        # Загрузка настроек постобжима
+
         post_forward_moment = self.config.get("post_forward_moment", 0.0)
         post_back_moment = self.config.get("post_back_moment", 0.0)
         
@@ -125,7 +117,7 @@ class MainWindow(QMainWindow):
         self.ui.lblPostForw.setText(f"Текущее значение момента зажатия: {post_forward_moment:.2f} Н·м")
         self.ui.lblPostBack.setText(f"Текущее значение момента разжатия: {post_back_moment:.2f} Н·м")
 
-        # Подключение кнопок сохранения постобжима
+        # Подключение кнопок сохранения
         self.ui.btnSavePostForw.clicked.connect(self._save_post_forward_moment)
         self.ui.btnSavePostBack.clicked.connect(self._save_post_back_moment)
     
@@ -327,6 +319,20 @@ class MainWindow(QMainWindow):
             # В режиме Auto обновляем слайдер для отображения
             self.ui.fanSpeed.setValue(speed)
     
+    def _save_post_forward_moment(self):
+        """Сохранение момента зажатия"""
+        value = self.ui.inPostForw.value()
+        self.config.set("post_forward_moment", value)
+        self.ui.lblPostForw.setText(f"Текущее значение момента зажатия: {value:.2f} Н·м")
+        print(f"[Post] Сохранен момент зажатия: {value:.2f} Н·м")
+
+    def _save_post_back_moment(self):
+        """Сохранение момента разжатия"""
+        value = self.ui.inPostBack.value()
+        self.config.set("post_back_moment", value)
+        self.ui.lblPostBack.setText(f"Текущее значение момента разжатия: {value:.2f} Н·м")
+        print(f"[Post] Сохранен момент разжатия: {value:.2f} Н·м")
+
     # ===== Датчики =====
     
     def _update_current(self, value: float):
@@ -414,31 +420,6 @@ class MainWindow(QMainWindow):
         
         # Добавляем данные в график
         self.graph_widget.add_data_point("Момент", value)
-        
-        # Проверяем момент для постобжима
-        self._check_post_moment(value)
-    
-    def _check_post_moment(self, current_moment: float):
-        """Проверка момента при движении постобжима"""
-        # Проверка зажатия
-        if hasattr(self, '_post_moving_forward') and self._post_moving_forward:
-            if current_moment >= self._post_target_moment:
-                self.arduino.send_command("POST_STOP")
-                self._post_moving_forward = False
-                if self._post_moment_timer:
-                    self._post_moment_timer.stop()
-                    self._post_moment_timer = None
-                print(f"[Post] Достигнут момент зажатия: {current_moment:.2f} Н·м")
-        
-        # Проверка разжатия
-        if hasattr(self, '_post_moving_back') and self._post_moving_back:
-            if current_moment <= self._post_target_moment:
-                self.arduino.send_command("POST_STOP")
-                self._post_moving_back = False
-                if self._post_moment_timer:
-                    self._post_moment_timer.stop()
-                    self._post_moment_timer = None
-                print(f"[Post] Достигнут момент разжатия: {current_moment:.2f} Н·м")
     
     def _update_temperature(self, temp: float) -> None:
         self.ui.lblTemp.setText(f"Температура: {temp:.1f}°C")
@@ -485,22 +466,6 @@ class MainWindow(QMainWindow):
         
         # Обновляем отображение
         self._update_text_slow()
-    
-    # ===== Постобжим =====
-    
-    def _save_post_forward_moment(self):
-        """Сохранение момента зажатия"""
-        value = self.ui.inPostForw.value()
-        self.config.set("post_forward_moment", value)
-        self.ui.lblPostForw.setText(f"Текущее значение момента зажатия: {value:.2f} Н·м")
-        print(f"[Post] Сохранен момент зажатия: {value:.2f} Н·м")
-    
-    def _save_post_back_moment(self):
-        """Сохранение момента разжатия"""
-        value = self.ui.inPostBack.value()
-        self.config.set("post_back_moment", value)
-        self.ui.lblPostBack.setText(f"Текущее значение момента разжатия: {value:.2f} Н·м")
-        print(f"[Post] Сохранен момент разжатия: {value:.2f} Н·м")
     
     # ===== Остальные методы =====
     
@@ -895,6 +860,15 @@ class MainWindow(QMainWindow):
             self.arduino.send_command(f"PRE_MOVE:{-steps}")
         
     def post_forward_start(self) -> None:
+        self.arduino.send_command("POST_FORWARD_START")
+    
+    def post_back_start(self) -> None:
+        self.arduino.send_command("POST_BACK_START")
+    
+    def post_stop(self) -> None:
+        self.arduino.send_command("POST_STOP")
+    
+    def post_forward_moment_start(self) -> None:
         """Зажатие до сохраненного момента"""
         target_moment = self.config.get("post_forward_moment", 0.0)
         if target_moment <= 0:
@@ -912,8 +886,8 @@ class MainWindow(QMainWindow):
         
         self._post_moving_forward = True
         self._post_target_moment = target_moment
-    
-    def post_back_start(self) -> None:
+
+    def post_back_moment_start(self) -> None:
         """Разжатие до сохраненного момента"""
         target_moment = self.config.get("post_back_moment", 0.0)
         if target_moment <= 0:
@@ -925,18 +899,13 @@ class MainWindow(QMainWindow):
         if current_moment <= target_moment:
             print(f"[Post] Уже разжато: {current_moment:.2f} <= {target_moment:.2f}")
             return
-        
-        self.arduino.send_command("POST_BACK_START")
-        print(f"[Post] Разжатие до {target_moment:.2f} Н·м")
-        
-        self._post_moving_back = True
-        self._post_target_moment = target_moment
     
-    def post_stop(self) -> None:
-        self.arduino.send_command("POST_STOP")
-        self._post_moving_forward = False
-        self._post_moving_back = False
+    self.arduino.send_command("POST_BACK_START")
+    print(f"[Post] Разжатие до {target_moment:.2f} Н·м")
     
+    self._post_moving_back = True
+    self._post_target_moment = target_moment
+
     def post_home(self) -> None:
         self.show_homing_dialog("Поиск дома постобжима...")
         self.arduino.send_command("POST_HOME_START")
@@ -1046,11 +1015,6 @@ class MainWindow(QMainWindow):
         
     def closeEvent(self, event) -> None:
         self._is_closing = True
-        
-        # Останавливаем таймер постобжима
-        if self._post_moment_timer:
-            self._post_moment_timer.stop()
-            self._post_moment_timer = None
         
         dialog = PasswordDialog(self)
         if dialog.exec() == PasswordDialog.Accepted:
