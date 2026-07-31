@@ -1020,13 +1020,13 @@ class Ui_MainWindow(object):
         self.verticalLayout_51.setSpacing(5)
         self.verticalLayout_51.setObjectName(u"verticalLayout_51")
         self.verticalLayout_51.setContentsMargins(0, 0, 0, 0)
-        self.toolButton_25 = QToolButton(self.widget_31)
-        self.toolButton_25.setObjectName(u"toolButton_25")
-        sizePolicy.setHeightForWidth(self.toolButton_25.sizePolicy().hasHeightForWidth())
-        self.toolButton_25.setSizePolicy(sizePolicy)
-        self.toolButton_25.setMinimumSize(QSize(0, 60))
-        self.toolButton_25.setFont(font5)
-        self.toolButton_25.setStyleSheet(u"QToolButton {\n"
+        self.btnPostHomeMan = QToolButton(self.widget_31)
+        self.btnPostHomeMan.setObjectName(u"btnPostHomeMan")
+        sizePolicy.setHeightForWidth(self.btnPostHomeMan.sizePolicy().hasHeightForWidth())
+        self.btnPostHomeMan.setSizePolicy(sizePolicy)
+        self.btnPostHomeMan.setMinimumSize(QSize(0, 60))
+        self.btnPostHomeMan.setFont(font5)
+        self.btnPostHomeMan.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -1036,19 +1036,19 @@ class Ui_MainWindow(object):
 "	background: #cfddeb;\n"
 "\n"
 "}")
-        self.toolButton_25.setIcon(icon3)
-        self.toolButton_25.setIconSize(QSize(35, 35))
-        self.toolButton_25.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        self.btnPostHomeMan.setIcon(icon3)
+        self.btnPostHomeMan.setIconSize(QSize(35, 35))
+        self.btnPostHomeMan.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
 
-        self.verticalLayout_51.addWidget(self.toolButton_25)
+        self.verticalLayout_51.addWidget(self.btnPostHomeMan)
 
-        self.toolButton_26 = QToolButton(self.widget_31)
-        self.toolButton_26.setObjectName(u"toolButton_26")
-        sizePolicy.setHeightForWidth(self.toolButton_26.sizePolicy().hasHeightForWidth())
-        self.toolButton_26.setSizePolicy(sizePolicy)
-        self.toolButton_26.setMinimumSize(QSize(0, 60))
-        self.toolButton_26.setFont(font5)
-        self.toolButton_26.setStyleSheet(u"QToolButton {\n"
+        self.btnPostForwMan = QToolButton(self.widget_31)
+        self.btnPostForwMan.setObjectName(u"btnPostForwMan")
+        sizePolicy.setHeightForWidth(self.btnPostForwMan.sizePolicy().hasHeightForWidth())
+        self.btnPostForwMan.setSizePolicy(sizePolicy)
+        self.btnPostForwMan.setMinimumSize(QSize(0, 60))
+        self.btnPostForwMan.setFont(font5)
+        self.btnPostForwMan.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -1058,11 +1058,11 @@ class Ui_MainWindow(object):
 "	background: #cfddeb;\n"
 "\n"
 "}")
-        self.toolButton_26.setIcon(icon4)
-        self.toolButton_26.setIconSize(QSize(35, 35))
-        self.toolButton_26.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        self.btnPostForwMan.setIcon(icon4)
+        self.btnPostForwMan.setIconSize(QSize(35, 35))
+        self.btnPostForwMan.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
 
-        self.verticalLayout_51.addWidget(self.toolButton_26)
+        self.verticalLayout_51.addWidget(self.btnPostForwMan)
 
 
         self.horizontalLayout_28.addWidget(self.widget_31)
@@ -3150,13 +3150,13 @@ class Ui_MainWindow(object):
         self.framePosAndHome_4.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_33 = QVBoxLayout(self.framePosAndHome_4)
         self.verticalLayout_33.setObjectName(u"verticalLayout_33")
-        self.label_17 = QLabel(self.framePosAndHome_4)
-        self.label_17.setObjectName(u"label_17")
-        self.label_17.setMaximumSize(QSize(16777215, 35))
-        self.label_17.setFont(font14)
-        self.label_17.setWordWrap(True)
+        self.lblPostForw = QLabel(self.framePosAndHome_4)
+        self.lblPostForw.setObjectName(u"lblPostForw")
+        self.lblPostForw.setMaximumSize(QSize(16777215, 35))
+        self.lblPostForw.setFont(font14)
+        self.lblPostForw.setWordWrap(True)
 
-        self.verticalLayout_33.addWidget(self.label_17)
+        self.verticalLayout_33.addWidget(self.lblPostForw)
 
         self.label_19 = QLabel(self.framePosAndHome_4)
         self.label_19.setObjectName(u"label_19")
@@ -3164,17 +3164,17 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_33.addWidget(self.label_19)
 
-        self.doubleSpinBox_3 = QDoubleSpinBox(self.framePosAndHome_4)
-        self.doubleSpinBox_3.setObjectName(u"doubleSpinBox_3")
-        self.doubleSpinBox_3.setMinimumSize(QSize(0, 30))
-        self.doubleSpinBox_3.setFont(font15)
+        self.inPostForw = QDoubleSpinBox(self.framePosAndHome_4)
+        self.inPostForw.setObjectName(u"inPostForw")
+        self.inPostForw.setMinimumSize(QSize(0, 30))
+        self.inPostForw.setFont(font15)
 
-        self.verticalLayout_33.addWidget(self.doubleSpinBox_3)
+        self.verticalLayout_33.addWidget(self.inPostForw)
 
-        self.pushButton_28 = QPushButton(self.framePosAndHome_4)
-        self.pushButton_28.setObjectName(u"pushButton_28")
-        self.pushButton_28.setMinimumSize(QSize(0, 60))
-        self.pushButton_28.setStyleSheet(u"QPushButton {\n"
+        self.btnSavePostForw = QPushButton(self.framePosAndHome_4)
+        self.btnSavePostForw.setObjectName(u"btnSavePostForw")
+        self.btnSavePostForw.setMinimumSize(QSize(0, 60))
+        self.btnSavePostForw.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -3185,15 +3185,15 @@ class Ui_MainWindow(object):
 "\n"
 "}")
 
-        self.verticalLayout_33.addWidget(self.pushButton_28)
+        self.verticalLayout_33.addWidget(self.btnSavePostForw)
 
-        self.label_22 = QLabel(self.framePosAndHome_4)
-        self.label_22.setObjectName(u"label_22")
-        self.label_22.setMaximumSize(QSize(16777215, 35))
-        self.label_22.setFont(font9)
-        self.label_22.setWordWrap(True)
+        self.lblPostBack = QLabel(self.framePosAndHome_4)
+        self.lblPostBack.setObjectName(u"lblPostBack")
+        self.lblPostBack.setMaximumSize(QSize(16777215, 35))
+        self.lblPostBack.setFont(font9)
+        self.lblPostBack.setWordWrap(True)
 
-        self.verticalLayout_33.addWidget(self.label_22)
+        self.verticalLayout_33.addWidget(self.lblPostBack)
 
         self.label_24 = QLabel(self.framePosAndHome_4)
         self.label_24.setObjectName(u"label_24")
@@ -3201,17 +3201,17 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_33.addWidget(self.label_24)
 
-        self.doubleSpinBox_4 = QDoubleSpinBox(self.framePosAndHome_4)
-        self.doubleSpinBox_4.setObjectName(u"doubleSpinBox_4")
-        self.doubleSpinBox_4.setMinimumSize(QSize(0, 30))
-        self.doubleSpinBox_4.setFont(font15)
+        self.inPostBack = QDoubleSpinBox(self.framePosAndHome_4)
+        self.inPostBack.setObjectName(u"inPostBack")
+        self.inPostBack.setMinimumSize(QSize(0, 30))
+        self.inPostBack.setFont(font15)
 
-        self.verticalLayout_33.addWidget(self.doubleSpinBox_4)
+        self.verticalLayout_33.addWidget(self.inPostBack)
 
-        self.pushButton_29 = QPushButton(self.framePosAndHome_4)
-        self.pushButton_29.setObjectName(u"pushButton_29")
-        self.pushButton_29.setMinimumSize(QSize(0, 60))
-        self.pushButton_29.setStyleSheet(u"QPushButton {\n"
+        self.btnSavePostBack = QPushButton(self.framePosAndHome_4)
+        self.btnSavePostBack.setObjectName(u"btnSavePostBack")
+        self.btnSavePostBack.setMinimumSize(QSize(0, 60))
+        self.btnSavePostBack.setStyleSheet(u"QPushButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -3222,7 +3222,7 @@ class Ui_MainWindow(object):
 "\n"
 "}")
 
-        self.verticalLayout_33.addWidget(self.pushButton_29)
+        self.verticalLayout_33.addWidget(self.btnSavePostBack)
 
         self.line_21 = QFrame(self.framePosAndHome_4)
         self.line_21.setObjectName(u"line_21")
@@ -3234,13 +3234,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_33.addWidget(self.line_21)
 
-        self.btnFixHome_3 = QToolButton(self.framePosAndHome_4)
-        self.btnFixHome_3.setObjectName(u"btnFixHome_3")
-        sizePolicy.setHeightForWidth(self.btnFixHome_3.sizePolicy().hasHeightForWidth())
-        self.btnFixHome_3.setSizePolicy(sizePolicy)
-        self.btnFixHome_3.setMinimumSize(QSize(0, 120))
-        self.btnFixHome_3.setFont(font7)
-        self.btnFixHome_3.setStyleSheet(u"QToolButton {\n"
+        self.btnPostForw = QToolButton(self.framePosAndHome_4)
+        self.btnPostForw.setObjectName(u"btnPostForw")
+        sizePolicy.setHeightForWidth(self.btnPostForw.sizePolicy().hasHeightForWidth())
+        self.btnPostForw.setSizePolicy(sizePolicy)
+        self.btnPostForw.setMinimumSize(QSize(0, 120))
+        self.btnPostForw.setFont(font7)
+        self.btnPostForw.setStyleSheet(u"QToolButton {\n"
 "	background: #bdcfdd;\n"
 "	border: 2px solid #a6b8c6;\n"
 "	border-radius: 5px;\n"
@@ -3250,11 +3250,11 @@ class Ui_MainWindow(object):
 "	background: #cfddeb;\n"
 "\n"
 "}")
-        self.btnFixHome_3.setIcon(icon4)
-        self.btnFixHome_3.setIconSize(QSize(80, 80))
-        self.btnFixHome_3.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+        self.btnPostForw.setIcon(icon4)
+        self.btnPostForw.setIconSize(QSize(80, 80))
+        self.btnPostForw.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
 
-        self.verticalLayout_33.addWidget(self.btnFixHome_3)
+        self.verticalLayout_33.addWidget(self.btnPostForw)
 
 
         self.horizontalLayout_9.addWidget(self.framePosAndHome_4)
@@ -3273,7 +3273,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(4)
+        self.stackedWidget.setCurrentIndex(8)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -3326,8 +3326,8 @@ class Ui_MainWindow(object):
         self.lblPostTorqMan.setText(QCoreApplication.translate("MainWindow", u"--- \u041d\u00b7\u043c", None))
         self.btnPostBackMan.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0432\u043e\u0434\u0438\u0442\u044c", None))
         self.btnPostForwardMan.setText(QCoreApplication.translate("MainWindow", u"\u0421\u0432\u043e\u0434\u0438\u0442\u044c", None))
-        self.toolButton_25.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0430\u0442\u044c", None))
-        self.toolButton_26.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0430\u0442\u044c", None))
+        self.btnPostHomeMan.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0430\u0437\u0436\u0430\u0442\u044c", None))
+        self.btnPostForwMan.setText(QCoreApplication.translate("MainWindow", u"\u0417\u0430\u0436\u0430\u0442\u044c", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u0423\u043f\u0441\u0441... \u041f\u0443\u0441\u0442\u043e(\n"
 "\u0417\u0434\u0435\u0441\u044c \u0441\u043a\u043e\u0440\u043e \u0447\u0442\u043e-\u0442\u043e \u0431\u0443\u0434\u0435\u0442!", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0434\u0430\u0442\u0447\u0438\u043a:", None))
@@ -3429,14 +3429,14 @@ class Ui_MainWindow(object):
         self.btnForwardPost1grad.setText(QCoreApplication.translate("MainWindow", u"+1\u00b0", None))
         self.btnForwardPost5grad.setText(QCoreApplication.translate("MainWindow", u"+5\u00b0", None))
         self.lblPostSpeed.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043a\u043e\u0440\u043e\u0441\u0442\u044c \u043e\u0431\u0436\u0438\u043c\u0430: --%", None))
-        self.label_17.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043a\u0443\u0449\u0435\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435 \u043c\u043e\u043c\u0435\u043d\u0442\u0430 \u0437\u0430\u0436\u0430\u0442\u0438\u044f: --- A", None))
+        self.lblPostForw.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043a\u0443\u0449\u0435\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435 \u043c\u043e\u043c\u0435\u043d\u0442\u0430 \u0437\u0430\u0436\u0430\u0442\u0438\u044f: --- \u041d\u00b7\u043c", None))
         self.label_19.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0441\u0442\u0438 \u043d\u043e\u0432\u043e\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435:", None))
-        self.pushButton_28.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043c\u043e\u043c\u0435\u043d\u0442\n"
+        self.btnSavePostForw.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043c\u043e\u043c\u0435\u043d\u0442\n"
 "\u0437\u0430\u0436\u0430\u0442\u0438\u044f", None))
-        self.label_22.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043a\u0443\u0449\u0435\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435 \u043c\u043e\u043c\u0435\u043d\u0442\u0430 \u0440\u0430\u0437\u0436\u0430\u0442\u0438\u044f: --- \u0410", None))
+        self.lblPostBack.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043a\u0443\u0449\u0435\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435 \u043c\u043e\u043c\u0435\u043d\u0442\u0430 \u0440\u0430\u0437\u0436\u0430\u0442\u0438\u044f: --- \u041d\u00b7\u043c", None))
         self.label_24.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0441\u0442\u0438 \u043d\u043e\u0432\u043e\u0435 \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u0435:", None))
-        self.pushButton_29.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043c\u043e\u043c\u0435\u043d\u0442\n"
+        self.btnSavePostBack.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c \u043c\u043e\u043c\u0435\u043d\u0442\n"
 "\u0440\u0430\u0437\u0436\u0430\u0442\u0438\u044f", None))
-        self.btnFixHome_3.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043b\u043d\u043e\u0441\u0442\u044c\u044e \u0437\u0430\u0436\u0430\u0442\u044c", None))
+        self.btnPostForw.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u043b\u043d\u043e\u0441\u0442\u044c\u044e \u0437\u0430\u0436\u0430\u0442\u044c", None))
     # retranslateUi
 

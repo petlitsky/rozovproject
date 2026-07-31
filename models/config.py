@@ -25,12 +25,8 @@ DEFAULT_CONFIG = {
     "temp_min": 40.0,
     "temp_max": 70.0,
     "start_speed": 30,
-    "force_threshold": 2.0,
-    "force_window": 5,
-    "torque_threshold": 0.3,
-    "torque_window": 5,
-    "current_threshold": 0.3,
-    "current_window": 5,
+    "post_forward_moment": 0.0,   # Момент зажатия
+    "post_back_moment": 0.0,      # Момент разжатия
 }
 
 
@@ -69,7 +65,6 @@ class Config:
         self._save()
     
     def get_all(self) -> dict:
-        """Получение всей конфигурации"""
         return self._config.copy()
 
 def get_config_value(key: str, default: Any = None) -> Any:
