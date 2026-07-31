@@ -2863,6 +2863,12 @@ QFrame {
                         <height>40</height>
                        </size>
                       </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
                       <property name="maximum">
                        <double>5.000000000000000</double>
                       </property>
