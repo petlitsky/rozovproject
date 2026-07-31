@@ -2574,6 +2574,22 @@ QFrame {
                     <string>Настройки фильтрации датчиков</string>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_5">
+                    <item row="4" column="0">
+                     <widget class="QLabel" name="label_41">
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::ClickFocus</enum>
+                      </property>
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Порог чувствительности ACS712:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
                     <item row="0" column="1">
                      <widget class="QSpinBox" name="spinForceThreshold">
                       <property name="minimumSize">
@@ -2608,6 +2624,59 @@ QFrame {
                       </property>
                       <property name="value">
                        <number>20</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="1">
+                     <widget class="QSpinBox" name="spinTorqueThreshold">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>110</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::StrongFocus</enum>
+                      </property>
+                      <property name="inputMethodHints">
+                       <set>Qt::InputMethodHint::ImhPreferNumbers</set>
+                      </property>
+                      <property name="minimum">
+                       <number>0</number>
+                      </property>
+                      <property name="maximum">
+                       <number>50</number>
+                      </property>
+                      <property name="value">
+                       <number>5</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_40">
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::ClickFocus</enum>
+                      </property>
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Окно чувствительности TCP-715A:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
                      </widget>
                     </item>
@@ -2675,77 +2744,8 @@ QFrame {
                       </property>
                      </widget>
                     </item>
-                    <item row="4" column="0">
-                     <widget class="QLabel" name="label_41">
-                      <property name="font">
-                       <font>
-                        <pointsize>9</pointsize>
-                        <bold>false</bold>
-                       </font>
-                      </property>
-                      <property name="focusPolicy">
-                       <enum>Qt::FocusPolicy::ClickFocus</enum>
-                      </property>
-                      <property name="text">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Порог чувствительности ACS712:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="label_40">
-                      <property name="font">
-                       <font>
-                        <pointsize>9</pointsize>
-                        <bold>false</bold>
-                       </font>
-                      </property>
-                      <property name="focusPolicy">
-                       <enum>Qt::FocusPolicy::ClickFocus</enum>
-                      </property>
-                      <property name="text">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Окно чувствительности TCP-715A:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="1">
-                     <widget class="QSpinBox" name="spinForceWindow">
-                      <property name="minimumSize">
-                       <size>
-                        <width>101</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>90</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <pointsize>9</pointsize>
-                        <bold>false</bold>
-                       </font>
-                      </property>
-                      <property name="focusPolicy">
-                       <enum>Qt::FocusPolicy::StrongFocus</enum>
-                      </property>
-                      <property name="inputMethodHints">
-                       <set>Qt::InputMethodHint::ImhPreferNumbers</set>
-                      </property>
-                      <property name="minimum">
-                       <number>0</number>
-                      </property>
-                      <property name="maximum">
-                       <number>10</number>
-                      </property>
-                      <property name="value">
-                       <number>1</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="2" column="1">
-                     <widget class="QSpinBox" name="spinTorqueThreshold">
+                    <item row="5" column="1">
+                     <widget class="QSpinBox" name="spinCurrentWindow">
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
@@ -2774,7 +2774,7 @@ QFrame {
                        <number>0</number>
                       </property>
                       <property name="maximum">
-                       <number>50</number>
+                       <number>10</number>
                       </property>
                       <property name="value">
                        <number>5</number>
@@ -2818,11 +2818,11 @@ QFrame {
                       </property>
                      </widget>
                     </item>
-                    <item row="4" column="1">
-                     <widget class="QSpinBox" name="spinCurrentWindow">
+                    <item row="1" column="1">
+                     <widget class="QSpinBox" name="spinForceWindow">
                       <property name="minimumSize">
                        <size>
-                        <width>101</width>
+                        <width>110</width>
                         <height>40</height>
                        </size>
                       </property>
@@ -2855,40 +2855,19 @@ QFrame {
                       </property>
                      </widget>
                     </item>
-                    <item row="5" column="1">
-                     <widget class="QSpinBox" name="startSpeed_3">
+                    <item row="4" column="1">
+                     <widget class="QDoubleSpinBox" name="spinCurrentThreshold">
                       <property name="minimumSize">
                        <size>
-                        <width>0</width>
+                        <width>110</width>
                         <height>40</height>
                        </size>
                       </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>110</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <pointsize>9</pointsize>
-                        <bold>false</bold>
-                       </font>
-                      </property>
-                      <property name="focusPolicy">
-                       <enum>Qt::FocusPolicy::StrongFocus</enum>
-                      </property>
-                      <property name="inputMethodHints">
-                       <set>Qt::InputMethodHint::ImhPreferNumbers</set>
-                      </property>
-                      <property name="minimum">
-                       <number>0</number>
-                      </property>
                       <property name="maximum">
-                       <number>10</number>
+                       <double>5.000000000000000</double>
                       </property>
                       <property name="value">
-                       <number>5</number>
+                       <double>0.100000000000000</double>
                       </property>
                      </widget>
                     </item>
