@@ -900,11 +900,11 @@ class MainWindow(QMainWindow):
             print(f"[Post] Уже разжато: {current_moment:.2f} <= {target_moment:.2f}")
             return
     
-    self.arduino.send_command("POST_BACK_START")
-    print(f"[Post] Разжатие до {target_moment:.2f} Н·м")
-    
-    self._post_moving_back = True
-    self._post_target_moment = target_moment
+        self.arduino.send_command("POST_BACK_START")
+        print(f"[Post] Разжатие до {target_moment:.2f} Н·м")
+        
+        self._post_moving_back = True
+        self._post_target_moment = target_moment
 
     def post_home(self) -> None:
         self.show_homing_dialog("Поиск дома постобжима...")
