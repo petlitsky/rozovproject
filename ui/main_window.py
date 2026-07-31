@@ -107,6 +107,35 @@ class MainWindow(QMainWindow):
         
         # Кнопка сброса статистики
         self.ui.btnResetStats.clicked.connect(self._reset_stats)
+
+        force_threshold = self.config.get("force_threshold", 2.0)
+        force_window = self.config.get("force_window", 5)
+        torque_threshold = self.config.get("torque_threshold", 0.3)
+        torque_window = self.config.get("torque_window", 5)
+        current_threshold = self.config.get("current_threshold", 0.3)
+        current_window = self.config.get("current_window", 5)
+
+        # Сила
+        self.ui.spinForceThreshold.setValue(force_threshold)
+        self.ui.spinForceWindow.setValue(force_window)
+        
+        # Момент
+        self.ui.spinTorqueThreshold.setValue(torque_threshold)
+        self.ui.spinTorqueWindow.setValue(torque_window)
+        
+        # Ток
+        self.ui.spinCurrentThreshold.setValue(current_threshold)
+        self.ui.spinCurrentWindow.setValue(current_window)
+
+        self.ui.spinForceThreshold.valueChanged.connect(lambda v: self._save_filter_settings("force_threshold", v))
+        self.ui.spinForceWindow.valueChanged.connect(lambda v: self._save_filter_settings("force_window", int(v)))
+        self.ui.spinTorqueThreshold.valueChanged.connect(lambda v: self._save_filter_settings("torque_threshold", v))
+        self.ui.spinTorqueWindow.valueChanged.connect(lambda v: self._save_filter_settings("torque_window", int(v)))
+        self.ui.spinCurrentThreshold.valueChanged.connect(lambda v: self._save_filter_settings("current_threshold", v))
+        self.ui.spinCurrentWindow.valueChanged.connect(lambda v: self._save_filter_settings("current_window", int(v)))
+
+        # Применяем настройки к датчикам
+        self._apply_filter_settings()
     
     def _setup_graphs(self):
         """Инициализация графиков"""
@@ -332,7 +361,36 @@ class MainWindow(QMainWindow):
             self.current_min = value
             self.config.set("current_min", value)
         self.current_avg = ((self.current_avg * (self.current_count - 1)) + value) / self.current_count
-            
+    
+    def _save_filter_settings(self, key: str, value):
+        """Сохранение настройки фильтра в конфиг"""
+        self.config.set(key, value)
+        # Применяем к датчику
+        self._apply_filter_settings()
+
+    def _apply_filter_settings(self):
+        """Применение настроек фильтров к датчикам"""
+        # Сила
+        if hasattr(self, 'force_sensor'):
+            threshold = self.config.get("force_threshold", 2.0)
+            window = self.config.get("force_window", 5)
+            self.force_sensor.set_filter_threshold(threshold)
+            self.force_sensor.set_filter_window(window)
+        
+        # Момент
+        if hasattr(self, 'torque_worker'):
+            threshold = self.config.get("torque_threshold", 0.3)
+            window = self.config.get("torque_window", 5)
+            self.torque_worker.set_filter_threshold(threshold)
+            self.torque_worker.set_filter_window(window)
+        
+        # Ток
+        if hasattr(self, 'arduino'):
+            threshold = self.config.get("current_threshold", 0.3)
+            window = self.config.get("current_window", 5)
+        self.arduino.set_current_filter_threshold(threshold)
+        self.arduino.set_current_filter_window(window)
+
     def _update_force_labels(self, value: float):
         if self.is_moving_to_force:
             target = float(self.config.get("target_pre_force", 0.0))

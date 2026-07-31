@@ -25,6 +25,12 @@ DEFAULT_CONFIG = {
     "temp_min": 40.0,
     "temp_max": 70.0,
     "start_speed": 30,
+    "force_threshold": 2.0,
+    "force_window": 5,
+    "torque_threshold": 0.3,
+    "torque_window": 5,
+    "current_threshold": 0.3,
+    "current_window": 5,
 }
 
 

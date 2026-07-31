@@ -370,7 +370,7 @@ QPushButton:checked {
           <string notr="true">background: #dde0e7;</string>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>4</number>
          </property>
          <widget class="QWidget" name="pageAutoMode">
           <layout class="QVBoxLayout" name="verticalLayout_30">
@@ -2558,7 +2558,352 @@ QFrame {
                 <property name="focusPolicy">
                  <enum>Qt::FocusPolicy::ClickFocus</enum>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_62">
+                <layout class="QVBoxLayout" name="verticalLayout_41">
+                 <item>
+                  <widget class="QGroupBox" name="groupBox_5">
+                   <property name="font">
+                    <font>
+                     <pointsize>12</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::FocusPolicy::ClickFocus</enum>
+                   </property>
+                   <property name="title">
+                    <string>Настройки фильтрации датчиков</string>
+                   </property>
+                   <layout class="QGridLayout" name="gridLayout_5">
+                    <item row="0" column="1">
+                     <widget class="QSpinBox" name="spinForceThreshold">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>110</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::StrongFocus</enum>
+                      </property>
+                      <property name="inputMethodHints">
+                       <set>Qt::InputMethodHint::ImhPreferNumbers</set>
+                      </property>
+                      <property name="minimum">
+                       <number>0</number>
+                      </property>
+                      <property name="maximum">
+                       <number>50</number>
+                      </property>
+                      <property name="value">
+                       <number>20</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="0">
+                     <widget class="QLabel" name="label_44">
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::ClickFocus</enum>
+                      </property>
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Окно чувствительности BTQ-403A:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="0">
+                     <widget class="QLabel" name="label_56">
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::ClickFocus</enum>
+                      </property>
+                      <property name="text">
+                       <string>Порог чувствительности BTQ-403A:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="5" column="0">
+                     <widget class="QLabel" name="label_57">
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::ClickFocus</enum>
+                      </property>
+                      <property name="text">
+                       <string>Окно чувствительности ACS712:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="0">
+                     <widget class="QLabel" name="label_38">
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::ClickFocus</enum>
+                      </property>
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Порог чувствительности TCP-715A:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="4" column="0">
+                     <widget class="QLabel" name="label_41">
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::ClickFocus</enum>
+                      </property>
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Порог чувствительности ACS712:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="0">
+                     <widget class="QLabel" name="label_40">
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::ClickFocus</enum>
+                      </property>
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Окно чувствительности TCP-715A:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="1" column="1">
+                     <widget class="QSpinBox" name="spinForceWindow">
+                      <property name="minimumSize">
+                       <size>
+                        <width>101</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>90</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::StrongFocus</enum>
+                      </property>
+                      <property name="inputMethodHints">
+                       <set>Qt::InputMethodHint::ImhPreferNumbers</set>
+                      </property>
+                      <property name="minimum">
+                       <number>0</number>
+                      </property>
+                      <property name="maximum">
+                       <number>10</number>
+                      </property>
+                      <property name="value">
+                       <number>1</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="2" column="1">
+                     <widget class="QSpinBox" name="spinTorqueThreshold">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>110</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::StrongFocus</enum>
+                      </property>
+                      <property name="inputMethodHints">
+                       <set>Qt::InputMethodHint::ImhPreferNumbers</set>
+                      </property>
+                      <property name="minimum">
+                       <number>0</number>
+                      </property>
+                      <property name="maximum">
+                       <number>50</number>
+                      </property>
+                      <property name="value">
+                       <number>5</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="1">
+                     <widget class="QSpinBox" name="spinTorqueWindow">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>110</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::StrongFocus</enum>
+                      </property>
+                      <property name="inputMethodHints">
+                       <set>Qt::InputMethodHint::ImhPreferNumbers</set>
+                      </property>
+                      <property name="minimum">
+                       <number>0</number>
+                      </property>
+                      <property name="maximum">
+                       <number>10</number>
+                      </property>
+                      <property name="value">
+                       <number>1</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="4" column="1">
+                     <widget class="QSpinBox" name="spinCurrentWindow">
+                      <property name="minimumSize">
+                       <size>
+                        <width>101</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>90</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::StrongFocus</enum>
+                      </property>
+                      <property name="inputMethodHints">
+                       <set>Qt::InputMethodHint::ImhPreferNumbers</set>
+                      </property>
+                      <property name="minimum">
+                       <number>0</number>
+                      </property>
+                      <property name="maximum">
+                       <number>10</number>
+                      </property>
+                      <property name="value">
+                       <number>1</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="5" column="1">
+                     <widget class="QSpinBox" name="startSpeed_3">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>110</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>9</pointsize>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::FocusPolicy::StrongFocus</enum>
+                      </property>
+                      <property name="inputMethodHints">
+                       <set>Qt::InputMethodHint::ImhPreferNumbers</set>
+                      </property>
+                      <property name="minimum">
+                       <number>0</number>
+                      </property>
+                      <property name="maximum">
+                       <number>10</number>
+                      </property>
+                      <property name="value">
+                       <number>5</number>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="widget_54" native="true">
+                <property name="focusPolicy">
+                 <enum>Qt::FocusPolicy::ClickFocus</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_63">
                  <item>
                   <widget class="QGroupBox" name="groupBox_2">
                    <property name="font">
@@ -2698,28 +3043,6 @@ QRadioButton::indicator:checked {
                    </layout>
                   </widget>
                  </item>
-                 <item>
-                  <spacer name="verticalSpacer_2">
-                   <property name="orientation">
-                    <enum>Qt::Orientation::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="QWidget" name="widget_54" native="true">
-                <property name="focusPolicy">
-                 <enum>Qt::FocusPolicy::ClickFocus</enum>
-                </property>
-                <layout class="QVBoxLayout" name="verticalLayout_63">
                  <item>
                   <widget class="QGroupBox" name="groupBox_3">
                    <property name="font">
