@@ -14,7 +14,7 @@ class ForceSensorWorker(QThread):
         self.pd_sck_pin = pd_sck_pin
         
         # Калибровочный коэффициент для перевода сырых отсчетов в ГРАММЫ
-        self.scale_ratio = 775.4  
+        self.scale_ratio = 420.0  
         self._running = True
 
         self.request = None
@@ -50,7 +50,7 @@ class ForceSensorWorker(QThread):
                 raw_val = self._read_average(3)
                 if raw_val is not None:
                     # 1. Расчет массы в граммах
-                    weight_grams = (raw_val - 75968) / self.scale_ratio
+                    weight_grams = (raw_val - 82000) / self.scale_ratio
                     
                     # 2. Перевод граммов в Ньютоны (Н): (г / 1000) * 9.80665
                     force_newtons = (weight_grams / 1000.0) * 9.80665
