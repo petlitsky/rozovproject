@@ -16,11 +16,11 @@ class TorqueSensorWorker(QThread):
         self.request = None
         self.zero_offset = 0
         
-        # Для фильтрации выбросов
+        # Для фильтрации
         self._prev_torque = 0.0
-        self._filter_threshold = 0.3  # Порог изменения для фильтра (Н·м)
-        self._consecutive_count = 0   # Счетчик одинаковых отклонений
-        self._filter_window = 5       # Окно для подтверждения изменения
+        self._suspected_value = None
+        self._suspected_prev = None
+        self._max_change = 0.5  # Порог (Н·м)
 
     def run(self):
         try:
@@ -32,7 +32,6 @@ class TorqueSensorWorker(QThread):
             except Exception:
                 chip_path = "/dev/gpiochip0"
 
-            # Настройка конфигурации линий для gpiod v2
             config = {
                 self.dout_pin: gpiod.LineSettings(direction=gpiod.line.Direction.INPUT),
                 self.pd_sck_pin: gpiod.LineSettings(direction=gpiod.line.Direction.OUTPUT, output_value=gpiod.line.Value.INACTIVE)
@@ -44,7 +43,6 @@ class TorqueSensorWorker(QThread):
                 config=config
             )
 
-            # Тарировка (обнуление)
             self.msleep(500)
             self.zero_offset = self._read_average(10)
             print(f"[Torque BTQ-403A] Готов. Нулевое смещение: {self.zero_offset}")
@@ -58,10 +56,8 @@ class TorqueSensorWorker(QThread):
                     if abs(val) < 0.05:
                         val = 0.0
 
-                    # Фильтрация выбросов
-                    filtered_val = self._filter_spike(val)
-                    
-                    self.torque_updated.emit(float(filtered_val))
+                    filtered_value = self._smart_filter(val)
+                    self.torque_updated.emit(filtered_value)
                 
                 self.msleep(100)
 
@@ -72,31 +68,32 @@ class TorqueSensorWorker(QThread):
         finally:
             self._cleanup()
 
-    def _filter_spike(self, value):
-        """
-        Фильтр выбросов.
-        Если значение резко отличается от предыдущего - проверяем несколько раз.
-        """
+    def _smart_filter(self, value):
+        """Умный фильтр: отличает выброс от реального изменения"""
         diff = abs(value - self._prev_torque)
         
-        # Если изменение больше порога - это потенциальный выброс
-        if diff > self._filter_threshold:
-            # Увеличиваем счетчик подозрительных значений
-            self._consecutive_count += 1
-            
-            # Если подозрительных значений больше окна - это реальное изменение
-            if self._consecutive_count >= self._filter_window:
-                self._consecutive_count = 0
-                self._prev_torque = value
-                return value
-            else:
-                # Возвращаем предыдущее значение (фильтруем выброс)
-                return self._prev_torque
-        else:
-            # Нормальное изменение - сбрасываем счетчик
-            self._consecutive_count = 0
+        if diff <= self._max_change:
+            self._suspected_value = None
+            self._suspected_prev = None
             self._prev_torque = value
             return value
+        
+        if self._suspected_value is None:
+            self._suspected_value = value
+            self._suspected_prev = self._prev_torque
+            return self._prev_torque
+        else:
+            diff_back = abs(value - self._suspected_prev)
+            
+            if diff_back <= self._max_change:
+                self._suspected_value = None
+                self._suspected_prev = None
+                return self._prev_torque
+            else:
+                self._prev_torque = self._suspected_value
+                self._suspected_value = None
+                self._suspected_prev = None
+                return self._prev_torque
 
     def _read_raw(self):
         count = 0
@@ -131,14 +128,6 @@ class TorqueSensorWorker(QThread):
                 values.append(v)
             time.sleep(0.002)
         return sum(values) / len(values) if values else None
-
-    def set_filter_threshold(self, threshold: float):
-        """Установка порога фильтрации (Н·м)"""
-        self._filter_threshold = threshold
-
-    def set_filter_window(self, window: int):
-        """Установка окна фильтрации (количество измерений)"""
-        self._filter_window = window
 
     def stop(self):
         self._running = False
