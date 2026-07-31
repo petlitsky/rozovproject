@@ -3168,6 +3168,8 @@ class Ui_MainWindow(object):
         self.inPostForw.setObjectName(u"inPostForw")
         self.inPostForw.setMinimumSize(QSize(0, 30))
         self.inPostForw.setFont(font15)
+        self.inPostForw.setMinimum(-100.000000000000000)
+        self.inPostForw.setMaximum(100.000000000000000)
 
         self.verticalLayout_33.addWidget(self.inPostForw)
 
@@ -3205,6 +3207,8 @@ class Ui_MainWindow(object):
         self.inPostBack.setObjectName(u"inPostBack")
         self.inPostBack.setMinimumSize(QSize(0, 30))
         self.inPostBack.setFont(font15)
+        self.inPostBack.setMinimum(-100.000000000000000)
+        self.inPostBack.setMaximum(100.000000000000000)
 
         self.verticalLayout_33.addWidget(self.inPostBack)
 
