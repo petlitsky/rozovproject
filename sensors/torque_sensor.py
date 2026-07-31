@@ -42,6 +42,7 @@ class TorqueSensorWorker(QThread):
             self.msleep(500)
             self.zero_offset = self._read_average(10)
             print(f"[Torque BTQ-403A] Готов. Нулевое смещение: {self.zero_offset}")
+            self.zero_offset = 0
 
             while self._running:
                 raw_val = self._read_average(3)
