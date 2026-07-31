@@ -21,6 +21,12 @@ class ArduinoController(QObject):
         self._disconnect_shown = False
         self._timer: Optional[QTimer] = None
 
+        # Для фильтрации тока
+        self._prev_current = 0.0
+        self._filter_threshold = 0.3  # Порог изменения для фильтра (А)
+        self._consecutive_count = 0   # Счетчик одинаковых отклонений
+        self._filter_window = 5       # Окно для подтверждения изменения
+
         self._handlers = {
             "LIN_MOVING": lambda: self.moving.emit("LIN"),
             "PRE_MOVING": lambda: self.moving.emit("PRE"),
@@ -98,6 +104,32 @@ class ArduinoController(QObject):
         except (serial.SerialException, OSError, IOError):
             self.disconnect()
  
+    def _filter_current_spike(self, value):
+        """
+        Фильтр выбросов для тока.
+        Если значение резко отличается от предыдущего - проверяем несколько раз.
+        """
+        diff = abs(value - self._prev_current)
+        
+        # Если изменение больше порога - это потенциальный выброс
+        if diff > self._filter_threshold:
+            # Увеличиваем счетчик подозрительных значений
+            self._consecutive_count += 1
+            
+            # Если подозрительных значений больше окна - это реальное изменение
+            if self._consecutive_count >= self._filter_window:
+                self._consecutive_count = 0
+                self._prev_current = value
+                return value
+            else:
+                # Возвращаем предыдущее значение (фильтруем выброс)
+                return self._prev_current
+        else:
+            # Нормальное изменение - сбрасываем счетчик
+            self._consecutive_count = 0
+            self._prev_current = value
+            return value
+
     def _process_data(self, data: str) -> None:
         # 1. Обработка команд без параметров
         if data in self._handlers:
@@ -118,10 +150,13 @@ class ArduinoController(QObject):
                     pass
                 return
 
-            # Ток
+            # Ток - с фильтрацией
             if key == "CURRENT":
                 try:
-                    self.current_updated.emit(float(val))
+                    raw_current = float(val)
+                    # Применяем фильтрацию
+                    filtered_current = self._filter_current_spike(raw_current)
+                    self.current_updated.emit(filtered_current)
                 except ValueError:
                     pass
                 return
@@ -134,6 +169,14 @@ class ArduinoController(QObject):
                 except ValueError:
                     pass
                 return
+
+    def set_current_filter_threshold(self, threshold: float):
+        """Установка порога фильтрации тока (А)"""
+        self._filter_threshold = threshold
+
+    def set_current_filter_window(self, window: int):
+        """Установка окна фильтрации тока (количество измерений)"""
+        self._filter_window = window
 
     def _get_ports_to_try(self) -> list:
         ports = [f"COM{i}" for i in range(1, 16)]

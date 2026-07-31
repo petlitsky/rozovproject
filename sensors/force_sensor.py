@@ -19,6 +19,12 @@ class ForceSensorWorker(QThread):
 
         self.request = None
         self.zero_offset = 0
+        
+        # Для фильтрации выбросов
+        self._prev_force = 0.0
+        self._filter_threshold = 2.0  # Порог изменения для фильтра (Н)
+        self._consecutive_count = 0   # Счетчик одинаковых отклонений
+        self._filter_window = 5       # Окно для подтверждения изменения
 
     def run(self):
         try:
@@ -59,9 +65,11 @@ class ForceSensorWorker(QThread):
                     if abs(force_newtons) < 0.01:
                         force_newtons = 0.0
 
-                    self.last_force = force_newtons
-                    # Отправляем усилие в Ньютонах
-                    self.force_updated.emit(float(force_newtons))
+                    # Фильтрация выбросов
+                    filtered_force = self._filter_spike(force_newtons)
+                    
+                    self.last_force = filtered_force
+                    self.force_updated.emit(float(filtered_force))
                 
                 self.msleep(100)
 
@@ -71,6 +79,32 @@ class ForceSensorWorker(QThread):
             self.error_occurred.emit(error_msg)
         finally:
             self._cleanup()
+
+    def _filter_spike(self, value):
+        """
+        Фильтр выбросов.
+        Если значение резко отличается от предыдущего - проверяем несколько раз.
+        """
+        diff = abs(value - self._prev_force)
+        
+        # Если изменение больше порога - это потенциальный выброс
+        if diff > self._filter_threshold:
+            # Увеличиваем счетчик подозрительных значений
+            self._consecutive_count += 1
+            
+            # Если подозрительных значений больше окна - это реальное изменение
+            if self._consecutive_count >= self._filter_window:
+                self._consecutive_count = 0
+                self._prev_force = value
+                return value
+            else:
+                # Возвращаем предыдущее значение (фильтруем выброс)
+                return self._prev_force
+        else:
+            # Нормальное изменение - сбрасываем счетчик
+            self._consecutive_count = 0
+            self._prev_force = value
+            return value
 
     def _read_raw(self):
         count = 0
@@ -108,6 +142,14 @@ class ForceSensorWorker(QThread):
 
     def get_current_force(self) -> float:
         return self.last_force
+
+    def set_filter_threshold(self, threshold: float):
+        """Установка порога фильтрации (Н)"""
+        self._filter_threshold = threshold
+
+    def set_filter_window(self, window: int):
+        """Установка окна фильтрации (количество измерений)"""
+        self._filter_window = window
 
     def stop(self):
         self._running = False

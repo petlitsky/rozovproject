@@ -15,6 +15,12 @@ class TorqueSensorWorker(QThread):
 
         self.request = None
         self.zero_offset = 0
+        
+        # Для фильтрации выбросов
+        self._prev_torque = 0.0
+        self._filter_threshold = 0.3  # Порог изменения для фильтра (Н·м)
+        self._consecutive_count = 0   # Счетчик одинаковых отклонений
+        self._filter_window = 5       # Окно для подтверждения изменения
 
     def run(self):
         try:
@@ -52,7 +58,10 @@ class TorqueSensorWorker(QThread):
                     if abs(val) < 0.05:
                         val = 0.0
 
-                    self.torque_updated.emit(float(val))
+                    # Фильтрация выбросов
+                    filtered_val = self._filter_spike(val)
+                    
+                    self.torque_updated.emit(float(filtered_val))
                 
                 self.msleep(100)
 
@@ -62,6 +71,32 @@ class TorqueSensorWorker(QThread):
             self.error_occurred.emit(error_msg)
         finally:
             self._cleanup()
+
+    def _filter_spike(self, value):
+        """
+        Фильтр выбросов.
+        Если значение резко отличается от предыдущего - проверяем несколько раз.
+        """
+        diff = abs(value - self._prev_torque)
+        
+        # Если изменение больше порога - это потенциальный выброс
+        if diff > self._filter_threshold:
+            # Увеличиваем счетчик подозрительных значений
+            self._consecutive_count += 1
+            
+            # Если подозрительных значений больше окна - это реальное изменение
+            if self._consecutive_count >= self._filter_window:
+                self._consecutive_count = 0
+                self._prev_torque = value
+                return value
+            else:
+                # Возвращаем предыдущее значение (фильтруем выброс)
+                return self._prev_torque
+        else:
+            # Нормальное изменение - сбрасываем счетчик
+            self._consecutive_count = 0
+            self._prev_torque = value
+            return value
 
     def _read_raw(self):
         count = 0
@@ -96,6 +131,14 @@ class TorqueSensorWorker(QThread):
                 values.append(v)
             time.sleep(0.002)
         return sum(values) / len(values) if values else None
+
+    def set_filter_threshold(self, threshold: float):
+        """Установка порога фильтрации (Н·м)"""
+        self._filter_threshold = threshold
+
+    def set_filter_window(self, window: int):
+        """Установка окна фильтрации (количество измерений)"""
+        self._filter_window = window
 
     def stop(self):
         self._running = False
