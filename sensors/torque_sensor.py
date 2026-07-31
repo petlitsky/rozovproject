@@ -15,12 +15,6 @@ class TorqueSensorWorker(QThread):
 
         self.request = None
         self.zero_offset = 0
-        
-        # Для фильтрации
-        self._prev_torque = 0.0
-        self._suspected_value = None
-        self._suspected_prev = None
-        self._max_change = 0.5  # Порог (Н·м)
 
     def run(self):
         try:
@@ -32,6 +26,7 @@ class TorqueSensorWorker(QThread):
             except Exception:
                 chip_path = "/dev/gpiochip0"
 
+            # Настройка конфигурации линий для gpiod v2
             config = {
                 self.dout_pin: gpiod.LineSettings(direction=gpiod.line.Direction.INPUT),
                 self.pd_sck_pin: gpiod.LineSettings(direction=gpiod.line.Direction.OUTPUT, output_value=gpiod.line.Value.INACTIVE)
@@ -43,6 +38,7 @@ class TorqueSensorWorker(QThread):
                 config=config
             )
 
+            # Тарировка (обнуление)
             self.msleep(500)
             self.zero_offset = self._read_average(10)
             print(f"[Torque BTQ-403A] Готов. Нулевое смещение: {self.zero_offset}")
@@ -56,8 +52,7 @@ class TorqueSensorWorker(QThread):
                     if abs(val) < 0.05:
                         val = 0.0
 
-                    filtered_value = self._smart_filter(val)
-                    self.torque_updated.emit(filtered_value)
+                    self.torque_updated.emit(float(val))
                 
                 self.msleep(100)
 
@@ -67,33 +62,6 @@ class TorqueSensorWorker(QThread):
             self.error_occurred.emit(error_msg)
         finally:
             self._cleanup()
-
-    def _smart_filter(self, value):
-        """Умный фильтр: отличает выброс от реального изменения"""
-        diff = abs(value - self._prev_torque)
-        
-        if diff <= self._max_change:
-            self._suspected_value = None
-            self._suspected_prev = None
-            self._prev_torque = value
-            return value
-        
-        if self._suspected_value is None:
-            self._suspected_value = value
-            self._suspected_prev = self._prev_torque
-            return self._prev_torque
-        else:
-            diff_back = abs(value - self._suspected_prev)
-            
-            if diff_back <= self._max_change:
-                self._suspected_value = None
-                self._suspected_prev = None
-                return self._prev_torque
-            else:
-                self._prev_torque = self._suspected_value
-                self._suspected_value = None
-                self._suspected_prev = None
-                return self._prev_torque
 
     def _read_raw(self):
         count = 0

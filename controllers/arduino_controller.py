@@ -11,7 +11,7 @@ class ArduinoController(QObject):
     limit_reached = Signal(str, str)
     disconnected = Signal()
     speed_updated = Signal(str, int)
-    current_updated = Signal(float)
+    current_updated = Signal(float)  # Сигнал для тока
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -20,12 +20,6 @@ class ArduinoController(QObject):
         self.is_connected = False
         self._disconnect_shown = False
         self._timer: Optional[QTimer] = None
-        
-        # Для фильтрации тока
-        self._prev_current = 0.0
-        self._suspected_value = None
-        self._suspected_prev = None
-        self._max_change = 0.5  # Порог (А)
 
         self._handlers = {
             "LIN_MOVING": lambda: self.moving.emit("LIN"),
@@ -104,42 +98,18 @@ class ArduinoController(QObject):
         except (serial.SerialException, OSError, IOError):
             self.disconnect()
  
-    def _smart_filter_current(self, value):
-        """Умный фильтр для тока"""
-        diff = abs(value - self._prev_current)
-        
-        if diff <= self._max_change:
-            self._suspected_value = None
-            self._suspected_prev = None
-            self._prev_current = value
-            return value
-        
-        if self._suspected_value is None:
-            self._suspected_value = value
-            self._suspected_prev = self._prev_current
-            return self._prev_current
-        else:
-            diff_back = abs(value - self._suspected_prev)
-            
-            if diff_back <= self._max_change:
-                self._suspected_value = None
-                self._suspected_prev = None
-                return self._prev_current
-            else:
-                self._prev_current = self._suspected_value
-                self._suspected_value = None
-                self._suspected_prev = None
-                return self._prev_current
-
     def _process_data(self, data: str) -> None:
+        # 1. Обработка команд без параметров
         if data in self._handlers:
             self._handlers[data]()
             return
 
+        # 2. Обработка команд с параметрами вида 'КЛЮЧ:ЗНАЧЕНИЕ'
         if ":" in data:
             parts = data.split(":", 1)
             key, val = parts[0], parts[1]
 
+            # Позиции
             if key in ("LIN_POS", "PRE_POS"):
                 axis = key.split("_")[0]
                 try:
@@ -148,15 +118,15 @@ class ArduinoController(QObject):
                     pass
                 return
 
+            # Ток
             if key == "CURRENT":
                 try:
-                    raw = float(val)
-                    filtered = self._smart_filter_current(raw)
-                    self.current_updated.emit(filtered)
+                    self.current_updated.emit(float(val))
                 except ValueError:
                     pass
                 return
 
+            # Скорости
             if "_SPEED_CURRENT" in key or "_SPEED_SET" in key:
                 axis = key.split("_")[0]
                 try:
