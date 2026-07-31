@@ -42,7 +42,7 @@ class MainWindow(QMainWindow):
         self._post_moving_forward = False
         self._post_moving_back = False
         self._post_target_moment = 0.0
-        self._post_moment_timer: Optional[QTimer] = Non
+        self._post_moment_timer: Optional[QTimer] = None
                 
         self._setup_ui()
         self._setup_connections()
