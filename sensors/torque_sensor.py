@@ -6,78 +6,55 @@ class TorqueSensorWorker(QThread):
     torque_updated = Signal(float)
     error_occurred = Signal(str)
 
-    import gpiod
-import numpy as np
-from PyQt6.QtCore import QThread, pyqtSignal
-
-class TorqueSensor(QThread):
-    torque_updated = pyqtSignal(float)
-
     def __init__(self, dout_pin=18, pd_sck_pin=23, parent=None):
         super().__init__(parent)
         self.dout_pin = dout_pin
         self.pd_sck_pin = pd_sck_pin
+        self.scale_ratio = 420.0
         self._running = True
+
         self.request = None
         self.zero_offset = 0
 
-        # --- КАЛИБРОВОЧНАЯ ТАБЛИЦА (на основе ваших замеров и рычага 205 мм) ---
-        # Длина рычага: 0.205 м. Ускорение: 9.80665 м/с²
-        # Формула момента: М = (граммы / 1000) * 9.80665 * 0.205
-        
-        # 1. Значения, которые выдавал ваш старый код (при коэфф. 420 и zero=0)
-        old_code_vals = np.array([166, 825, 836, 1024, 1184])
-        
-        # Восстанавливаем из них чистые сырые данные АЦП (raw_val)
-        self.cal_raw = old_code_vals * 420.0
-        
-        # 2. Соответствующий им реальный физический момент в Н*м
-        self.cal_torque = np.array([
-            0.0,                               # 0 г
-            (350 / 1000.0) * 9.80665 * 0.205,  # 350 г (~0.70 Н*м)
-            (340 / 1000.0) * 9.80665 * 0.205,  # 340 г (~0.68 Н*м)
-            (4100 / 1000.0) * 9.80665 * 0.205, # 4100 г (~8.24 Н*м)
-            (4910 / 1000.0) * 9.80665 * 0.205  # 4910 г (~9.87 Н*м)
-        ])
-        
-        # Сортируем массивы для корректной работы интерполяции
-        idx = np.argsort(self.cal_raw)
-        self.cal_raw = self.cal_raw[idx]
-        self.cal_torque = self.cal_torque[idx]
-
     def run(self):
         try:
-            print(f"[Torque BTQ-403A] Инициализация GPIO...")
+            print(f"[Torque BTQ-403A] Инициализация GPIO (DOUT={self.dout_pin}, SCK={self.pd_sck_pin}) via gpiod v2...")
+            
             chip_path = "/dev/gpiochip4"
-            try: gpiod.Chip(chip_path).close()
-            except Exception: chip_path = "/dev/gpiochip0"
+            try:
+                gpiod.Chip(chip_path).close()
+            except Exception:
+                chip_path = "/dev/gpiochip0"
 
+            # Настройка конфигурации линий для gpiod v2
             config = {
                 self.dout_pin: gpiod.LineSettings(direction=gpiod.line.Direction.INPUT),
                 self.pd_sck_pin: gpiod.LineSettings(direction=gpiod.line.Direction.OUTPUT, output_value=gpiod.line.Value.INACTIVE)
             }
-            self.request = gpiod.request_lines(chip_path, consumer="HX711_TORQUE", config=config)
 
-            # При кусочной интерполяции мы не используем динамический авто-ноль, 
-            # так как точка 0 г (166 * 420) уже жестко заложена в таблицу калибровки.
-            print(f"[Torque BTQ-403A] Готов. Используется табличная интерполяция.")
+            self.request = gpiod.request_lines(
+                chip_path,
+                consumer="HX711_TORQUE",
+                config=config
+            )
+
+            # Тарировка (обнуление)
+            self.msleep(500)
+            self.zero_offset = self._read_average(10)
+            print(f"[Torque BTQ-403A] Готов. Нулевое смещение: {self.zero_offset}")
+            self.zero_offset = 0
 
             while self._running:
                 raw_val = self._read_average(3)
                 if raw_val is not None:
-                    # Автоматический точный перевод сырого значения в Н*м по таблице
-                    val = float(np.interp(raw_val, self.cal_raw, self.cal_torque))
+                    val = (raw_val - self.zero_offset) / self.scale_ratio
                     
-                    # Отсечка мелких шумов вокруг абсолютного нуля
                     if abs(val) < 0.05:
                         val = 0.0
 
-                    self.torque_updated.emit(val)
+                    self.torque_updated.emit(float(val))
                 
                 self.msleep(100)
-        except Exception as e:
-            print(f"Ошибка в потоке датчика: {e}")
-
 
         except Exception as e:
             error_msg = f"Ошибка чтения Torque Sensor: {e}"
