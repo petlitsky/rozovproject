@@ -38,6 +38,11 @@ class MainWindow(QMainWindow):
         
         # Время старта программы
         self.start_time = datetime.now()
+
+        self._post_moving_forward = False
+        self._post_moving_back = False
+        self._post_target_moment = 0.0
+        self._post_moment_timer: Optional[QTimer] = Non
                 
         self._setup_ui()
         self._setup_connections()
@@ -420,7 +425,31 @@ class MainWindow(QMainWindow):
         
         # Добавляем данные в график
         self.graph_widget.add_data_point("Момент", value)
+
+        self._check_post_moment(value)
     
+    def _check_post_moment(self, current_moment: float):
+        """Проверка момента при движении постобжима"""
+        # Проверка зажатия
+        if hasattr(self, '_post_moving_forward') and self._post_moving_forward:
+            if current_moment >= self._post_target_moment:
+                self.arduino.send_command("POST_STOP")
+                self._post_moving_forward = False
+                if self._post_moment_timer:
+                    self._post_moment_timer.stop()
+                    self._post_moment_timer = None
+                print(f"[Post] Достигнут момент зажатия: {current_moment:.2f} Н·м")
+        
+        # Проверка разжатия
+        if hasattr(self, '_post_moving_back') and self._post_moving_back:
+            if current_moment <= self._post_target_moment:
+                self.arduino.send_command("POST_STOP")
+                self._post_moving_back = False
+                if self._post_moment_timer:
+                    self._post_moment_timer.stop()
+                    self._post_moment_timer = None
+                print(f"[Post] Достигнут момент разжатия: {current_moment:.2f} Н·м")
+
     def _update_temperature(self, temp: float) -> None:
         self.ui.lblTemp.setText(f"Температура: {temp:.1f}°C")
         
@@ -890,7 +919,7 @@ class MainWindow(QMainWindow):
     def post_back_moment_start(self) -> None:
         """Разжатие до сохраненного момента"""
         target_moment = self.config.get("post_back_moment", 0.0)
-        if target_moment <= 0:
+        if target_moment >= 0:
             print("[Post] Момент разжатия не сохранен!")
             return
         
