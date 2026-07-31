@@ -1229,9 +1229,149 @@ class Ui_MainWindow(object):
         self.widget_53 = QWidget(self.widget_52)
         self.widget_53.setObjectName(u"widget_53")
         self.widget_53.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
-        self.verticalLayout_62 = QVBoxLayout(self.widget_53)
-        self.verticalLayout_62.setObjectName(u"verticalLayout_62")
-        self.groupBox_2 = QGroupBox(self.widget_53)
+        self.verticalLayout_41 = QVBoxLayout(self.widget_53)
+        self.verticalLayout_41.setObjectName(u"verticalLayout_41")
+        self.groupBox_5 = QGroupBox(self.widget_53)
+        self.groupBox_5.setObjectName(u"groupBox_5")
+        self.groupBox_5.setFont(font7)
+        self.groupBox_5.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
+        self.gridLayout_5 = QGridLayout(self.groupBox_5)
+        self.gridLayout_5.setObjectName(u"gridLayout_5")
+        self.spinForceThreshold = QSpinBox(self.groupBox_5)
+        self.spinForceThreshold.setObjectName(u"spinForceThreshold")
+        self.spinForceThreshold.setMinimumSize(QSize(0, 40))
+        self.spinForceThreshold.setMaximumSize(QSize(110, 16777215))
+        font9 = QFont()
+        font9.setPointSize(9)
+        font9.setBold(False)
+        self.spinForceThreshold.setFont(font9)
+        self.spinForceThreshold.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        self.spinForceThreshold.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
+        self.spinForceThreshold.setMinimum(0)
+        self.spinForceThreshold.setMaximum(50)
+        self.spinForceThreshold.setValue(20)
+
+        self.gridLayout_5.addWidget(self.spinForceThreshold, 0, 1, 1, 1)
+
+        self.label_44 = QLabel(self.groupBox_5)
+        self.label_44.setObjectName(u"label_44")
+        self.label_44.setFont(font9)
+        self.label_44.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
+
+        self.gridLayout_5.addWidget(self.label_44, 3, 0, 1, 1)
+
+        self.label_56 = QLabel(self.groupBox_5)
+        self.label_56.setObjectName(u"label_56")
+        self.label_56.setFont(font9)
+        self.label_56.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
+
+        self.gridLayout_5.addWidget(self.label_56, 2, 0, 1, 1)
+
+        self.label_57 = QLabel(self.groupBox_5)
+        self.label_57.setObjectName(u"label_57")
+        self.label_57.setFont(font9)
+        self.label_57.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
+
+        self.gridLayout_5.addWidget(self.label_57, 5, 0, 1, 1)
+
+        self.label_38 = QLabel(self.groupBox_5)
+        self.label_38.setObjectName(u"label_38")
+        self.label_38.setFont(font9)
+        self.label_38.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
+
+        self.gridLayout_5.addWidget(self.label_38, 0, 0, 1, 1)
+
+        self.label_41 = QLabel(self.groupBox_5)
+        self.label_41.setObjectName(u"label_41")
+        self.label_41.setFont(font9)
+        self.label_41.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
+
+        self.gridLayout_5.addWidget(self.label_41, 4, 0, 1, 1)
+
+        self.label_40 = QLabel(self.groupBox_5)
+        self.label_40.setObjectName(u"label_40")
+        self.label_40.setFont(font9)
+        self.label_40.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
+
+        self.gridLayout_5.addWidget(self.label_40, 1, 0, 1, 1)
+
+        self.spinForceWindow = QSpinBox(self.groupBox_5)
+        self.spinForceWindow.setObjectName(u"spinForceWindow")
+        self.spinForceWindow.setMinimumSize(QSize(101, 40))
+        self.spinForceWindow.setMaximumSize(QSize(90, 16777215))
+        self.spinForceWindow.setFont(font9)
+        self.spinForceWindow.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        self.spinForceWindow.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
+        self.spinForceWindow.setMinimum(0)
+        self.spinForceWindow.setMaximum(10)
+        self.spinForceWindow.setValue(1)
+
+        self.gridLayout_5.addWidget(self.spinForceWindow, 1, 1, 1, 1)
+
+        self.spinTorqueThreshold = QSpinBox(self.groupBox_5)
+        self.spinTorqueThreshold.setObjectName(u"spinTorqueThreshold")
+        self.spinTorqueThreshold.setMinimumSize(QSize(0, 40))
+        self.spinTorqueThreshold.setMaximumSize(QSize(110, 16777215))
+        self.spinTorqueThreshold.setFont(font9)
+        self.spinTorqueThreshold.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        self.spinTorqueThreshold.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
+        self.spinTorqueThreshold.setMinimum(0)
+        self.spinTorqueThreshold.setMaximum(50)
+        self.spinTorqueThreshold.setValue(5)
+
+        self.gridLayout_5.addWidget(self.spinTorqueThreshold, 2, 1, 1, 1)
+
+        self.spinTorqueWindow = QSpinBox(self.groupBox_5)
+        self.spinTorqueWindow.setObjectName(u"spinTorqueWindow")
+        self.spinTorqueWindow.setMinimumSize(QSize(0, 40))
+        self.spinTorqueWindow.setMaximumSize(QSize(110, 16777215))
+        self.spinTorqueWindow.setFont(font9)
+        self.spinTorqueWindow.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        self.spinTorqueWindow.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
+        self.spinTorqueWindow.setMinimum(0)
+        self.spinTorqueWindow.setMaximum(10)
+        self.spinTorqueWindow.setValue(1)
+
+        self.gridLayout_5.addWidget(self.spinTorqueWindow, 3, 1, 1, 1)
+
+        self.spinCurrentWindow = QSpinBox(self.groupBox_5)
+        self.spinCurrentWindow.setObjectName(u"spinCurrentWindow")
+        self.spinCurrentWindow.setMinimumSize(QSize(101, 40))
+        self.spinCurrentWindow.setMaximumSize(QSize(90, 16777215))
+        self.spinCurrentWindow.setFont(font9)
+        self.spinCurrentWindow.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        self.spinCurrentWindow.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
+        self.spinCurrentWindow.setMinimum(0)
+        self.spinCurrentWindow.setMaximum(10)
+        self.spinCurrentWindow.setValue(1)
+
+        self.gridLayout_5.addWidget(self.spinCurrentWindow, 4, 1, 1, 1)
+
+        self.startSpeed_3 = QSpinBox(self.groupBox_5)
+        self.startSpeed_3.setObjectName(u"startSpeed_3")
+        self.startSpeed_3.setMinimumSize(QSize(0, 40))
+        self.startSpeed_3.setMaximumSize(QSize(110, 16777215))
+        self.startSpeed_3.setFont(font9)
+        self.startSpeed_3.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        self.startSpeed_3.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
+        self.startSpeed_3.setMinimum(0)
+        self.startSpeed_3.setMaximum(10)
+        self.startSpeed_3.setValue(5)
+
+        self.gridLayout_5.addWidget(self.startSpeed_3, 5, 1, 1, 1)
+
+
+        self.verticalLayout_41.addWidget(self.groupBox_5)
+
+
+        self.horizontalLayout_25.addWidget(self.widget_53)
+
+        self.widget_54 = QWidget(self.widget_52)
+        self.widget_54.setObjectName(u"widget_54")
+        self.widget_54.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
+        self.verticalLayout_63 = QVBoxLayout(self.widget_54)
+        self.verticalLayout_63.setObjectName(u"verticalLayout_63")
+        self.groupBox_2 = QGroupBox(self.widget_54)
         self.groupBox_2.setObjectName(u"groupBox_2")
         self.groupBox_2.setFont(font7)
         self.groupBox_2.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
@@ -1241,9 +1381,9 @@ class Ui_MainWindow(object):
         self.verticalLayout_64.setContentsMargins(10, 10, 10, 10)
         self.getAutoFan = QRadioButton(self.groupBox_2)
         self.getAutoFan.setObjectName(u"getAutoFan")
-        font9 = QFont()
-        font9.setBold(True)
-        self.getAutoFan.setFont(font9)
+        font10 = QFont()
+        font10.setBold(True)
+        self.getAutoFan.setFont(font10)
         self.getAutoFan.setStyleSheet(u"QRadioButton {\n"
 "    color: #2C3E50;\n"
 "    font-size: 12px;\n"
@@ -1265,7 +1405,7 @@ class Ui_MainWindow(object):
 
         self.getManualFan = QRadioButton(self.groupBox_2)
         self.getManualFan.setObjectName(u"getManualFan")
-        self.getManualFan.setFont(font9)
+        self.getManualFan.setFont(font10)
         self.getManualFan.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
         self.getManualFan.setStyleSheet(u"QRadioButton {\n"
 "    color: #2C3E50;\n"
@@ -1290,7 +1430,7 @@ class Ui_MainWindow(object):
 
         self.fanOff = QRadioButton(self.groupBox_2)
         self.fanOff.setObjectName(u"fanOff")
-        self.fanOff.setFont(font9)
+        self.fanOff.setFont(font10)
         self.fanOff.setStyleSheet(u"QRadioButton {\n"
 "\n"
 "    color: #2C3E50;\n"
@@ -1311,20 +1451,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_64.addWidget(self.fanOff)
 
 
-        self.verticalLayout_62.addWidget(self.groupBox_2)
+        self.verticalLayout_63.addWidget(self.groupBox_2)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout_62.addItem(self.verticalSpacer_2)
-
-
-        self.horizontalLayout_25.addWidget(self.widget_53)
-
-        self.widget_54 = QWidget(self.widget_52)
-        self.widget_54.setObjectName(u"widget_54")
-        self.widget_54.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
-        self.verticalLayout_63 = QVBoxLayout(self.widget_54)
-        self.verticalLayout_63.setObjectName(u"verticalLayout_63")
         self.groupBox_3 = QGroupBox(self.widget_54)
         self.groupBox_3.setObjectName(u"groupBox_3")
         self.groupBox_3.setFont(font7)
@@ -1335,10 +1463,10 @@ class Ui_MainWindow(object):
         self.gridLayout_3.setContentsMargins(10, 10, 10, 10)
         self.label_32 = QLabel(self.groupBox_3)
         self.label_32.setObjectName(u"label_32")
-        font10 = QFont()
-        font10.setPointSize(10)
-        font10.setBold(False)
-        self.label_32.setFont(font10)
+        font11 = QFont()
+        font11.setPointSize(10)
+        font11.setBold(False)
+        self.label_32.setFont(font11)
         self.label_32.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.gridLayout_3.addWidget(self.label_32, 0, 0, 1, 1)
@@ -1360,10 +1488,7 @@ class Ui_MainWindow(object):
         self.lblFanSpeed.setObjectName(u"lblFanSpeed")
         self.lblFanSpeed.setMinimumSize(QSize(40, 0))
         self.lblFanSpeed.setMaximumSize(QSize(30, 16777215))
-        font11 = QFont()
-        font11.setPointSize(9)
-        font11.setBold(False)
-        self.lblFanSpeed.setFont(font11)
+        self.lblFanSpeed.setFont(font9)
         self.lblFanSpeed.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.gridLayout_3.addWidget(self.lblFanSpeed, 1, 1, 1, 1)
@@ -1379,7 +1504,7 @@ class Ui_MainWindow(object):
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.label_34 = QLabel(self.groupBox_4)
         self.label_34.setObjectName(u"label_34")
-        self.label_34.setFont(font11)
+        self.label_34.setFont(font9)
         self.label_34.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.gridLayout_4.addWidget(self.label_34, 0, 0, 1, 1)
@@ -1388,7 +1513,7 @@ class Ui_MainWindow(object):
         self.tempMin.setObjectName(u"tempMin")
         self.tempMin.setMinimumSize(QSize(0, 40))
         self.tempMin.setMaximumSize(QSize(110, 16777215))
-        self.tempMin.setFont(font11)
+        self.tempMin.setFont(font9)
         self.tempMin.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.tempMin.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
         self.tempMin.setMinimum(1)
@@ -1400,14 +1525,14 @@ class Ui_MainWindow(object):
         self.label_51 = QLabel(self.groupBox_4)
         self.label_51.setObjectName(u"label_51")
         self.label_51.setMaximumSize(QSize(30, 16777215))
-        self.label_51.setFont(font11)
+        self.label_51.setFont(font9)
         self.label_51.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.gridLayout_4.addWidget(self.label_51, 0, 2, 1, 1)
 
         self.label_35 = QLabel(self.groupBox_4)
         self.label_35.setObjectName(u"label_35")
-        self.label_35.setFont(font11)
+        self.label_35.setFont(font9)
         self.label_35.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.gridLayout_4.addWidget(self.label_35, 1, 0, 1, 1)
@@ -1416,7 +1541,7 @@ class Ui_MainWindow(object):
         self.tempMax.setObjectName(u"tempMax")
         self.tempMax.setMinimumSize(QSize(101, 40))
         self.tempMax.setMaximumSize(QSize(90, 16777215))
-        self.tempMax.setFont(font11)
+        self.tempMax.setFont(font9)
         self.tempMax.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.tempMax.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
         self.tempMax.setMinimum(20)
@@ -1426,14 +1551,14 @@ class Ui_MainWindow(object):
 
         self.label_52 = QLabel(self.groupBox_4)
         self.label_52.setObjectName(u"label_52")
-        self.label_52.setFont(font11)
+        self.label_52.setFont(font9)
         self.label_52.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.gridLayout_4.addWidget(self.label_52, 1, 2, 1, 1)
 
         self.label_50 = QLabel(self.groupBox_4)
         self.label_50.setObjectName(u"label_50")
-        self.label_50.setFont(font11)
+        self.label_50.setFont(font9)
         self.label_50.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.gridLayout_4.addWidget(self.label_50, 2, 0, 1, 1)
@@ -1442,7 +1567,7 @@ class Ui_MainWindow(object):
         self.startSpeed.setObjectName(u"startSpeed")
         self.startSpeed.setMinimumSize(QSize(0, 40))
         self.startSpeed.setMaximumSize(QSize(110, 16777215))
-        self.startSpeed.setFont(font11)
+        self.startSpeed.setFont(font9)
         self.startSpeed.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.startSpeed.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
         self.startSpeed.setMinimum(5)
@@ -1453,7 +1578,7 @@ class Ui_MainWindow(object):
 
         self.label_53 = QLabel(self.groupBox_4)
         self.label_53.setObjectName(u"label_53")
-        self.label_53.setFont(font11)
+        self.label_53.setFont(font9)
         self.label_53.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.gridLayout_4.addWidget(self.label_53, 2, 2, 1, 1)
@@ -2307,7 +2432,7 @@ class Ui_MainWindow(object):
         self.label_10 = QLabel(self.framePosAndHome_3)
         self.label_10.setObjectName(u"label_10")
         self.label_10.setMaximumSize(QSize(16777215, 35))
-        self.label_10.setFont(font9)
+        self.label_10.setFont(font10)
         self.label_10.setWordWrap(True)
 
         self.verticalLayout_26.addWidget(self.label_10)
@@ -3190,7 +3315,7 @@ class Ui_MainWindow(object):
         self.label_22 = QLabel(self.framePosAndHome_4)
         self.label_22.setObjectName(u"label_22")
         self.label_22.setMaximumSize(QSize(16777215, 35))
-        self.label_22.setFont(font9)
+        self.label_22.setFont(font10)
         self.label_22.setWordWrap(True)
 
         self.verticalLayout_33.addWidget(self.label_22)
@@ -3273,7 +3398,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(4)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -3341,6 +3466,13 @@ class Ui_MainWindow(object):
         self.label_4.setText("")
         self.label_8.setText(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f \u0432\u0435\u043d\u0442\u0438\u043b\u044f\u0442\u043e\u0440\u043e\u043c \u043a\u043e\u0440\u043f\u0443\u0441\u0430", None))
         self.label_9.setText("")
+        self.groupBox_5.setTitle(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u0444\u0438\u043b\u044c\u0442\u0440\u0430\u0446\u0438\u0438 \u0434\u0430\u0442\u0447\u0438\u043a\u043e\u0432", None))
+        self.label_44.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u041e\u043a\u043d\u043e \u0447\u0443\u0432\u0441\u0442\u0432\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u0438 BTQ-403A:</p></body></html>", None))
+        self.label_56.setText(QCoreApplication.translate("MainWindow", u"\u041f\u043e\u0440\u043e\u0433 \u0447\u0443\u0432\u0441\u0442\u0432\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u0438 BTQ-403A:", None))
+        self.label_57.setText(QCoreApplication.translate("MainWindow", u"\u041e\u043a\u043d\u043e \u0447\u0443\u0432\u0441\u0442\u0432\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u0438 ACS712:", None))
+        self.label_38.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u041f\u043e\u0440\u043e\u0433 \u0447\u0443\u0432\u0441\u0442\u0432\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u0438 TCP-715A:</p></body></html>", None))
+        self.label_41.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u041f\u043e\u0440\u043e\u0433 \u0447\u0443\u0432\u0441\u0442\u0432\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u0438 ACS712:</p></body></html>", None))
+        self.label_40.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u041e\u043a\u043d\u043e \u0447\u0443\u0432\u0441\u0442\u0432\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u0438 TCP-715A:</p></body></html>", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"\u0420\u0435\u0436\u0438\u043c \u0440\u0430\u0431\u043e\u0442\u044b", None))
         self.getAutoFan.setText(QCoreApplication.translate("MainWindow", u"\u0410\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0439 \u0440\u0435\u0436\u0438\u043c (\u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u043c\u044b\u0439)", None))
         self.getManualFan.setText(QCoreApplication.translate("MainWindow", u"\u0420\u0443\u0447\u043d\u043e\u0439 \u0440\u0435\u0436\u0438\u043c (\u0444\u0438\u043a\u0441\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u0430\u044f \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c)", None))
