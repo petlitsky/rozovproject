@@ -3,6 +3,7 @@ from PySide6.QtCore import QThread, Signal
 import gpiod
 
 class ForceSensorWorker(QThread):
+    # Передает силу в Ньютонах (Н)
     force_updated = Signal(float)
     error_occurred = Signal(str)
     last_force = 0.0
@@ -11,17 +12,13 @@ class ForceSensorWorker(QThread):
         super().__init__(parent)
         self.dout_pin = dout_pin
         self.pd_sck_pin = pd_sck_pin
+        
+        # Калибровочный коэффициент для перевода сырых отсчетов в ГРАММЫ
         self.scale_ratio = 775.4  
         self._running = True
 
         self.request = None
         self.zero_offset = 0
-        
-        # Для фильтрации
-        self._prev_force = 0.0
-        self._suspected_value = None  # Подозрительное значение
-        self._suspected_prev = None   # Предыдущее перед подозрительным
-        self._max_change = 5.0  # Порог для определения "резкого" изменения (Н)
 
     def run(self):
         try:
@@ -44,6 +41,7 @@ class ForceSensorWorker(QThread):
                 config=config
             )
 
+            # Тарировка (обнуление)
             self.msleep(500)
             self.zero_offset = self._read_average(10)
             print(f"[Force Sensor] Готов. Нулевое смещение: {self.zero_offset}")
@@ -51,17 +49,19 @@ class ForceSensorWorker(QThread):
             while self._running:
                 raw_val = self._read_average(3)
                 if raw_val is not None:
+                    # 1. Расчет массы в граммах
                     weight_grams = (raw_val - 75968) / self.scale_ratio
+                    
+                    # 2. Перевод граммов в Ньютоны (Н): (г / 1000) * 9.80665
                     force_newtons = (weight_grams / 1000.0) * 9.80665
 
+                    # Отсечка мелких шумов около нуля (менее ~0.01 Н)
                     if abs(force_newtons) < 0.01:
                         force_newtons = 0.0
 
-                    # Умная фильтрация
-                    filtered_value = self._smart_filter(force_newtons)
-                    
-                    self.last_force = filtered_value
-                    self.force_updated.emit(filtered_value)
+                    self.last_force = force_newtons
+                    # Отправляем усилие в Ньютонах
+                    self.force_updated.emit(float(force_newtons))
                 
                 self.msleep(100)
 
@@ -71,44 +71,6 @@ class ForceSensorWorker(QThread):
             self.error_occurred.emit(error_msg)
         finally:
             self._cleanup()
-
-    def _smart_filter(self, value):
-        """
-        Умный фильтр: отличает выброс от реального изменения
-        """
-        diff = abs(value - self._prev_force)
-        
-        # Если изменение в пределах нормы - пропускаем
-        if diff <= self._max_change:
-            self._suspected_value = None
-            self._suspected_prev = None
-            self._prev_force = value
-            return value
-        
-        # Резкое изменение!
-        if self._suspected_value is None:
-            # Первый раз видим подозрительное значение
-            self._suspected_value = value
-            self._suspected_prev = self._prev_force
-            # Пока возвращаем предыдущее (ждем подтверждения)
-            return self._prev_force
-        else:
-            # У нас уже есть подозрительное значение от прошлого раза
-            # Проверяем, вернулось ли значение обратно
-            diff_back = abs(value - self._suspected_prev)
-            
-            if diff_back <= self._max_change:
-                # Вернулось обратно! Это был выброс
-                self._suspected_value = None
-                self._suspected_prev = None
-                return self._prev_force
-            else:
-                # Не вернулось! Это реальное изменение
-                # Обновляем предыдущее значение
-                self._prev_force = self._suspected_value
-                self._suspected_value = None
-                self._suspected_prev = None
-                return self._prev_force
 
     def _read_raw(self):
         count = 0
