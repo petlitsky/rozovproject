@@ -83,7 +83,7 @@ class TorqueSensorWorker(QThread):
         self.request.set_value(self.pd_sck_pin, gpiod.line.Value.INACTIVE)
 
         if count & 0x800000:
-            count -= 0x1000000
+            count -= 0x1000000 
 
         return count
 

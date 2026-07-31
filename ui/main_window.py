@@ -321,6 +321,7 @@ class MainWindow(QMainWindow):
         
         # Обновляем lblFixCur
         self.ui.lblFixCur.setText(f"{value:.2f} А")
+        self.ui.lblFixCurMan.setText(f"{value:.2f} А")
         
         # Обновляем статистику
         self.current_count += 1
