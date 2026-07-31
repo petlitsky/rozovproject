@@ -1,7 +1,6 @@
 import time
 from PySide6.QtCore import QThread, Signal
 import gpiod
-import numpy as np
 
 class TorqueSensorWorker(QThread):
     torque_updated = Signal(float)
@@ -11,31 +10,11 @@ class TorqueSensorWorker(QThread):
         super().__init__(parent)
         self.dout_pin = dout_pin
         self.pd_sck_pin = pd_sck_pin
-        
-        # --- КАЛИБРОВОЧНАЯ ТАБЛИЦА (Рычаг 205 мм = 0.205 м) ---
-        # 1. Ваши экспериментальные точки (значения "Н*м" из старого кода при коэфф. 420)
-        old_vals = np.array([166.0, 825.0, 1184.0, 1184.0, 836.0])
-        
-        # Переводим старые значения обратно в чистый сырой сыгнал АЦП (raw_val)
-        self.cal_raw = old_vals * 420.0
-        
-        # 2. Рассчитываем точный физический крутящий момент (М = F * L = (г / 1000) * 9.80665 * 0.205)
-        # Соответствует точкам: 0г, 350г, 4100г, 4910г, 340г
-        self.cal_torque = np.array([
-            0.0,
-            (350.0 / 1000.0) * 9.80665 * 0.205,
-            (4100.0 / 1000.0) * 9.80665 * 0.205,
-            (4910.0 / 1000.0) * 9.80665 * 0.205,
-            (340.0 / 1000.0) * 9.80665 * 0.205
-        ])
-        
-        # Сортируем массивы по возрастанию сигнала АЦП для правильной интерполяции
-        idx = np.argsort(self.cal_raw)
-        self.cal_raw = self.cal_raw[idx]
-        self.cal_torque = self.cal_torque[idx]
-
+        self.scale_ratio = 420.0
         self._running = True
+
         self.request = None
+        self.zero_offset = 0
 
     def run(self):
         try:
@@ -47,6 +26,7 @@ class TorqueSensorWorker(QThread):
             except Exception:
                 chip_path = "/dev/gpiochip0"
 
+            # Настройка конфигурации линий для gpiod v2
             config = {
                 self.dout_pin: gpiod.LineSettings(direction=gpiod.line.Direction.INPUT),
                 self.pd_sck_pin: gpiod.LineSettings(direction=gpiod.line.Direction.OUTPUT, output_value=gpiod.line.Value.INACTIVE)
@@ -58,28 +38,30 @@ class TorqueSensorWorker(QThread):
                 config=config
             )
 
-            # Ожидание стабилизации АЦП
+            # Тарировка (обнуление)
             self.msleep(500)
-            print(f"[Torque BTQ-403A] Готов. Используется табличная интерполяция Н*м.")
+            self.zero_offset = self._read_average(10)
+            print(f"[Torque BTQ-403A] Готов. Нулевое смещение: {self.zero_offset}")
+            self.zero_offset = 0
 
             while self._running:
                 raw_val = self._read_average(3)
                 if raw_val is not None:
-                    # Умножаем сырые данные со считывателя (если ваш метод _read_average 
-                    # возвращает чистый АЦП, а не деленный на 420. Если деленный — убрать "* 420.0")
-                    # Переводим в Н*м по калибровочной сетке:
-                    val = float(np.interp(raw_val, self.cal_raw, self.cal_torque))
+                    val = (raw_val - self.zero_offset) / self.scale_ratio - 110
                     
-                    # Отсечка мелких шумов около нуля (менее 0.05 Н*м)
                     if abs(val) < 0.05:
                         val = 0.0
 
-                    self.torque_updated.emit(val)
+                    self.torque_updated.emit(float(val))
                 
                 self.msleep(100)
-                
+
         except Exception as e:
-            print(f"[Torque BTQ-403A] Ошибка выполнения потока: {e}")
+            error_msg = f"Ошибка чтения Torque Sensor: {e}"
+            print(f"[Torque Error] {error_msg}")
+            self.error_occurred.emit(error_msg)
+        finally:
+            self._cleanup()
 
     def _read_raw(self):
         count = 0
