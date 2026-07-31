@@ -93,30 +93,23 @@ class ManualControls(QObject):
         self.ui.btnGoPreForceMan.clicked.connect(self.main.go_to_pre_force)
     
     def _connect_post_crimp_buttons(self) -> None:
-        buttons = [
-            (self.ui.btnPostBack, self.main.post_back_start, self.main.post_stop),
-            (self.ui.btnPostForward, self.main.post_forward_start, self.main.post_stop),
-        ]
+        # ЗАЖАТИЕ до сохраненного момента (btnPostForw, btnPostForwMan)
+        self.ui.btnPostForward.clicked.connect(self.main.post_forward_start)
+        self.ui.btnPostForwardMan.clicked.connect(self.main.post_forward_start)
         
-        for btn, press, release in buttons:
-            btn.pressed.connect(press)
-            btn.released.connect(release)
+        # РАЗЖАТИЕ до сохраненного момента (btnPostBack, btnPostBackMan) - это и есть HOME!
+        self.ui.btnPostBack.clicked.connect(self.main.post_back_start)
+        self.ui.btnPostBackMan.clicked.connect(self.main.post_back_start)
         
-        buttons_man = [
-            (self.ui.btnPostBackMan, self.main.post_back_start, self.main.post_stop),
-            (self.ui.btnPostForwardMan, self.main.post_forward_start, self.main.post_stop),
-        ]
-        
-        for btn, press, release in buttons_man:
-            btn.pressed.connect(press)
-            btn.released.connect(release)
-        
+        # Кнопки хоуминга (поиск физического дома) - если нужны отдельно
+        self.ui.btnPostHome.clicked.connect(self.main.post_home)
+        self.ui.btnPostHomeMan.clicked.connect(self.main.post_home)
+                
+        # Кнопки перемещения на градусы
         self.ui.btnBackPost1grad.clicked.connect(lambda: self.main.post_move_degrees(-1))
         self.ui.btnForwardPost1grad.clicked.connect(lambda: self.main.post_move_degrees(1))
         self.ui.btnBackPost5grad.clicked.connect(lambda: self.main.post_move_degrees(-5))
         self.ui.btnForwardPost5grad.clicked.connect(lambda: self.main.post_move_degrees(5))
-
-        self.ui.btnPostHome.clicked.connect(self.main.post_home)
     
     def _connect_speed_sliders(self) -> None:
         self.ui.linSpeed.valueChanged.connect(self._on_lin_speed_changed)
@@ -144,8 +137,3 @@ class ManualControls(QObject):
     def _on_fan_speed_changed(self, value: int) -> None:
         self.ui.lblFanSpeed.setText(f"{value}%")
         self.main.set_fan_speed(value)
-
-    def _connect_fan_radio(self) -> None:
-        self.ui.getAutoFan.clicked.connect(self.main._process_auto_fan)
-        self.ui.getManualFan.clicked.connect(self.main._on_manual_fan_slider_changed)
-        self.ui.fanOff.clicked.connect(self.main._set_fan_off)
